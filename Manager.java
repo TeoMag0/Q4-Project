@@ -25,6 +25,15 @@ public class Manager{
             each.send(message);
         }
     }
+    
+    @SuppressWarnings("rawtypes")
+    public void broadcastExcept(NetworkObject message, int clientID) {
+        for (ServerThread each : serverThreads) {
+            if(each.clientID() != clientID){
+                each.send(message);
+            }
+        }
+    }
 
     
 }

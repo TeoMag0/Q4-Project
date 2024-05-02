@@ -45,15 +45,19 @@ public class PlayerMovement implements KeyListener, Runnable{
             Vector2 direction = Vector2.zero();
             if(a){
                 direction.add(new Vector2(-1,0));
-            }if(w){
+            }
+            if(w){
                 direction.add(new Vector2(0, 1));
-            }if(d){
+            }
+            if(d){
                 direction.add(new Vector2(1, 0));
-            }if(s){
+            }
+            if(s){
                 direction.add(new Vector2(0, -1));
             }
             if(!direction.equals(Vector2.zero())){
                 player.movePosition(Vector2.multiply(direction.normalized(), speed));
+                ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(player.getPos(), Packet.PLAYERPOS));//vector2 is 186 bytes, float[] is 177 bytes
                 Screen.Singleton.repaint();
             }
             try{

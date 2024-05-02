@@ -26,8 +26,14 @@ public class ConnectionManager {
 
 				switch(received.packet){
 					case PLAYERPOS:
+						//{int clientID, Vector2 pos}
+						int clientID = (int)((Object[])received.data)[0];
+						Vector2 pos = (Vector2)((Object[])received.data)[1];
+						DummyPlayerManager.Singleton.updatePosition(clientID, pos);
                         break;
 				}
+
+				Screen.Singleton.repaint();
 			}
 		} catch (UnknownHostException e) {
 			System.err.println("Host unkown: " + hostName);

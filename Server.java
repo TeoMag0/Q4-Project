@@ -14,6 +14,7 @@ public class Server {
         Manager manager = new Manager();
 
 		//This loop will run and wait for one connection at a time.
+		int i=0;
 		while(true){
 			System.out.println("Waiting for a connection");
 
@@ -21,10 +22,11 @@ public class Server {
 			Socket clientSocket = serverSocket.accept();
 
 			//Once a connection is made, run the socket in a ServerThread.
-            ServerThread serverThread = new ServerThread(clientSocket, manager);
+            ServerThread serverThread = new ServerThread(clientSocket, manager, i);
             manager.add(serverThread);
 			Thread thread = new Thread(serverThread);
 			thread.start();
+			i++;
 		}
 	}
 }

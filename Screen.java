@@ -20,7 +20,7 @@ public class Screen extends JPanel {
 		this.setFocusable(true);		
 
 		player = new Player(Vector2.zero(), 0.05f);
-		addKeyListener(player.movementManager());
+		addKeyListener(player.movementManager);
 	}
 
 	public void paintComponent(Graphics g){
@@ -29,6 +29,7 @@ public class Screen extends JPanel {
 		Vector2 ovalPos = getScreenCoords(new Vector2(1,1));
 		g.drawOval(ovalPos.intX(), ovalPos.intY(), toPixels(1), toPixels(1));
 
+		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 	}
     

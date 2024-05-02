@@ -7,12 +7,12 @@ import java.awt.*;
 public class Player implements DrawableObject{
     private Vector2 position;
     private Vector2 size;
-    private PlayerMovement movementManager;
-    private PlayerAppearanceManager appearanceManager;
+    public final PlayerMovement movementManager;
+    public final PlayerAppearanceManager appearanceManager;
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
-        size = new Vector2(1, -1);
+        size = new Vector2(.3f, 0);
 
         movementManager = new PlayerMovement(this, speed);
         new Thread(movementManager).start();
@@ -33,10 +33,6 @@ public class Player implements DrawableObject{
     }
     public Vector2 getPos(){
         return position.clone();
-    }
-
-    public PlayerMovement movementManager(){
-        return movementManager;
     }
     public Vector2 size(){
         return size.clone();
