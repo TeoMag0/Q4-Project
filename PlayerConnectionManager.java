@@ -9,7 +9,7 @@ public class PlayerConnectionManager implements Runnable{
     
     public void run(){
         while(true){
-            player.sendPosition();
+            ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(player.getPos(), Packet.PLAYERPOS));//vector2 is 186 bytes, float[] is 177 bytes
             try{
                 Thread.sleep(sendInterval);
             }catch(InterruptedException e){

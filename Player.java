@@ -28,10 +28,6 @@ public class Player extends Startable implements DrawableObject{
         appearanceManager.drawMe(g);
     }
 
-    public void sendPosition(){
-        //vector2 is 186 bytes, float[] is 177 bytes
-        ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(position, Packet.PLAYERPOS));
-    }
     public void movePosition(Vector2 deltaPos){
         //if(not colliding on one side)
         position.add(deltaPos);
