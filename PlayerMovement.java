@@ -60,7 +60,6 @@ public class PlayerMovement extends Startable implements KeyListener, Runnable{
             }
             if(!direction.equals(Vector2.zero())){
                 player.movePosition(Vector2.multiply(direction.normalized(), speed));
-                player.sendPosition();
                 Screen.Singleton.repaint();
             }
             try{

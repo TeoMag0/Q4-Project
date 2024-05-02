@@ -9,18 +9,19 @@ public class Player extends Startable implements DrawableObject{
     private Vector2 size;
     public final PlayerMovement movementManager;
     public final PlayerAppearanceManager appearanceManager;
+    public final PlayerConnectionManager connectionManager;
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
         size = new Vector2(.3f, 0);
 
         movementManager = new PlayerMovement(this, speed);
-
+        connectionManager = new PlayerConnectionManager(this);
         appearanceManager = new PlayerAppearanceManager(this);
     }
     public void start(){
         new Thread(movementManager).start();
-        sendPosition();
+        new Thread(connectionManager).start();
     }
 
     public void drawMe(Graphics g){
