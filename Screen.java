@@ -20,7 +20,6 @@ public class Screen extends JPanel {
 		this.setFocusable(true);		
 
 		player = new Player(Vector2.zero(), 0.05f);
-		addKeyListener(player.movementManager);
 	}
 
 	public void paintComponent(Graphics g){

@@ -4,7 +4,7 @@ import java.awt.event.*;
  * purpose: give movement commands
  */
 
-public class PlayerMovement implements KeyListener, Runnable{
+public class PlayerMovement extends Startable implements KeyListener, Runnable{
 
     private boolean a,w,d,s;
     private float speed;
@@ -13,6 +13,9 @@ public class PlayerMovement implements KeyListener, Runnable{
     public PlayerMovement(Player player, float speed){
         this.speed = speed;
         this.player = player;
+    }
+    public void start(){
+        Screen.Singleton.addKeyListener(this);
     }
 
     public void keyPressed(KeyEvent e){
@@ -57,7 +60,7 @@ public class PlayerMovement implements KeyListener, Runnable{
             }
             if(!direction.equals(Vector2.zero())){
                 player.movePosition(Vector2.multiply(direction.normalized(), speed));
-                ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(player.getPos(), Packet.PLAYERPOS));//vector2 is 186 bytes, float[] is 177 bytes
+                player.sendPosition();
                 Screen.Singleton.repaint();
             }
             try{

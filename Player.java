@@ -4,7 +4,7 @@ import java.awt.*;
  * things to update: figure out collisions for player
  */
 
-public class Player implements DrawableObject{
+public class Player extends Startable implements DrawableObject{
     private Vector2 position;
     private Vector2 size;
     public final PlayerMovement movementManager;
@@ -15,9 +15,12 @@ public class Player implements DrawableObject{
         size = new Vector2(.3f, 0);
 
         movementManager = new PlayerMovement(this, speed);
-        new Thread(movementManager).start();
 
         appearanceManager = new PlayerAppearanceManager(this);
+    }
+    public void start(){
+        new Thread(movementManager).start();
+        sendPosition();
     }
 
     public void drawMe(Graphics g){
@@ -25,6 +28,7 @@ public class Player implements DrawableObject{
     }
 
     public void sendPosition(){
+        //vector2 is 186 bytes, float[] is 177 bytes
         ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(position, Packet.PLAYERPOS));
     }
     public void movePosition(Vector2 deltaPos){

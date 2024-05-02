@@ -18,8 +18,9 @@ public class ConnectionManager {
         out = new ObjectOutputStream(serverSocket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(serverSocket.getInputStream());
 
-		try {
+		StartManager.Singleton.start();
 
+		try {
 			while (true) {
 				Object receivedObject = in.readObject();
 				NetworkObject received = (NetworkObject)receivedObject;
@@ -44,6 +45,7 @@ public class ConnectionManager {
 		}catch (ClassNotFoundException e){
 			System.out.println(e);
 		}
+        serverSocket.close();
 	}
 
     @SuppressWarnings("rawtypes")
