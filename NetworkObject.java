@@ -1,7 +1,11 @@
 import java.io.Serializable;
 
-public abstract class NetworkObject<E> implements Serializable{
-    public abstract String objectType();
+/*
+ *purpose: act as a container when sending data between client/servers
+ things to update:  
+ */
+
+public class NetworkObject<E> implements Serializable{
     public final E data;
     public final Packet packet;
 

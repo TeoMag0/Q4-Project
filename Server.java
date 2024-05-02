@@ -1,6 +1,11 @@
 import java.net.*;
 import java.io.*;
 
+/*
+ * purpose: host server
+ * things to update: none
+ */
+
 public class Server {
 	public static void main(String[] args) throws IOException {
 		int portNumber = 1024;

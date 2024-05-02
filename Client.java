@@ -7,8 +7,7 @@ public class Client {
 
         JFrame frame = new JFrame("Client");
 
-		Screen sc = new Screen();
-		frame.add(sc);
+		frame.add(Screen.Singleton);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();

@@ -1,4 +1,10 @@
 import java.util.*;
+
+/*
+ * purpose: facilitate communication between clients
+ * things to update:
+ */
+
 public class Manager{
     private LinkedList<ServerThread> serverThreads;
 

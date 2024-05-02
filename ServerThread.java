@@ -1,6 +1,11 @@
 import java.net.*;
 import java.io.*;
 
+/*
+ * purpose: manage the connection to its client
+ * things to update:
+ */
+
 public class ServerThread implements Runnable{	
 	private Socket clientSocket;
     private Manager manager;

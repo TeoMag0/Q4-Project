@@ -1,6 +1,11 @@
 import java.io.*;
 import java.net.*;
 
+/*
+ * purpose: manage sending/receiving packets
+ * things to update: switch in while loop must be able to receive any type of data
+ */
+
 public class ConnectionManager {
     public static final ConnectionManager Singleton = new ConnectionManager();
     private ObjectOutputStream out;
@@ -19,8 +24,8 @@ public class ConnectionManager {
 				Object receivedObject = in.readObject();
 				NetworkObject received = (NetworkObject)receivedObject;
 
-				switch(received.objectType()){
-					case "":
+				switch(received.packet){
+					case PLAYERPOS:
                         break;
 				}
 			}
