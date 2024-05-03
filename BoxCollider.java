@@ -1,4 +1,4 @@
-public class BoxCollider extends Collider{
+public abstract class BoxCollider extends Collider{
     private Vector2 size;
 
     public BoxCollider(Transform parent, Vector2 size){
@@ -8,9 +8,5 @@ public class BoxCollider extends Collider{
 
     public Vector2 size(){
         return size.clone();
-    }
-
-    public void onCollisionEnter(Collider col){
-        
     }
 }

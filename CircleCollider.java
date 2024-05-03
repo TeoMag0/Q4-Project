@@ -1,4 +1,4 @@
-public class CircleCollider extends Collider{
+public abstract class CircleCollider extends Collider{
     private float radius;
     
     public CircleCollider(Transform parent, float radius){
@@ -8,9 +8,5 @@ public class CircleCollider extends Collider{
 
     public float radius(){
         return radius;
-    }
-
-    public void onCollisionEnter(Collider col){
-
     }
 }
