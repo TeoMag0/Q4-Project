@@ -16,7 +16,7 @@ public class DummyPlayerManager implements DrawableObject{
         if(dummies.get(clientID) == null){
             dummies.put(clientID, new DummyPlayer(pos));
         }else{
-            dummies.get(clientID).setPosition(pos);
+            dummies.get(clientID).moveToPosition(pos);
         }
     }
 
