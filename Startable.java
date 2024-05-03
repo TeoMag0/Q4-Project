@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /*
  * purpose: keep track of all objects that have a start method
@@ -6,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class Startable {
 
-    public static final ArrayList<Startable> startables = new ArrayList<>();
+    public static final MyArrayList<Startable> startables = new MyArrayList<>();
     
     public Startable(){
         startables.add(this);

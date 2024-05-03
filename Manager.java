@@ -1,4 +1,3 @@
-import java.util.*;
 
 /*
  * purpose: facilitate communication between clients
@@ -6,10 +5,10 @@ import java.util.*;
  */
 
 public class Manager{
-    private LinkedList<ServerThread> serverThreads;
+    private DLList<ServerThread> serverThreads;
 
     public Manager(){
-        serverThreads = new LinkedList<ServerThread>();
+        serverThreads = new DLList<ServerThread>();
     }
 
     public void add(ServerThread serverThread) {

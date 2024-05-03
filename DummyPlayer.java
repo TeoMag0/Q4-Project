@@ -4,7 +4,7 @@ import java.awt.*;
  * things to update: figure out collisions for player
  */
 
-public class DummyPlayer implements DrawableObject {
+public class DummyPlayer implements DrawableObject, Transform {
     private Vector2 position;
     private Vector2 size;
     private final DummyPlayerAppearanceManager appearanceManager;
