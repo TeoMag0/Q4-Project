@@ -19,6 +19,9 @@ public abstract class Collider implements Transform{
     public Vector2 getPos(){
         return parent.getPos();
     }
+    public Transform parent(){
+        return parent;
+    }
     public abstract void onCollisionEnter(Collider col);
 
     public static void checkCollision(Collider col1, Collider col2){
