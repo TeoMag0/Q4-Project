@@ -2,6 +2,10 @@ import java.io.*;
 
 import javax.swing.JFrame;
 
+/*
+ * purpose: client runner
+ */
+
 public class Client {
     public static void main(String[] args) throws IOException {
 

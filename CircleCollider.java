@@ -1,3 +1,8 @@
+
+/*
+ * purpose: provide collision detection in the shape of a circle
+ */
+
 public abstract class CircleCollider extends Collider{
     private float radius;
     

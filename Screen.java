@@ -19,7 +19,7 @@ public class Screen extends JPanel {
 		this.setLayout(null);
 		this.setFocusable(true);		
 
-		player = new Player(Vector2.zero(), 0.05f);
+		player = new Player(Vector2.zero(), .5f);
 	}
 
 	public void paintComponent(Graphics g){

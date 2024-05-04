@@ -9,10 +9,12 @@ public class PlayerMovement extends Startable implements KeyListener, Runnable{
     private boolean a,w,d,s;
     private float speed;
     private Player player;
+    private final float movementDeltaTime;
 
     public PlayerMovement(Player player, float speed){
         this.speed = speed;
         this.player = player;
+        movementDeltaTime = 0.01f;
     }
     public void start(){
         Screen.Singleton.addKeyListener(this);
@@ -59,11 +61,11 @@ public class PlayerMovement extends Startable implements KeyListener, Runnable{
                 direction.add(new Vector2(0, -1));
             }
             if(!direction.equals(Vector2.zero())){
-                player.movePosition(Vector2.multiply(direction.normalized(), speed));
+                player.movePosition(Vector2.multiply(direction.normalized(), speed/movementDeltaTime));
                 Screen.Singleton.repaint();
             }
             try{
-                Thread.sleep(10);
+                Thread.sleep((int)(movementDeltaTime*1000));
             }catch(InterruptedException e){
                 System.out.println(e);
             }

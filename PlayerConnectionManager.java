@@ -1,3 +1,8 @@
+
+/*
+ * purpose: manage anything that player needs to send to server
+ */
+
 public class PlayerConnectionManager implements Runnable{
     private Player player;
     public static final int sendInterval = 100;//millisecond interval between position updates to the server

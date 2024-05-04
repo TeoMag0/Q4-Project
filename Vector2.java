@@ -178,6 +178,34 @@ public class Vector2 implements Serializable{
         return new Vector2(0, 0);
     }
     /**
+     * Returns a unit vector straight up
+     * @return
+     */
+    public static Vector2 up(){
+        return new Vector2(0,1);
+    }
+    /**
+     * Returns a unit vector straight down
+     * @return
+     */
+    public static Vector2 down(){
+        return new Vector2(0,-1);
+    }
+    /**
+     * Returns a unit vector to the right
+     * @return
+     */
+    public static Vector2 right(){
+        return new Vector2(1,0);
+    }
+    /**
+     * Returns a unit vector to the left
+     * @return
+     */
+    public static Vector2 left(){
+        return new Vector2(-1,0);
+    }
+    /**
      * Returns whether Vectors are equal
      * @return
      */
