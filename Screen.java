@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /*
- * purpose: draw all things that need to be drawn
+ * purpose: draw all things that need to be drawn, also wakes up everything and is a hub
  * things to update:
  * notes: 
  * 	UI should directly use pixel to draw, while objects in the world should use getScreenCoords()
@@ -13,13 +13,14 @@ public class Screen extends JPanel {
 	private static final int pixelsPerUnit = 100;
 	public static final Vector2 screenPixelDimensions = new Vector2(1280, 720);
 	public static final Screen Singleton = new Screen();
-	private static Player player;
+	public static final Player player = new Player(Vector2.zero(), 5f);
 
 	public Screen() {
 		this.setLayout(null);
 		this.setFocusable(true);		
 
-		player = new Player(Vector2.zero(), .5f);
+		//instantiate things that need awakening
+		ColliderManager.Singleton.wakeUp();
 	}
 
 	public void paintComponent(Graphics g){
@@ -29,6 +30,7 @@ public class Screen extends JPanel {
 		g.drawOval(ovalPos.intX(), ovalPos.intY(), toPixels(1), toPixels(1));
 
 		DummyPlayerManager.Singleton.drawMe(g);
+		WallManager.Singleton.drawMe(g);
 		player.drawMe(g);
 	}
     

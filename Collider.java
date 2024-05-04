@@ -6,12 +6,19 @@
 
 public abstract class Collider implements Transform{
     private Shape shape;
-    private Transform parent;
+    private HasCollider parent;
+    private ColliderPurpose purpose;
     private static final MyArrayList<Collider> allColliders = new MyArrayList<>();
 
-    public Collider(Transform parent){
+    public Collider(HasCollider parent, ColliderPurpose purpose, Shape shape){
         this.parent = parent;
+        this.purpose = purpose;
         allColliders.add(this);
+        this.shape = shape;
+    }
+
+    public ColliderPurpose purpose(){
+        return purpose;
     }
 
     public Shape shape(){
@@ -20,10 +27,9 @@ public abstract class Collider implements Transform{
     public Vector2 getPos(){
         return parent.getPos();
     }
-    public Transform parent(){
+    public HasCollider parent(){
         return parent;
     }
-    public abstract void onCollisionEnter(Collider col);
 
     public static void checkCollision(Collider col1, Collider col2){
         if(col1.shape() == Shape.CIRCLE && col2.shape == Shape.CIRCLE){
@@ -32,8 +38,8 @@ public abstract class Collider implements Transform{
 
             //collision between circles is when the difference in their positions is less than their radii
             if(Vector2.distance(cir2.getPos(), cir1.getPos()) <= cir1.radius()+cir2.radius()){
-                cir1.onCollisionEnter(cir2);
-                cir2.onCollisionEnter(cir1);
+                cir1.parent().onCollisionEnter(cir2);
+                cir2.parent().onCollisionEnter(cir1);
             }
         }else if((col1.shape() == Shape.BOX && col2.shape() == Shape.CIRCLE) || (col2.shape() == Shape.BOX && col1.shape() == Shape.CIRCLE)){
             BoxCollider box;
@@ -47,11 +53,10 @@ public abstract class Collider implements Transform{
             }
 
             if(findBoxPointInCircle(box, cir) != null || findCirclePointInBox(cir, box) != null){
-                box.onCollisionEnter(cir);
-                cir.onCollisionEnter(box);
-            }
-            
-        }else if(col1.shape() == Shape.BOX && col2.shape() == Shape.CIRCLE){
+                box.parent().onCollisionEnter(cir);
+                cir.parent().onCollisionEnter(box);
+            }       
+        }else if(col1.shape() == Shape.BOX && col2.shape() == Shape.BOX){
             BoxCollider box1 = (BoxCollider)col1;
             BoxCollider box2 = (BoxCollider)col2;
 
@@ -61,8 +66,8 @@ public abstract class Collider implements Transform{
             Vector2 box2TopRight = box2.cornerTR();
 
             if(box1BottomLeft.getX()<box2TopRight.getX() && box1TopRight.getX()>box2BottomLeft.getX() && box1BottomLeft.getY()<box2TopRight.getY() && box1TopRight.getY()>box2BottomLeft.getY()){
-                box1.onCollisionEnter(box2);
-                box2.onCollisionEnter(box1);
+                box1.parent().onCollisionEnter(box2);
+                box2.parent().onCollisionEnter(box1);
             }
         }
     }
@@ -80,7 +85,7 @@ public abstract class Collider implements Transform{
         return null;
     }
     public static Vector2 findCirclePointInBox(CircleCollider circle, BoxCollider box){
-        if(circle.getPos().getX() > box.cornerBL().getX() && circle.getPos().getX() < box.cornerTR().getX() && Vector2.distance(circle.getPos(), box.getPos()) < (box.size().getY()/2+circle.radius())){
+        if(circle.getPos().getX() > box.cornerBL().getX() && circle.getPos().getX() < box.cornerTR().getX() && Math.abs(circle.getPos().getY()-box.getPos().getY()) <= (box.size().getY()/2+circle.radius())){
             if(circle.getPos().getY() > box.getPos().getY()){
                 //circle on top of box
                 return Vector2.sum(circle.getPos(), Vector2.multiply(Vector2.down(), circle.radius()));
@@ -88,7 +93,7 @@ public abstract class Collider implements Transform{
                 //circle under box
                 return Vector2.sum(circle.getPos(), Vector2.multiply(Vector2.up(), circle.radius()));
             }
-        }else if(circle.getPos().getY() > box.cornerBL().getY() && circle.getPos().getY() < box.cornerTR().getY() && Vector2.distance(circle.getPos(), box.getPos()) < (box.size().getX()/2+circle.radius())){
+        }else if(circle.getPos().getY() > box.cornerBL().getY() && circle.getPos().getY() < box.cornerTR().getY() && Math.abs(circle.getPos().getX()-box.getPos().getX()) <= (box.size().getX()/2+circle.radius())){
             if (circle.getPos().getX() > box.getPos().getX()) {
                 // circle on right side
                 return Vector2.sum(circle.getPos(), Vector2.multiply(Vector2.left(), circle.radius()));
@@ -103,4 +108,8 @@ public abstract class Collider implements Transform{
 enum Shape{
     BOX,
     CIRCLE
+}
+enum ColliderPurpose{
+    PLAYER,
+    WALL
 }

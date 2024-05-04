@@ -2,9 +2,10 @@ import java.awt.event.*;
 
 /*
  * purpose: give movement commands
+ * notes: works off of collision timer to make player colisions align
  */
 
-public class PlayerMovement extends Startable implements KeyListener, Runnable{
+public class PlayerMovement extends Startable implements KeyListener{
 
     private boolean a,w,d,s;
     private float speed;
@@ -45,30 +46,24 @@ public class PlayerMovement extends Startable implements KeyListener, Runnable{
             s = false;
         }
     }
-    public void run(){
-        while(true){
-            Vector2 direction = Vector2.zero();
-            if(a){
-                direction.add(new Vector2(-1,0));
-            }
-            if(w){
-                direction.add(new Vector2(0, 1));
-            }
-            if(d){
-                direction.add(new Vector2(1, 0));
-            }
-            if(s){
-                direction.add(new Vector2(0, -1));
-            }
-            if(!direction.equals(Vector2.zero())){
-                player.movePosition(Vector2.multiply(direction.normalized(), speed/movementDeltaTime));
-                Screen.Singleton.repaint();
-            }
-            try{
-                Thread.sleep((int)(movementDeltaTime*1000));
-            }catch(InterruptedException e){
-                System.out.println(e);
-            }
+
+    public void movePlayer(){
+        Vector2 direction = Vector2.zero();
+        if (a) {
+            direction.add(new Vector2(-1, 0));
+        }
+        if (w) {
+            direction.add(new Vector2(0, 1));
+        }
+        if (d) {
+            direction.add(new Vector2(1, 0));
+        }
+        if (s) {
+            direction.add(new Vector2(0, -1));
+        }
+        if (!direction.equals(Vector2.zero())) {
+            player.movePosition(Vector2.multiply(direction.normalized(), speed * movementDeltaTime));
+            Screen.Singleton.repaint();
         }
     }
 }

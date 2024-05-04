@@ -3,11 +3,11 @@
  * purpose: provide collision detection in the shape of a circle
  */
 
-public abstract class CircleCollider extends Collider{
+public class CircleCollider extends Collider{
     private float radius;
     
-    public CircleCollider(Transform parent, float radius){
-        super(parent);
+    public CircleCollider(HasCollider parent, float radius, ColliderPurpose purpose){
+        super(parent, purpose, Shape.CIRCLE);
         this.radius = radius;
     }
 

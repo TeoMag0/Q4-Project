@@ -10,6 +10,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     public final PlayerMovement movementManager;
     public final PlayerAppearanceManager appearanceManager;
     public final PlayerConnectionManager connectionManager;
+    public final PlayerCollisionManager collisionManager;
     private Vector2 redirectionVector; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force?
 
     public Player(Vector2 position, float speed){
@@ -20,9 +21,9 @@ public class Player extends Startable implements DrawableObject, Transform{
         movementManager = new PlayerMovement(this, speed);
         connectionManager = new PlayerConnectionManager(this);
         appearanceManager = new PlayerAppearanceManager(this);
+        collisionManager = new PlayerCollisionManager(this, size.getX()/2);
     }
     public void start(){
-        new Thread(movementManager).start();
         new Thread(connectionManager).start();
     }
 
@@ -31,8 +32,13 @@ public class Player extends Startable implements DrawableObject, Transform{
     }
 
     public void movePosition(Vector2 deltaPos){
-        //if(not colliding on one side)
+        if(!redirectionVector.equals(Vector2.zero()) && Vector2.dot(deltaPos, redirectionVector) < 0){
+            //redir normal is parallel to the surface
+            Vector2 redirNormal = new Vector2(-redirectionVector.getY(), redirectionVector.getX());
+            deltaPos = Vector2.multiply(redirNormal, Vector2.dot(deltaPos, redirNormal));
+        }
         position.add(deltaPos);
+        redirectionVector = Vector2.zero();
     }
     public Vector2 getPos(){
         return position.clone();
@@ -42,5 +48,8 @@ public class Player extends Startable implements DrawableObject, Transform{
     }
     public void setSize(Vector2 s){
         size = s.clone();
+    }
+    public void setRedirectionVector(Vector2 vector){
+        redirectionVector = vector.clone();
     }
 }
