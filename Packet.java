@@ -4,5 +4,6 @@
  */
 
 public enum Packet{
-    PLAYERPOS    
+    PLAYERPOS,
+    PLAYERSTATUS
 }

@@ -25,13 +25,19 @@ public class ConnectionManager {
 				Object receivedObject = in.readObject();
 				NetworkObject received = (NetworkObject)receivedObject;
 
+				int clientID;
 				switch(received.packet){
 					case PLAYERPOS:
 						//{int clientID, Vector2 pos}
-						int clientID = (int)((Object[])received.data)[0];
+						clientID = (int)((Object[])received.data)[0];
 						Vector2 pos = (Vector2)((Object[])received.data)[1];
 						DummyPlayerManager.Singleton.updatePosition(clientID, pos);
                         break;
+					case PLAYERSTATUS:
+						//receives {int clientID, boolean alive}
+						clientID = (int)((Object[]) received.data)[0];
+						boolean alive = (boolean)((Object[]) received.data)[1];
+						DummyPlayerManager.Singleton.setAlive(clientID, alive);
 				}
 
 				Screen.Singleton.repaint();

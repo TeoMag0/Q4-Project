@@ -13,6 +13,7 @@ public class Server {
 		ServerSocket serverSocket = new ServerSocket(portNumber);
 
         Manager manager = new Manager();
+		Game game = new Game(manager);
 
 		//This loop will run and wait for one connection at a time.
 		int i=0;
@@ -23,7 +24,8 @@ public class Server {
 			Socket clientSocket = serverSocket.accept();
 
 			//Once a connection is made, run the socket in a ServerThread.
-            ServerThread serverThread = new ServerThread(clientSocket, manager, i);
+            ServerThread serverThread = new ServerThread(clientSocket, manager, game, i);
+			game.addClient(i);
             manager.add(serverThread);
 			Thread thread = new Thread(serverThread);
 			thread.start();

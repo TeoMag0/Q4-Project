@@ -11,11 +11,13 @@ public class ServerThread implements Runnable{
     private Manager manager;
     private ObjectOutputStream out;
     private int clientID;
+    private Game game;
 
-	public ServerThread(Socket clientSocket, Manager manager, int clientID){
+	public ServerThread(Socket clientSocket, Manager manager, Game game, int clientID){
 		this.clientSocket = clientSocket;
         this.manager = manager;
         this.clientID = clientID;
+        this.game = game;
 	}
 
     @SuppressWarnings("rawtypes")
@@ -28,13 +30,7 @@ public class ServerThread implements Runnable{
             while(true){
                 Object receivedObject = in.readObject();
                 NetworkObject received = (NetworkObject)receivedObject;
-                switch(received.packet){
-                    case PLAYERPOS:
-                        //receives Vector2 pos
-                        //sends {int clientID, Vector2 pos}
-                        manager.broadcastExcept(new NetworkObject<Object[]>(new Object[]{clientID, received.data}, received.packet), clientID);
-                        break;
-                }
+                game.update(clientID, received);
             }
 		} catch (IOException ex){
 			System.out.println("Error listening for a connection");

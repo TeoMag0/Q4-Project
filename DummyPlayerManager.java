@@ -19,6 +19,10 @@ public class DummyPlayerManager implements DrawableObject{
         }
     }
 
+    public void setAlive(int clientID, boolean alive){
+        dummies.get(clientID).setAlive(alive);
+    }
+
     public void drawMe(Graphics g){
         for(int each : dummies.keySet().toDLList()){
             dummies.get(each).drawMe(g);

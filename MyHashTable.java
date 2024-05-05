@@ -14,7 +14,6 @@ public class MyHashTable<K,V>{
         if(keySet.contains(key)){
             remove(key);
         }
-        keySet.add(key);
         if(val == null){
             return;
         }
@@ -22,6 +21,7 @@ public class MyHashTable<K,V>{
             array[key.hashCode()%array.length] = new DLList<Pair<K,V>>();
         } 
         array[key.hashCode()%array.length].add(new Pair<K, V>(key, val));    
+        keySet.add(key);
         size++;
     }
     public V get(K key){
