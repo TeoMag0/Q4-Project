@@ -52,6 +52,14 @@ public class MyArrayList<E> implements Iterable<E>{
         array[size] = null;
         size--;
     }
+    public void remove(E element){
+        for(int i=0;i<size;i++){
+            if(array[i].equals(element)){
+                remove(i);
+                return;
+            }
+        }
+    }
     public int size(){
         return size;
     }

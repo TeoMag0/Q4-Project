@@ -8,10 +8,12 @@ public class PlayerCollisionManager implements HasCollider, Transform{
     
     private Player player;
     private CircleCollider playerCol;
+    private boolean active;
 
     public PlayerCollisionManager(Player player, float radius){
         playerCol = new CircleCollider(this, radius, ColliderPurpose.PLAYER);
         this.player = player;
+        active = true;
     }
 
     public Vector2 getPos(){
@@ -19,6 +21,9 @@ public class PlayerCollisionManager implements HasCollider, Transform{
     }
 
     public void onCollisionEnter(Collider col){
+        if(!active){
+            return;
+        }
         if(col.purpose() == ColliderPurpose.WALL){
             BoxCollider wallCol = (BoxCollider)col;
             // normal force direction on circle
@@ -35,6 +40,13 @@ public class PlayerCollisionManager implements HasCollider, Transform{
             if(normalForceDir != null){
                 player.setRedirectionVector(normalForceDir.normalized());
             }
+        }else if(col.purpose() == ColliderPurpose.ENEMYPROJECTILE){
+            player.healthManager.hit();
+            col.setPurpose(ColliderPurpose.DUD);
         }
+    }
+    
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

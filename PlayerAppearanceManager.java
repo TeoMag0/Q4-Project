@@ -10,8 +10,10 @@ import javax.imageio.*;
 public class PlayerAppearanceManager implements DrawableObject {
     private Player player;
     private BufferedImage playerSprite;
+    private boolean active;
     
     public PlayerAppearanceManager(Player player){
+        active = true;
 
         try{
             playerSprite = ImageIO.read(new File("BlankSprite.png"));
@@ -25,9 +27,15 @@ public class PlayerAppearanceManager implements DrawableObject {
     }
 
     public void drawMe(Graphics g){
+        if(!active){
+            return;
+        }
         Vector2 playerSize = player.size();
         Vector2 playerPixelSize = new Vector2(Screen.toPixels(playerSize.getX()), Screen.toPixels(playerSize.getY()));
         Vector2 playerPixelDrawpoint = Vector2.multiply(Vector2.difference(Screen.screenPixelDimensions, playerPixelSize), 1f/2);
         g.drawImage(playerSprite, playerPixelDrawpoint.intX(), playerPixelDrawpoint.intY(), playerPixelSize.intX(), playerPixelSize.intY(), null);
+    }
+    public void setActive(boolean active){
+        this.active = active;
     }
 }

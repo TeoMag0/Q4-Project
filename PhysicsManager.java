@@ -3,12 +3,12 @@
  * purpose: refresh colliders
  */
 
-public class ColliderManager extends Startable implements Runnable{
-    public static final ColliderManager Singleton = new ColliderManager();
+public class PhysicsManager extends Startable implements Runnable{
+    public static final PhysicsManager Singleton = new PhysicsManager();
     private MyArrayList<Collider> colliders = new MyArrayList<>();
     public static final int physicsTimeStepMS = 10;
 
-    public ColliderManager(){
+    public PhysicsManager(){
         colliders = Collider.colliderList();
     }
     public void start(){
@@ -19,6 +19,8 @@ public class ColliderManager extends Startable implements Runnable{
         while(true){
 
             Screen.player.movementManager.movePlayer();
+
+            Projectile.updateAll(physicsTimeStepMS);
 
             if(colliders.size() > 1){
                 for(int i=0;i<colliders.size();i++){

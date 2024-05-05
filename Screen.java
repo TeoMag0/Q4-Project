@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Screen extends JPanel {
 
-	private static final int pixelsPerUnit = 100;
+	private static int pixelsPerUnit = 100;
 	public static final Vector2 screenPixelDimensions = new Vector2(1280, 720);
 	public static final Screen Singleton = new Screen();
 	public static final Player player = new Player(Vector2.zero(), 5f);
@@ -19,8 +19,10 @@ public class Screen extends JPanel {
 		this.setLayout(null);
 		this.setFocusable(true);		
 
+		new BossProjectile("SquareBracket.png", new Vector2(-1,1), 1f, Vector2.zero(), true, true);
+
 		//instantiate things that need awakening
-		ColliderManager.Singleton.wakeUp();
+		PhysicsManager.Singleton.wakeUp();
 	}
 
 	public void paintComponent(Graphics g){
@@ -32,6 +34,7 @@ public class Screen extends JPanel {
 		DummyPlayerManager.Singleton.drawMe(g);
 		WallManager.Singleton.drawMe(g);
 		player.drawMe(g);
+		Projectile.drawAll(g);
 	}
     
 	public Dimension getPreferredSize() {
@@ -45,5 +48,8 @@ public class Screen extends JPanel {
 	}
 	public static int toPixels(float num){
 		return (int)(num*pixelsPerUnit);
+	}
+	public static void setPixelsPerUnit(int ppu){
+		pixelsPerUnit = ppu;
 	}
 }

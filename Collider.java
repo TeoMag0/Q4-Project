@@ -20,6 +20,9 @@ public abstract class Collider implements Transform{
     public ColliderPurpose purpose(){
         return purpose;
     }
+    public void setPurpose(ColliderPurpose p){
+        purpose = p;
+    }
 
     public Shape shape(){
         return shape;
@@ -111,5 +114,8 @@ enum Shape{
 }
 enum ColliderPurpose{
     PLAYER,
-    WALL
+    WALL,
+    ENEMYPROJECTILE,
+    PLAYERPROJECTILE,
+    DUD
 }

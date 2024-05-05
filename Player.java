@@ -11,6 +11,8 @@ public class Player extends Startable implements DrawableObject, Transform{
     public final PlayerAppearanceManager appearanceManager;
     public final PlayerConnectionManager connectionManager;
     public final PlayerCollisionManager collisionManager;
+    public final PlayerHealthManager healthManager;
+    public final PlayerUIManager uiManager;
     private Vector2 redirectionVector; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force?
 
     public Player(Vector2 position, float speed){
@@ -22,6 +24,8 @@ public class Player extends Startable implements DrawableObject, Transform{
         connectionManager = new PlayerConnectionManager(this);
         appearanceManager = new PlayerAppearanceManager(this);
         collisionManager = new PlayerCollisionManager(this, size.getX()/2);
+        healthManager = new PlayerHealthManager(this, 6);
+        uiManager = new PlayerUIManager(this);
     }
     public void start(){
         new Thread(connectionManager).start();
@@ -29,6 +33,7 @@ public class Player extends Startable implements DrawableObject, Transform{
 
     public void drawMe(Graphics g){
         appearanceManager.drawMe(g);
+        uiManager.drawMe(g);
     }
 
     public void movePosition(Vector2 deltaPos){
@@ -51,5 +56,20 @@ public class Player extends Startable implements DrawableObject, Transform{
     }
     public void setRedirectionVector(Vector2 vector){
         redirectionVector = vector.clone();
+    }
+    public void die(){
+        appearanceManager.setActive(false);
+        collisionManager.setActive(false);
+        movementManager.setActive(false);
+        position = Vector2.zero();
+        Screen.setPixelsPerUnit(50);
+    }
+    public void ressurect(Vector2 pos){
+        appearanceManager.setActive(true);
+        collisionManager.setActive(true);
+        movementManager.setActive(true);
+        position = pos.clone();
+        Screen.setPixelsPerUnit(100);
+        healthManager.resetHealth();
     }
 }
