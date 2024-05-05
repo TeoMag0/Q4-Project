@@ -63,7 +63,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         movementManager.setActive(false);
         position = Vector2.zero();
         Screen.setPixelsPerUnit(50);
-        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(false, Packet.PLAYERSTATUS));
+        connectionManager.die();
     }
     public void resurrect(Vector2 pos){
         appearanceManager.setActive(true);
@@ -72,6 +72,6 @@ public class Player extends Startable implements DrawableObject, Transform{
         position = pos.clone();
         Screen.setPixelsPerUnit(100);
         healthManager.resetHealth();
-        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(true, Packet.PLAYERSTATUS));
+        connectionManager.resurrect();
     }
 }
