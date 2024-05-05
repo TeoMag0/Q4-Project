@@ -24,7 +24,7 @@ public class Server {
 			Socket clientSocket = serverSocket.accept();
 
 			//Once a connection is made, run the socket in a ServerThread.
-            ServerThread serverThread = new ServerThread(clientSocket, manager, game, i);
+            ServerThread serverThread = new ServerThread(clientSocket, game, i);
 			game.addClient(i);
             manager.add(serverThread);
 			Thread thread = new Thread(serverThread);

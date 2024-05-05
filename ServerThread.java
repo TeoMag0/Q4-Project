@@ -8,14 +8,12 @@ import java.io.*;
 
 public class ServerThread implements Runnable{	
 	private Socket clientSocket;
-    private Manager manager;
     private ObjectOutputStream out;
     private int clientID;
     private Game game;
 
-	public ServerThread(Socket clientSocket, Manager manager, Game game, int clientID){
+	public ServerThread(Socket clientSocket, Game game, int clientID){
 		this.clientSocket = clientSocket;
-        this.manager = manager;
         this.clientID = clientID;
         this.game = game;
 	}

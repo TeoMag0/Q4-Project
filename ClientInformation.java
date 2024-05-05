@@ -4,6 +4,7 @@
  */
 
 public class ClientInformation{
+    private Vector2 position;
     private boolean isAlive;
     private boolean inBossRoom;
 

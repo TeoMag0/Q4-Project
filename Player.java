@@ -13,7 +13,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     public final PlayerCollisionManager collisionManager;
     public final PlayerHealthManager healthManager;
     public final PlayerUIManager uiManager;
-    private Vector2 redirectionVector; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force?
+    private Vector2 redirectionVector; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
