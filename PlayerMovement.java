@@ -10,14 +10,12 @@ public class PlayerMovement extends Startable implements KeyListener{
     private boolean a,w,d,s;
     private float speed;
     private Player player;
-    private final float movementDeltaTime;
     private boolean active;
 
     public PlayerMovement(Player player, float speed){
         active = true;
         this.speed = speed;
         this.player = player;
-        movementDeltaTime = 0.01f;
     }
     public void start(){
         Screen.Singleton.addKeyListener(this);
@@ -62,7 +60,7 @@ public class PlayerMovement extends Startable implements KeyListener{
         }
     }
 
-    public void movePlayer(){
+    public void movePlayer(float deltaTimeMS){
         Vector2 direction = Vector2.zero();
         if (a) {
             direction.add(new Vector2(-1, 0));
@@ -77,7 +75,7 @@ public class PlayerMovement extends Startable implements KeyListener{
             direction.add(new Vector2(0, -1));
         }
         if (!direction.equals(Vector2.zero()) && active) {
-            player.movePosition(Vector2.multiply(direction.normalized(), speed * movementDeltaTime));
+            player.movePosition(Vector2.multiply(direction.normalized(), speed * 1f*deltaTimeMS/1000));
             Screen.Singleton.repaint();
         }
     }

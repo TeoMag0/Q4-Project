@@ -6,7 +6,7 @@
 public class PhysicsManager extends Startable implements Runnable{
     public static final PhysicsManager Singleton = new PhysicsManager();
     private MyArrayList<Collider> colliders = new MyArrayList<>();
-    public static final int physicsTimeStepMS = 10;
+    public static final int physicsTimeStepMS = 7; //144 fps
 
     public PhysicsManager(){
         colliders = Collider.colliderList();
@@ -18,7 +18,7 @@ public class PhysicsManager extends Startable implements Runnable{
     public void run(){
         while(true){
 
-            Screen.player.movementManager.movePlayer();
+            Screen.player.movementManager.movePlayer(physicsTimeStepMS);
 
             Projectile.updateAll(physicsTimeStepMS);
 
