@@ -34,11 +34,24 @@ public class PlayerCollisionManager implements HasCollider, Transform{
             Vector2 boxCol = Collider.findBoxPointInCircle(wallCol, playerCol);
             if (circleCol != null) {
                 normalForceDir = Vector2.difference(getPos(), circleCol);
+                if(Vector2.dot(normalForceDir, Vector2.right()) > 0){
+                    //on the right side
+                    player.moveTransform(Vector2.multiply(Vector2.right(), playerCol.radius()+wallCol.size().getX()/2 - Vector2.dot(Vector2.difference(getPos(),wallCol.getPos()), Vector2.right())));
+                }else if(Vector2.dot(normalForceDir, Vector2.right()) < 0){
+                    //on the left side
+                    player.moveTransform(Vector2.multiply(Vector2.left(), playerCol.radius()+wallCol.size().getX()/2 - Vector2.dot(Vector2.difference(getPos(),wallCol.getPos()), Vector2.left())));
+                }else if(Vector2.dot(normalForceDir, Vector2.up()) > 0){
+                    //on top
+                    player.moveTransform(Vector2.multiply(Vector2.up(), playerCol.radius()+wallCol.size().getY()/2 - Vector2.dot(Vector2.difference(getPos(),wallCol.getPos()), Vector2.up())));
+                }else if(Vector2.dot(normalForceDir, Vector2.up()) < 0){
+                    //on bottom
+                    player.moveTransform(Vector2.multiply(Vector2.down(), playerCol.radius()+wallCol.size().getY()/2 - Vector2.dot(Vector2.difference(getPos(),wallCol.getPos()), Vector2.down())));
+                }
             }else if(boxCol != null){
                 normalForceDir = Vector2.difference(getPos(), boxCol);
             }
             if(normalForceDir != null){
-                player.setRedirectionVector(normalForceDir.normalized());
+                player.addRedirectionVector(normalForceDir.normalized());
             }
         }else if(col.purpose() == ColliderPurpose.ENEMYPROJECTILE){
             player.healthManager.hit();

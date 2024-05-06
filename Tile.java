@@ -5,15 +5,22 @@ public class Tile implements HasCollider, Serializable{
     private TilePic pic;
     private Collider collider;
     private float size;
+    private boolean isWall;
 
     public Tile(Vector2 rc, TilePic pic, boolean isWall, float size){
         this.rc = rc.clone();
         this.pic = pic;
         this.size = size;
+        this.isWall = isWall;
         if(isWall){
             collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.WALL);
         }else{
             collider = null;
+        }
+    }
+    public void setUp(){
+        if(isWall){
+            collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.WALL);
         }
     }
 

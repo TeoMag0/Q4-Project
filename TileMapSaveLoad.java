@@ -8,7 +8,7 @@ public class TileMapSaveLoad{
 
     private static final String saveFile = "virus.exe";
 
-    public static void saveMap(MyArrayList<Pair<Vector2, Tile>> tiles){
+    public static void saveMap(Pair<Vector2, Tile>[] tiles){
         try{
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(saveFile));
             output.writeObject(tiles);
@@ -18,10 +18,10 @@ public class TileMapSaveLoad{
         }
     }
     @SuppressWarnings("unchecked")
-    public static MyArrayList<Pair<Vector2, Tile>> loadMap(){
+    public static Pair<Vector2, Tile>[] loadMap(){
         try {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream(saveFile));
-            MyArrayList<Pair<Vector2, Tile>> list = (MyArrayList<Pair<Vector2, Tile>>)input.readObject();
+            Pair<Vector2, Tile>[] list = (Pair<Vector2, Tile>[])input.readObject();
             input.close();
             return list;
         } catch (IOException e) {

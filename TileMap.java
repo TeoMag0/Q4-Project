@@ -18,10 +18,11 @@ public class TileMap extends Startable implements DrawableObject{
         this.tileSize = tileSize;
     }
     public void start(){
-        MyArrayList<Pair<Vector2, Tile>> mapList = TileMapSaveLoad.loadMap();
+        Pair<Vector2, Tile>[] map = TileMapSaveLoad.loadMap();
 
-        for (int i = 0; i < mapList.size(); i++) {
-            tileMap.put(mapList.get(i).key, mapList.get(i).val);
+        for (int i = 0; i < map.length; i++) {
+            tileMap.put(map[i].key, map[i].val);
+            tileMap.get(map[i].key).setUp();
         }
     }
 
@@ -46,11 +47,23 @@ public class TileMap extends Startable implements DrawableObject{
         Vector2 rc = coordsToRC(coords);
         tileMap.put(rc, new Tile(rc, pic, isWall, tileSize));
     }
+
+    @SuppressWarnings("unchecked")
+    public void saveMap(){
+        Pair<Vector2, Tile>[] array = new Pair[tileMap.keySet().toDLList().size()];
+
+        int i=0;
+        for(Vector2 each : tileMap.keySet().toDLList()){
+            array[i] = new Pair<Vector2, Tile>(each, tileMap.get(each));
+            i++;
+        }
+        TileMapSaveLoad.saveMap(array);
+    }
 }
 
 enum TilePic {
     STONE_BRICK_FLOOR("FloorTile.png"),
-
+    STONE_WALL("wall1.png")
     ;
     private BufferedImage pic;
     private TilePic(String s){

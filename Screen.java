@@ -31,8 +31,8 @@ public class Screen extends JPanel {
 		Vector2 ovalPos = getScreenCoords(new Vector2(1,1));
 		g.drawOval(ovalPos.intX(), ovalPos.intY(), toPixels(1), toPixels(1));
 
+		TileMap.Singleton.drawMe(g);
 		DummyPlayerManager.Singleton.drawMe(g);
-		WallManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);
 	}
@@ -47,7 +47,7 @@ public class Screen extends JPanel {
 		return new Vector2(newX, newY);
 	}
 	public static int toPixels(float num){
-		return (int)(num*pixelsPerUnit);
+		return (int)Math.ceil(num*pixelsPerUnit);
 	}
 	public static void setPixelsPerUnit(int ppu){
 		pixelsPerUnit = ppu;

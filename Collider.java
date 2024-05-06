@@ -1,10 +1,11 @@
+import java.io.Serializable;
 
 /*
  * purpose: Responsible for collision detection
  * to update: add new algorithms if new colliders are made
  */
 
-public abstract class Collider implements Transform{
+public abstract class Collider implements Transform, Serializable{
     private Shape shape;
     private HasCollider parent;
     private ColliderPurpose purpose;
