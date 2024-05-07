@@ -26,7 +26,7 @@ public class Manager{
     }
     
     @SuppressWarnings("rawtypes")
-    public void broadcastExcept(NetworkObject message, int clientID) {
+    public void broadcastExcept(int clientID, NetworkObject message) {
         for (ServerThread each : serverThreads) {
             if(each.clientID() != clientID){
                 each.send(message);
@@ -34,5 +34,14 @@ public class Manager{
         }
     }
 
+    @SuppressWarnings("rawtypes")
+    public void send(int clientID, NetworkObject message){
+        for (ServerThread each : serverThreads) {
+            if(each.clientID() == clientID){
+                each.send(message);
+                return;
+            }
+        }
+    }
     
 }

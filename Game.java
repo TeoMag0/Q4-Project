@@ -15,38 +15,42 @@ public class Game {
     private Manager manager;
     private MyHashTable<Integer, ClientInformation> clients;
     public final int MaxPlayers;
+    private GameState gameState;
     
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
         MaxPlayers = 4;
+        gameState = GameState.WAITING_FOR_PLAYERS;
     }
 
     @SuppressWarnings("rawtypes")
     public void update(int clientID, NetworkObject obj){
         switch(obj.packet){
-            case PLAYERPOS:
+            case PLAYER_POS:
                 // receives Vector2 pos
                 // sends {int clientID, Vector2 pos}
-                manager.broadcastExcept(new NetworkObject<Object[]>(new Object[] { clientID, obj.data }, obj.packet), clientID);
+                manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] { clientID, obj.data }, obj.packet));
                 break;
-            case PLAYERSTATUS:
+            case PLAYER_STATUS:
                 //recieves boolean alive
                 //sends {int clientID, boolean alive}
-                manager.broadcastExcept(new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, obj.packet), clientID);
+                manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, obj.packet));
                 break;
         }
-    }
-    @SuppressWarnings("rawtypes")
-    public void updateGameState(NetworkObject obj){
-
     }
 
     public void addClient(int clientID){
         clients.put(clientID, new ClientInformation());
+        if(gameState == GameState.WAITING_FOR_PLAYERS){
+            manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));
+        }
     }
     public void disconnectClient(int clientID){
         clients.remove(clientID);
+        if (gameState == GameState.WAITING_FOR_PLAYERS) {
+            manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));
+        }
     }
     public int numClients(){
         return clients.keySet().size();

@@ -11,9 +11,11 @@ import javax.imageio.*;
 public class PlayerUIManager implements DrawableObject{
     private BufferedImage[] hearts;
     private Player player;
+    private WaitingForPlayersText waitingText;
 
     public PlayerUIManager(Player player){
         this.player = player;
+        waitingText = new WaitingForPlayersText(false);
 
         hearts = new BufferedImage[3];
         try{
@@ -27,6 +29,7 @@ public class PlayerUIManager implements DrawableObject{
 
     public void drawMe(Graphics g){
         drawHearts(g);
+        waitingText.drawMe(g);
     }
     private void drawHearts(Graphics g){
         Vector2 heartPixelSize = new Vector2(75,75);

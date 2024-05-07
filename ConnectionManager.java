@@ -27,13 +27,13 @@ public class ConnectionManager {
 
 				int clientID;
 				switch(received.packet){
-					case PLAYERPOS:
+					case PLAYER_POS:
 						//{int clientID, Vector2 pos}
 						clientID = (int)((Object[])received.data)[0];
 						Vector2 pos = (Vector2)((Object[])received.data)[1];
 						DummyPlayerManager.Singleton.updatePosition(clientID, pos);
                         break;
-					case PLAYERSTATUS:
+					case PLAYER_STATUS:
 						//receives {int clientID, boolean alive}
 						clientID = (int)((Object[]) received.data)[0];
 						boolean alive = (boolean)((Object[]) received.data)[1];

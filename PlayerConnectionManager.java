@@ -16,7 +16,7 @@ public class PlayerConnectionManager implements Runnable{
     public void run(){
         while(true){
             if(alive){
-                ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(player.getPos(), Packet.PLAYERPOS));//vector2 is 186 bytes, float[] is 177 bytes
+                ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(player.getPos(), Packet.PLAYER_POS));//vector2 is 186 bytes, float[] is 177 bytes
             }
             try{
                 Thread.sleep(sendInterval);
@@ -26,11 +26,11 @@ public class PlayerConnectionManager implements Runnable{
         }
     }
     public void die(){
-        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(false, Packet.PLAYERSTATUS));
+        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(false, Packet.PLAYER_STATUS));
         alive = false;
     }
     public void resurrect(){
-        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(true, Packet.PLAYERSTATUS));
+        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(true, Packet.PLAYER_STATUS));
         alive = true;
     }
 }
