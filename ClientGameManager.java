@@ -22,6 +22,7 @@ public class ClientGameManager {
                 break;
             case GET_IN_ROOM:
                 CellDoors.openCellDoors();
+                Screen.player.uiManager.waitingText().fadeOut();
                 break;
             case PHASE_1:
                 break;
