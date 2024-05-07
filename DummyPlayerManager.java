@@ -28,4 +28,8 @@ public class DummyPlayerManager implements DrawableObject{
             dummies.get(each).drawMe(g);
         }
     }
+
+    public void remove(int clientID){
+        dummies.remove(clientID);
+    }
 }

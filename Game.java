@@ -9,11 +9,13 @@ public class Game {
     private MyHashTable<Integer, ClientInformation> clients;
     public final int MaxPlayers;
     private GameState gameState;
+    private GameSpawnIndexManager playerSpawnIndices;
     
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
         MaxPlayers = 4;
+        playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
     }
 
@@ -38,10 +40,13 @@ public class Game {
     public void addClient(int clientID){
         System.out.println(String.format("Client %s added", clientID));
         clients.put(clientID, new ClientInformation());
+        playerSpawnIndices.addPlayer(clientID);
+        manager.send(clientID, new NetworkObject<Integer>(playerSpawnIndices.spawnIndexOf(clientID), Packet.PLAYER_SPAWN_INDEX));//send spawn index
+        manager.send(clientID, new NetworkObject<GameState>(gameState, Packet.GAME_STATE_CHANGE));//send current state
         if(gameState == GameState.WAITING_FOR_PLAYERS){
-            manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));
+            manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));//update waiting text
             if(numClients() == MaxPlayers){
-                nextStage();
+                nextState();
             }
         }
     }
@@ -49,15 +54,17 @@ public class Game {
         System.out.println(String.format("Client %s disconnected", clientID));
         manager.remove(clientID);
         clients.remove(clientID);
+        manager.broadcast(new NetworkObject<Integer>(clientID, Packet.DISCONNECTED_PLAYER));//tells client to delete dummy
+        playerSpawnIndices.removePlayer(clientID);
         if (gameState == GameState.WAITING_FOR_PLAYERS) {
-            manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));
+            manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));//update waiting text
         }
     }
     public int numClients(){
         return clients.keySet().size();
     }
 
-    public void nextStage(){
+    public void nextState(){
         GameState next;
         switch (gameState) {
             case WAITING_FOR_PLAYERS:
@@ -76,13 +83,6 @@ public class Game {
                 next = GameState.WAITING_FOR_PLAYERS;
                 break;
         }
-        manager.broadcast(new NetworkObject<GameState>(next, Packet.GAME_STATE_CHANGE));
-    }
-    public MyHashSet<Integer> clients(){
-        MyHashSet<Integer> set = new MyHashSet<>(MaxPlayers);
-        for(int id : clients.keySet().toDLList()){
-            set.add(id);
-        }
-        return set;
+        manager.broadcast(new NetworkObject<GameState>(next, Packet.GAME_STATE_CHANGE));//broadcast state change
     }
 }

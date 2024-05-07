@@ -9,6 +9,7 @@ import java.net.*;
 public class ConnectionManager {
     public static final ConnectionManager Singleton = new ConnectionManager();
     private ObjectOutputStream out;
+	private int clientID;
 
     @SuppressWarnings("rawtypes")
     public void connect() throws IOException{
@@ -39,6 +40,10 @@ public class ConnectionManager {
 						boolean alive = (boolean)((Object[]) received.data)[1];
 						DummyPlayerManager.Singleton.setAlive(clientID, alive);
 						break;
+					case DISCONNECTED_PLAYER:
+						//receives int clientID
+						DummyPlayerManager.Singleton.remove((int)received.data);
+						break;
 					case WAITING_PLAYERS:
 						//receives {int waitingplayers, int maxplayers}
 						WaitingForPlayersText waitingText = Screen.player.uiManager.waitingText();
@@ -46,7 +51,13 @@ public class ConnectionManager {
 						waitingText.setMaxPlayers(((int[]) received.data)[1]);
 						break;
 					case GAME_STATE_CHANGE:
+						//receives GameState gameState
 						ClientGameManager.Singleton.changeState((GameState)received.data);
+						break;
+					case PLAYER_SPAWN_INDEX:
+						//receives int spawnIndex
+						PlayerSpawns.setSpawnIndex((int)received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();

@@ -4,7 +4,7 @@
  */
 
 public class ClientGameManager {
-    public static ClientGameManager Singleton;
+    public static final ClientGameManager Singleton = new ClientGameManager();
     private GameState gameState;
 
     public ClientGameManager(){

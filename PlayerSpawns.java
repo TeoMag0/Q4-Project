@@ -15,7 +15,7 @@ public class PlayerSpawns {
     public static void movePlayerToSpawn(){
         Screen.player.setPos(TileMap.Singleton.rcToCoords(spawnPoints[spawnIndex]));
     }
-    public void setSpawnIndex(int index){
+    public static void setSpawnIndex(int index){
         spawnIndex = index;
     }
 }
