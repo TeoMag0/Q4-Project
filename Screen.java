@@ -5,7 +5,7 @@ import java.awt.*;
  * purpose: draw all things that need to be drawn, also wakes up everything and is a hub
  * things to update:
  * notes: 
- * 	UI should directly use pixel to draw, while objects in the world should use getScreenCoords()
+ * 	UI should directly use pixels to draw, while objects in the world should use getScreenCoords()
  */
 
 public class Screen extends JPanel {

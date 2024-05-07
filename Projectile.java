@@ -1,5 +1,9 @@
 import java.awt.*;
 
+/*
+ * abstract class for any kind of projectile
+ */
+
 public abstract class Projectile implements HasCollider, Transform, DrawableObject{
     public static final MyArrayList<Projectile> allProjectiles = new MyArrayList<>();
     private Vector2 pos, velocity;
