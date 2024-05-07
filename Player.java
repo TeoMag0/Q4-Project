@@ -57,6 +57,9 @@ public class Player extends Startable implements DrawableObject, Transform{
     public Vector2 getPos(){
         return position.clone();
     }
+    public void setPos(Vector2 pos){
+        position = pos.clone();
+    }
     public Vector2 size(){
         return size.clone();
     }

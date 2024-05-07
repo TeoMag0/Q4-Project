@@ -17,6 +17,14 @@ public class Manager{
     public void remove(ServerThread serverThread){
         serverThreads.remove(serverThread);
     }
+    public void remove(int clientID){
+        for(ServerThread each : serverThreads){
+            if(each.clientID() == clientID){
+                serverThreads.remove(each);
+                return;
+            }
+        }
+    }
 
     @SuppressWarnings("rawtypes")
     public void broadcast(NetworkObject message){

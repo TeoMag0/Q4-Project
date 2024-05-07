@@ -7,7 +7,6 @@ import java.io.*;
  */
 
 public class Server {
-	private static int i = 0;
 	public static void main(String[] args) throws IOException {
 		int portNumber = 1024;
 		ServerSocket serverSocket = new ServerSocket(portNumber);
@@ -25,13 +24,18 @@ public class Server {
 			// Wait for a connection.
 			Socket clientSocket = serverSocket.accept();
 
-			// Once a connection is made, run the socket in a ServerThread.
-			ServerThread serverThread = new ServerThread(clientSocket, game, i);
-			game.addClient(i);
-			manager.add(serverThread);
-			Thread thread = new Thread(serverThread);
-			thread.start();
-			i++;
+			MyHashSet<Integer> clientSet = game.clients();
+			for(int i=0;i<game.MaxPlayers;i++){
+				if(!clientSet.contains(i)){
+					// Once a connection is made, run the socket in a ServerThread.
+					ServerThread serverThread = new ServerThread(clientSocket, game, i);
+					manager.add(serverThread);
+					Thread thread = new Thread(serverThread);
+					thread.start();
+					game.addClient(i);
+					break;
+				}
+			}
 		}
 	}
 }

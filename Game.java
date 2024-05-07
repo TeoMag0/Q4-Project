@@ -3,13 +3,6 @@
  * purpose: everything to be sent to/between clients goes through this guy it's like an FBI tap, also change game state
  */
 
- enum GameState {
-    WAITING_FOR_PLAYERS,
-    PHASE_1,
-    PHASE_2,
-    GAME_END
-}
-
 public class Game {
 
     private Manager manager;
@@ -37,16 +30,24 @@ public class Game {
                 //sends {int clientID, boolean alive}
                 manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, obj.packet));
                 break;
+            default:
+                break;
         }
     }
 
     public void addClient(int clientID){
+        System.out.println(String.format("Client %s added", clientID));
         clients.put(clientID, new ClientInformation());
         if(gameState == GameState.WAITING_FOR_PLAYERS){
             manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));
+            if(numClients() == MaxPlayers){
+                nextStage();
+            }
         }
     }
     public void disconnectClient(int clientID){
+        System.out.println(String.format("Client %s disconnected", clientID));
+        manager.remove(clientID);
         clients.remove(clientID);
         if (gameState == GameState.WAITING_FOR_PLAYERS) {
             manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));
@@ -54,5 +55,34 @@ public class Game {
     }
     public int numClients(){
         return clients.keySet().size();
+    }
+
+    public void nextStage(){
+        GameState next;
+        switch (gameState) {
+            case WAITING_FOR_PLAYERS:
+                next = GameState.GET_IN_ROOM;
+                break;
+            case GET_IN_ROOM:
+                next = GameState.PHASE_1;
+                break;
+            case PHASE_1:
+                next = GameState.PHASE_2;
+                break;
+            case PHASE_2:
+                next = GameState.GAME_END;
+                break;
+            default:
+                next = GameState.WAITING_FOR_PLAYERS;
+                break;
+        }
+        manager.broadcast(new NetworkObject<GameState>(next, Packet.GAME_STATE_CHANGE));
+    }
+    public MyHashSet<Integer> clients(){
+        MyHashSet<Integer> set = new MyHashSet<>(MaxPlayers);
+        for(int id : clients.keySet().toDLList()){
+            set.add(id);
+        }
+        return set;
     }
 }

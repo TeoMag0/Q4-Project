@@ -38,6 +38,15 @@ public class ConnectionManager {
 						clientID = (int)((Object[]) received.data)[0];
 						boolean alive = (boolean)((Object[]) received.data)[1];
 						DummyPlayerManager.Singleton.setAlive(clientID, alive);
+						break;
+					case WAITING_PLAYERS:
+						//receives {int waitingplayers, int maxplayers}
+						WaitingForPlayersText waitingText = Screen.player.uiManager.waitingText();
+						waitingText.setCurrentPlayerCount(((int[])received.data)[0]);
+						waitingText.setMaxPlayers(((int[]) received.data)[1]);
+						break;
+					case GAME_STATE_CHANGE:
+						ClientGameManager.Singleton.changeState((GameState)received.data);
 				}
 
 				Screen.Singleton.repaint();

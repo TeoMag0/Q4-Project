@@ -34,8 +34,9 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         //tilemap building, temporary
         Vector2 coords = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
         if(e.getButton() == MouseEvent.BUTTON1){
-            TileMap.Singleton.addTile(coords, TilePic.STONE_BRICK_FLOOR, false);
-            TileMap.Singleton.saveMap();
+            //TileMap.Singleton.addTile(coords, TilePic.STONE_BRICK_FLOOR, false);
+            //TileMap.Singleton.saveMap();
+            System.out.println(TileMap.Singleton.coordsToRC(coords));
         }else if(e.getButton() == MouseEvent.BUTTON3) {
             TileMap.Singleton.addTile(coords, TilePic.JAIL_BARS, true);
             TileMap.Singleton.saveMap();

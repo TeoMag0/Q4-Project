@@ -16,13 +16,17 @@ public class ServerThread implements Runnable{
 		this.clientSocket = clientSocket;
         this.clientID = clientID;
         this.game = game;
+
+        try{
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+        }catch(IOException e){
+            System.out.println(e);
+        }
 	}
 
     @SuppressWarnings("rawtypes")
-	public void run(){
-		System.out.println(Thread.currentThread().getName() + ": connection opened.");
+	public void run(){        
 		try{
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
             while(true){
@@ -31,8 +35,7 @@ public class ServerThread implements Runnable{
                 game.update(clientID, received);
             }
 		} catch (IOException ex){
-			System.out.println("Error listening for a connection");
-			System.out.println(ex.getMessage());
+            game.disconnectClient(clientID);
 		}catch(ClassNotFoundException e){
             System.out.println(e);
         }
@@ -45,7 +48,6 @@ public class ServerThread implements Runnable{
         } catch (IOException ex){
             System.out.println("Error sending message");
             System.out.println(ex);
-            game.disconnectClient(clientID);
         }
     }
 

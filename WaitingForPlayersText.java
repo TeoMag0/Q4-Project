@@ -19,6 +19,8 @@ public class WaitingForPlayersText implements DrawableObject{
 
     public void drawMe(Graphics g){
         if (enabled) {
+            g.setFont(new Font(Font.DIALOG, Font.PLAIN, 36));
+            g.setColor(Color.WHITE);
             g.drawString(string, (int)((Screen.screenPixelDimensions.getX()-g.getFontMetrics().stringWidth(string))/2), (int)(Screen.screenPixelDimensions.getY()/3));
         }
     }

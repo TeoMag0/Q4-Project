@@ -53,6 +53,12 @@ public class TileMap extends Startable implements DrawableObject{
         }
         tileMap.put(rc, new Tile(rc, pic, isWall, tileSize));
     }
+    public void addTileRC(Vector2 rc, TilePic pic, boolean isWall){
+        if (tileMap.get(rc) != null) {
+            removeTile(rcToCoords(rc));
+        }
+        tileMap.put(rc, new Tile(rc, pic, isWall, tileSize));
+    }
     public void removeTile(Vector2 coords){
         Vector2 rc = coordsToRC(coords);
         if(tileMap.get(rc) != null){

@@ -15,7 +15,7 @@ public class PlayerUIManager implements DrawableObject{
 
     public PlayerUIManager(Player player){
         this.player = player;
-        waitingText = new WaitingForPlayersText(false);
+        waitingText = new WaitingForPlayersText(true);
 
         hearts = new BufferedImage[3];
         try{
@@ -51,5 +51,8 @@ public class PlayerUIManager implements DrawableObject{
             heartLoc.add(new Vector2(heartSpacing+heartPixelSize.getX(), 0));
             healthToDraw-=2;
         }
+    }
+    public WaitingForPlayersText waitingText(){
+        return waitingText;
     }
 }
