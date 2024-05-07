@@ -1,16 +1,25 @@
 
 /*
- * purpose: everything to be sent to/between clients goes through this guy it's like an FBI tap
+ * purpose: everything to be sent to/between clients goes through this guy it's like an FBI tap, also change game state
  */
+
+ enum GameState {
+    WAITING_FOR_PLAYERS,
+    PHASE_1,
+    PHASE_2,
+    GAME_END
+}
 
 public class Game {
 
     private Manager manager;
     private MyHashTable<Integer, ClientInformation> clients;
+    public final int MaxPlayers;
     
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
+        MaxPlayers = 4;
     }
 
     @SuppressWarnings("rawtypes")
@@ -28,8 +37,18 @@ public class Game {
                 break;
         }
     }
+    @SuppressWarnings("rawtypes")
+    public void updateGameState(NetworkObject obj){
+
+    }
 
     public void addClient(int clientID){
         clients.put(clientID, new ClientInformation());
+    }
+    public void disconnectClient(int clientID){
+        clients.remove(clientID);
+    }
+    public int numClients(){
+        return clients.keySet().size();
     }
 }

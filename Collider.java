@@ -116,7 +116,7 @@ enum Shape{
 enum ColliderPurpose{
     PLAYER,
     WALL,
-    ENEMYPROJECTILE,
-    PLAYERPROJECTILE,
+    ENEMY_PROJECTILE,
+    PLAYER_PROJECTILE,
     DUD
 }

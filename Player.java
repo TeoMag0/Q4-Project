@@ -13,6 +13,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     public final PlayerCollisionManager collisionManager;
     public final PlayerHealthManager healthManager;
     public final PlayerUIManager uiManager;
+    public final PlayerAttackManager attackManager;
     private final DLList<Vector2> redirectionVectors; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force
 
     public Player(Vector2 position, float speed){
@@ -26,6 +27,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         collisionManager = new PlayerCollisionManager(this, size.getX()/2);
         healthManager = new PlayerHealthManager(this, 6);
         uiManager = new PlayerUIManager(this);
+        attackManager = new PlayerAttackManager(this);
     }
     public void start(){
         new Thread(connectionManager).start();

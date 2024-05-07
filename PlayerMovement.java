@@ -35,15 +35,6 @@ public class PlayerMovement extends Startable implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_S){
             s = true;
         }
-
-        //tilemap testing
-        else if(e.getKeyCode() == KeyEvent.VK_0){
-            TileMap.Singleton.addTile(player.getPos(), TilePic.STONE_BRICK_FLOOR, false);
-            TileMap.Singleton.saveMap();
-        }else if(e.getKeyCode() == KeyEvent.VK_9) {
-            TileMap.Singleton.addTile(player.getPos(), TilePic.STONE_WALL, true);
-            TileMap.Singleton.saveMap();
-        }
     }
     public void keyTyped(KeyEvent e){
 

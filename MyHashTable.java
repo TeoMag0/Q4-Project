@@ -39,8 +39,9 @@ public class MyHashTable<K,V>{
     public V remove(K key){
         V toReturn = get(key);
         array[key.hashCode()%array.length].remove(new Pair<K,V>(key, toReturn));
+        keySet.remove(key);
         if(array[key.hashCode()%array.length].size() == 0){
-            keySet.remove(key);
+            array[key.hashCode()%array.length] = null;
         }
         if(toReturn != null){
             size--;

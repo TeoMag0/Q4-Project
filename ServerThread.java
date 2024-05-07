@@ -45,6 +45,7 @@ public class ServerThread implements Runnable{
         } catch (IOException ex){
             System.out.println("Error sending message");
             System.out.println(ex);
+            game.disconnectClient(clientID);
         }
     }
 

@@ -54,7 +54,7 @@ public class PlayerCollisionManager implements HasCollider, Transform{
             if(normalForceDir != null){
                 player.addRedirectionVector(normalForceDir.normalized());
             }
-        }else if(col.purpose() == ColliderPurpose.ENEMYPROJECTILE){
+        }else if(col.purpose() == ColliderPurpose.ENEMY_PROJECTILE){
             player.healthManager.hit();
             col.setPurpose(ColliderPurpose.DUD);
         }

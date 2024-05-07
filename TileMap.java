@@ -31,7 +31,10 @@ public class TileMap extends Startable implements DrawableObject{
             Tile tile = tileMap.get(each);
             
             Vector2 tilePixelCoords = Screen.getScreenCoords(rcToCoords(each));
-            g.drawImage(tile.pic().pic(), tilePixelCoords.intX(), tilePixelCoords.intY(), Screen.toPixels(tileSize), Screen.toPixels(tileSize), null);
+            Vector2 tileBR = Vector2.sum(tilePixelCoords, new Vector2(Screen.toPixels(tileSize), Screen.toPixels(tileSize)));
+            if(tilePixelCoords.getX() <= Screen.screenPixelDimensions.getX() && tilePixelCoords.getY() <= Screen.screenPixelDimensions.getY() && tileBR.getX() >= 0 && tileBR.getY() >= 0){
+                g.drawImage(tile.pic().pic(), tilePixelCoords.intX(), tilePixelCoords.intY(), Screen.toPixels(tileSize), Screen.toPixels(tileSize), null);
+            }
         }
     }
 
@@ -45,7 +48,16 @@ public class TileMap extends Startable implements DrawableObject{
 
     public void addTile(Vector2 coords, TilePic pic, boolean isWall){
         Vector2 rc = coordsToRC(coords);
+        if(tileMap.get(rc) != null){
+            removeTile(coords);
+        }
         tileMap.put(rc, new Tile(rc, pic, isWall, tileSize));
+    }
+    public void removeTile(Vector2 coords){
+        Vector2 rc = coordsToRC(coords);
+        if(tileMap.get(rc) != null){
+            tileMap.remove(rc).deleteCollider();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -63,7 +75,8 @@ public class TileMap extends Startable implements DrawableObject{
 
 enum TilePic {
     STONE_BRICK_FLOOR("FloorTile.png"),
-    STONE_WALL("wall1.png")
+    STONE_WALL("wall1.png"),
+    JAIL_BARS("JailBars.png");
     ;
     private BufferedImage pic;
     private TilePic(String s){

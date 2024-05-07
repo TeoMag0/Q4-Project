@@ -25,7 +25,7 @@ public class BossProjectile extends Projectile implements Runnable{
         regenerationTime = .5f;
 
         //get the x size
-        collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.ENEMYPROJECTILE);
+        collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.ENEMY_PROJECTILE);
 
         try{
             this.pic = ImageIO.read(new File(pic));
@@ -63,6 +63,6 @@ public class BossProjectile extends Projectile implements Runnable{
             System.out.println(e);
         }
 
-        collider.setPurpose(ColliderPurpose.ENEMYPROJECTILE);
+        collider.setPurpose(ColliderPurpose.ENEMY_PROJECTILE);
     }
 }

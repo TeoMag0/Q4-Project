@@ -19,17 +19,14 @@ public class Screen extends JPanel {
 		this.setLayout(null);
 		this.setFocusable(true);		
 
-		new BossProjectile("SquareBracket.png", new Vector2(-1,1), 1f, Vector2.zero(), true, true);
-
 		//instantiate things that need awakening
 		PhysicsManager.Singleton.wakeUp();
 	}
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-
-		Vector2 ovalPos = getScreenCoords(new Vector2(1,1));
-		g.drawOval(ovalPos.intX(), ovalPos.intY(), toPixels(1), toPixels(1));
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, screenPixelDimensions.intX(), screenPixelDimensions.intY());
 
 		TileMap.Singleton.drawMe(g);
 		DummyPlayerManager.Singleton.drawMe(g);
@@ -41,6 +38,11 @@ public class Screen extends JPanel {
         return new Dimension(screenPixelDimensions.intX(),screenPixelDimensions.intY());
 	}
 
+	public static Vector2 getWorldCoords(Vector2 coords){
+		float newX = (coords.getX()-screenPixelDimensions.getX()/2)/pixelsPerUnit+player.getPos().getX();
+		float newY = (screenPixelDimensions.getY()/2-coords.getY())/pixelsPerUnit+player.getPos().getY();
+		return new Vector2(newX, newY);
+	}
 	public static Vector2 getScreenCoords(Vector2 coords){
 		int newX = (int)((coords.getX()-player.getPos().getX())*pixelsPerUnit + screenPixelDimensions.getX()/2);
 		int newY = (int)(screenPixelDimensions.getY()/2 - (coords.getY()-player.getPos().getY())*pixelsPerUnit);

@@ -216,6 +216,13 @@ public class Vector2 implements Serializable{
             return true;
         return false;
     }
+    @Override
+    public int hashCode(){
+        int code = 0;
+        code += x > 0 ? Math.abs(x*100001) : Math.abs(x*1000001);
+        code += y > 0 ? Math.abs(y*1001) : Math.abs(y*10001);
+        return code;
+    }
 
     @Override
     public String toString(){
