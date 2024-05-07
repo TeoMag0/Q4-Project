@@ -46,10 +46,10 @@ public class MyArrayList<E> implements Iterable<E>{
         array[index] = obj;
     }
     public void remove(int index){
-        for(int i=index;i<size;i++){
+        for(int i=index;i<size-1;i++){
             array[i] = array[i+1];
         }
-        array[size] = null;
+        array[size-1] = null;
         size--;
     }
     public void remove(E element){
@@ -86,10 +86,10 @@ public class MyArrayList<E> implements Iterable<E>{
             private int index = -1;
 
             public boolean hasNext(){
-                if(index+1 >= size()){
-                    return false;
+                if(index+1 < size()){
+                    return true;
                 }
-                return true;
+                return false;
             }
 
             public E next(){

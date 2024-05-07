@@ -24,14 +24,13 @@ public class PlayerProjectile extends Projectile{
         try{
             this.pic = ImageIO.read(new File(pic));
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
     public void drawMe(Graphics g){
         Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getY()/2, size.getY()/2)));
-        g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.intX()), Screen.toPixels(size.intY()), null);
-        System.out.println("drawn");
+        g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
     }
 
     public void onCollisionEnter(Collider col){

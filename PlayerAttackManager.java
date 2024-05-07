@@ -11,35 +11,43 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     private boolean active;
     private Vector2 mouseWorldPosition;
     private boolean mouseDown;
+    private boolean canShoot;
     private float firerate;
-    private Thread curFiringThread;
+    private Thread runThread;
 
     public PlayerAttackManager(Player player){
         this.player = player;
         active = true;
         mouseDown = false;
-        firerate = 1;
+        firerate = 5;
+        canShoot = true;
     }
     public void start(){
         Screen.Singleton.addMouseListener(this);
         Screen.Singleton.addMouseMotionListener(this);
+        runThread = new Thread(this);
+        runThread.start();
     }
 
     public void run(){
         try{
-            while(mouseDown){
-                if(active){
+            while(true){
+                if(active && mouseDown && canShoot){
                     launchProjectile();
+                    canShoot(false);
                 }
-                Thread.sleep((int)(1000f/firerate));
+                if(!canShoot){
+                    Thread.sleep((int) (1000f / firerate));
+                    canShoot(true);
+                }
             }
         }catch(InterruptedException e){
 
         }
     }
     public void launchProjectile(){
-        float speed = 0;
-        new PlayerProjectile("Parentheses.png", player.getPos(), 1f, Vector2.multiply(Vector2.difference(mouseWorldPosition, player.getPos()).normalized(), speed));
+        float speed = 3;
+        new PlayerProjectile("Parentheses.png", player.getPos(), .5f, Vector2.multiply(Vector2.difference(mouseWorldPosition, player.getPos()).normalized(), speed));
     }
 
     public void mouseDragged(MouseEvent e){
@@ -52,26 +60,24 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
 
     }
     public void mousePressed(MouseEvent e) {
-        mouseDown = true;
         mouseWorldPosition = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
-        curFiringThread = new Thread(this);
-        curFiringThread.start();
+        mouseDown = true;
     }
     
     public void mouseReleased(MouseEvent e) {
         //tilemap building, temporary
         Vector2 coords = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
-        if(e.getButton() == MouseEvent.BUTTON1){
+        /*if(e.getButton() == MouseEvent.BUTTON1){
             //TileMap.Singleton.addTile(coords, TilePic.STONE_BRICK_FLOOR, false);
             //TileMap.Singleton.saveMap();
             //System.out.println(TileMap.Singleton.coordsToRC(coords));
         }else if(e.getButton() == MouseEvent.BUTTON3) {
-            TileMap.Singleton.addTile(coords, TilePic.JAIL_BARS, true);
+            TileMap.Singleton.addTile(coords, TilePic.STONE_WALL, true);
             TileMap.Singleton.saveMap();
         }else if(e.getButton() == MouseEvent.BUTTON2){
             TileMap.Singleton.removeTile(coords);
             TileMap.Singleton.saveMap();
-        }
+        }*/
         mouseDown = false;
     }
     
@@ -87,5 +93,8 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
 
     public void setActive(boolean active){
         this.active = active;
+    }
+    private synchronized void canShoot(boolean canShoot){
+        this.canShoot = canShoot;
     }
 }
