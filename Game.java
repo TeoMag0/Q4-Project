@@ -14,7 +14,7 @@ public class Game {
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 2;
+        MaxPlayers = 1;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
     }

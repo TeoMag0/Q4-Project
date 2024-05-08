@@ -13,6 +13,8 @@ public class PlayerProjectile extends Projectile{
     private BufferedImage pic;
     private Vector2 size;
     private CircleCollider collider;
+    private float maxDist;
+    private float lifeTime;
     private String[] pictureFiles = new String[] {
         "ParenthesesBL.png",
         "ParenthesesB.png",
@@ -24,12 +26,14 @@ public class PlayerProjectile extends Projectile{
         "ParenthesesL.png",
     };
 
-    public PlayerProjectile(Vector2 position, float size, Vector2 velocity){
+    public PlayerProjectile(Vector2 position, float size, Vector2 velocity, float maxDist){
         super(position, velocity);
         this.size = new Vector2(size, size);
 
         //get the x size
         collider = new CircleCollider(this, size/4, ColliderPurpose.PLAYER_PROJECTILE);
+
+        lifeTime = maxDist/velocity.magnitude();
 
         float angle = (float)Math.atan2(velocity.getY(), velocity.getX());
         float increment = (float)Math.PI/4;
@@ -46,6 +50,14 @@ public class PlayerProjectile extends Projectile{
             }
         }catch(IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public void update(float deltaTime){
+        super.update(deltaTime);
+        lifeTime -= deltaTime;
+        if(lifeTime <= 0){
+            destroySelf();
         }
     }
 
