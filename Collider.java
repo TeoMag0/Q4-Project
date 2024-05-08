@@ -1,11 +1,12 @@
 import java.io.Serializable;
+import java.awt.*;
 
 /*
  * purpose: Responsible for collision detection
  * to update: add new algorithms if new colliders are made
  */
 
-public abstract class Collider implements Transform, Serializable{
+public abstract class Collider implements Transform, Serializable, DrawableObject{
     private Shape shape;
     private HasCollider parent;
     private ColliderPurpose purpose;
@@ -107,6 +108,12 @@ public abstract class Collider implements Transform, Serializable{
             }
         }
         return null;
+    }
+
+    public static void drawAll(Graphics g){
+        for(Collider each : allColliders){
+            each.drawMe(g);
+        }
     }
 }
 enum Shape{

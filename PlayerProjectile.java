@@ -12,17 +12,39 @@ import javax.imageio.*;
 public class PlayerProjectile extends Projectile{
     private BufferedImage pic;
     private Vector2 size;
-    private BoxCollider collider;
+    private CircleCollider collider;
+    private String[] pictureFiles = new String[] {
+        "ParenthesesBL.png",
+        "ParenthesesB.png",
+        "ParenthesesBR.png",
+        "ParenthesesR.png",
+        "ParenthesesTR.png",
+        "ParenthesesT.png",
+        "ParenthesesTL.png",
+        "ParenthesesL.png",
+    };
 
-    public PlayerProjectile(String pic, Vector2 position, float size, Vector2 velocity){
+    public PlayerProjectile(Vector2 position, float size, Vector2 velocity){
         super(position, velocity);
         this.size = new Vector2(size, size);
 
         //get the x size
-        collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.PLAYER_PROJECTILE);
+        collider = new CircleCollider(this, size/2, ColliderPurpose.PLAYER_PROJECTILE);
 
+        float angle = (float)Math.atan2(velocity.getY(), velocity.getX());
+        System.out.println(angle);
+        float increment = (float)Math.PI/4;
+        float start = -(float)Math.PI*7/8;
         try{
-            this.pic = ImageIO.read(new File(pic));
+            pic = null;
+            for(int i=0;i<pictureFiles.length-1;i++){
+                if(angle > start+i*increment && angle < start+(i+1)*increment){
+                    pic = ImageIO.read(new File(pictureFiles[i]));
+                }
+            }
+            if(pic == null){
+                pic = ImageIO.read(new File(pictureFiles[7]));
+            }
         }catch(IOException e){
             e.printStackTrace();
         }

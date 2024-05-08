@@ -48,7 +48,7 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     public void launchProjectile(){
         float speed = 4;
         Vector2 velocity = Vector2.multiply(Vector2.difference(Screen.getWorldCoords(mouseWorldPositionPixels), player.getPos()).normalized(), speed);
-        new PlayerProjectile("Parentheses.png", player.getPos(), .5f, velocity);
+        new PlayerProjectile(player.getPos(), .5f, velocity);
     }
 
     public void mouseDragged(MouseEvent e){
@@ -76,10 +76,11 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         }else if(e.getButton() == MouseEvent.BUTTON3) {
             TileMap.Singleton.addTile(coords, TilePic.STONE_WALL, true);
             TileMap.Singleton.saveMap();
-        }else if(e.getButton() == MouseEvent.BUTTON2){
-            TileMap.Singleton.removeTile(coords);
-            TileMap.Singleton.saveMap();
-        }*/
+        }*/if(e.getButton() == MouseEvent.BUTTON2){
+            //TileMap.Singleton.removeTile(coords);
+            //TileMap.Singleton.saveMap();
+            TileMap.Singleton.saveToTextFile();
+        }
         if (e.getButton() == MouseEvent.BUTTON1) {
             mouseDown = false;
         }

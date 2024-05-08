@@ -32,6 +32,7 @@ public class Screen extends JPanel {
 		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);
+		Collider.drawAll(g);
 	}
     
 	public Dimension getPreferredSize() {

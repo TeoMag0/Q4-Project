@@ -1,3 +1,4 @@
+import java.awt.*;
 
 /*
  * purpose: provide collision detection in the shape of a circle
@@ -13,5 +14,11 @@ public class CircleCollider extends Collider{
 
     public float radius(){
         return radius;
+    }
+
+    public void drawMe(Graphics g){
+        g.setColor(Color.GREEN);
+        Vector2 drawPos = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-radius, radius)));
+        g.drawOval(drawPos.intX(), drawPos.intY(), Screen.toPixels(radius*2), Screen.toPixels(radius*2));
     }
 }

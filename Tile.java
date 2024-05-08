@@ -33,6 +33,9 @@ public class Tile implements HasCollider, Serializable{
     public TilePic pic(){
         return pic;
     }
+    public boolean isWall(){
+        return isWall;
+    }
 
     public void deleteCollider(){
         Collider.colliderList().remove(collider);

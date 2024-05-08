@@ -18,7 +18,7 @@ public class TileMap extends Startable implements DrawableObject{
         this.tileSize = tileSize;
     }
     public void start(){
-        Pair<Vector2, Tile>[] map = TileMapSaveLoad.loadMap();
+        Pair<Vector2, Tile>[] map = TileMapSaveLoad.loadMapFromText();
 
         for (int i = 0; i < map.length; i++) {
             tileMap.put(map[i].key, map[i].val);
@@ -65,6 +65,9 @@ public class TileMap extends Startable implements DrawableObject{
             tileMap.remove(rc).deleteCollider();
         }
     }
+    public float tileSize(){
+        return tileSize;
+    }
 
     @SuppressWarnings("unchecked")
     public void saveMap(){
@@ -76,6 +79,18 @@ public class TileMap extends Startable implements DrawableObject{
             i++;
         }
         TileMapSaveLoad.saveMap(array);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void saveToTextFile(){
+        Pair<Vector2, Tile>[] array = new Pair[tileMap.keySet().toDLList().size()];
+
+        int i = 0;
+        for (Vector2 each : tileMap.keySet().toDLList()) {
+            array[i] = new Pair<Vector2, Tile>(each, tileMap.get(each));
+            i++;
+        }
+        TileMapSaveLoad.saveMapToText(array);
     }
 }
 

@@ -1,3 +1,4 @@
+import java.awt.*;
 
 /*
  * purpose: provide collision detection in the shape of a rectangle
@@ -28,5 +29,11 @@ public class BoxCollider extends Collider{
     }
     public Vector2[] corners(){
         return new Vector2[] {cornerTL(), cornerTR(), cornerBR(), cornerBL()};
+    }
+
+    public void drawMe(Graphics g){
+        g.setColor(Color.GREEN);
+        Vector2 drawPos = Screen.getScreenCoords(cornerTL());
+        g.drawRect(drawPos.intX(), drawPos.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()));
     }
 }
