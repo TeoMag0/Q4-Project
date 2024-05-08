@@ -22,7 +22,6 @@ public class TileMap extends Startable implements DrawableObject{
 
         for (int i = 0; i < map.length; i++) {
             tileMap.put(map[i].key, map[i].val);
-            tileMap.get(map[i].key).setUp();
         }
     }
 

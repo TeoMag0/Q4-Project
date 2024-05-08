@@ -17,10 +17,10 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
 
     public PlayerAttackManager(Player player){
         this.player = player;
-        active = true;
+        setActive(true);
         mouseDown = false;
         firerate = 5;
-        canShoot = true;
+        canShoot(true);
     }
     public void start(){
         Screen.Singleton.addMouseListener(this);
@@ -40,9 +40,10 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
                     Thread.sleep((int) (1000f / firerate));
                     canShoot(true);
                 }
+                Thread.sleep(10);
             }
         }catch(InterruptedException e){
-
+            e.printStackTrace();
         }
     }
     public void launchProjectile(){
@@ -79,7 +80,6 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         }*/if(e.getButton() == MouseEvent.BUTTON2){
             //TileMap.Singleton.removeTile(coords);
             //TileMap.Singleton.saveMap();
-            TileMap.Singleton.saveToTextFile();
         }
         if (e.getButton() == MouseEvent.BUTTON1) {
             mouseDown = false;
@@ -96,7 +96,7 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
 
     }
 
-    public void setActive(boolean active){
+    public synchronized void setActive(boolean active){
         this.active = active;
     }
     private synchronized void canShoot(boolean canShoot){

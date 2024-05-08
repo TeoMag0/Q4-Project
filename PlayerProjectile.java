@@ -29,10 +29,9 @@ public class PlayerProjectile extends Projectile{
         this.size = new Vector2(size, size);
 
         //get the x size
-        collider = new CircleCollider(this, size/2, ColliderPurpose.PLAYER_PROJECTILE);
+        collider = new CircleCollider(this, size/4, ColliderPurpose.PLAYER_PROJECTILE);
 
         float angle = (float)Math.atan2(velocity.getY(), velocity.getX());
-        System.out.println(angle);
         float increment = (float)Math.PI/4;
         float start = -(float)Math.PI*7/8;
         try{

@@ -18,11 +18,6 @@ public class Tile implements HasCollider, Serializable{
             collider = null;
         }
     }
-    public void setUp(){
-        if(isWall){
-            collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.WALL);
-        }
-    }
 
     public Vector2 getPos(){
         return Vector2.sum(TileMap.Singleton.rcToCoords(rc), new Vector2(size/2, -size/2));

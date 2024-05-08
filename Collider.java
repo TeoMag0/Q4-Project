@@ -37,6 +37,13 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
     }
 
     public static void checkCollision(Collider col1, Collider col2){
+        if(col1 == null || col2 == null){
+            return;
+        }
+        if(col1.purpose == ColliderPurpose.WALL && col2.purpose == ColliderPurpose.WALL){
+            return;
+        }
+        
         if(col1.shape() == Shape.CIRCLE && col2.shape == Shape.CIRCLE){
             CircleCollider cir1 = (CircleCollider)col1;
             CircleCollider cir2 = (CircleCollider)col2;
