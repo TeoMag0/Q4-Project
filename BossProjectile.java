@@ -12,7 +12,7 @@ import javax.imageio.*;
 public class BossProjectile extends Projectile implements Runnable{
     private BufferedImage pic;
     private Vector2 size;
-    private BoxCollider collider;
+    private Collider collider;
     private boolean penetrates, regenerates;
     private float regenerationTime;
 

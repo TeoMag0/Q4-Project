@@ -9,6 +9,9 @@ public class BoxCollider extends Collider{
 
     public BoxCollider(HasCollider parent, Vector2 size, ColliderPurpose purpose){
         super(parent, purpose, Shape.BOX);
+        if(size == null){
+            System.out.println("SIZE IS NULL!!!");
+        }
         this.size = size.clone();
     }
 
@@ -25,6 +28,9 @@ public class BoxCollider extends Collider{
         return Vector2.sum(parent().getPos(), Vector2.multiply(new Vector2(size.getY(), -size.getX()), 1f / 2));
     }
     public Vector2 cornerBL(){
+        if(size == null){
+            System.out.println(this);
+        }
         return Vector2.difference(parent().getPos(), Vector2.multiply(size, 1f / 2));
     }
     public Vector2[] corners(){

@@ -29,6 +29,7 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
             Projectile p = projectilesToDelete.get(0);
             allProjectiles.remove(p);
             Collider.colliderList().remove(p.collider());
+            projectilesToDelete.remove(p);
         }
 
         for(Projectile each : allProjectiles){

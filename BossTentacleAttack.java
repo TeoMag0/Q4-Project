@@ -7,11 +7,19 @@ public class BossTentacleAttack extends Startable implements Runnable{
     private Boss boss;
 
     private float firerate;
+    private int numTentacles;
+    private float mainAngle;
+    private float rotSpeed;
+    private float projectileSpeed;
     private static final String tentPic = "Asterisk1.png";
 
     public BossTentacleAttack(Boss boss){
         this.boss = boss;
         firerate = 2;
+        numTentacles = 3;
+        mainAngle = 0;
+        rotSpeed = .1f;
+        projectileSpeed = 1;
     }
     public void start(){
         new Thread(this).start();
@@ -21,8 +29,13 @@ public class BossTentacleAttack extends Startable implements Runnable{
         try{
             while(true){
                 if(active){
-                    Vector2 velocity = new Vector2(0, -1);
-                    new BossProjectile(tentPic, boss.getPos(), .3f, velocity, true, true);
+                    float tentAngleInc = (float)(2*Math.PI/numTentacles);
+                    for(int i=0;i<numTentacles;i++){
+                        float angle = mainAngle+i*tentAngleInc;
+                        Vector2 velocity = new Vector2(projectileSpeed, angle, true);
+                        new BossProjectile(tentPic, boss.getPos(), .3f, velocity, true, true);
+                    }
+                    mainAngle += rotSpeed;
                     Thread.sleep((int)(1000/firerate));
                 }
                 Thread.sleep(10);
