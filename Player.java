@@ -74,7 +74,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         collisionManager.setActive(false);
         movementManager.setActive(false);
         position = Vector2.zero();
-        Screen.setPixelsPerUnit(50);
+        Screen.setPixelsPerUnit(75);
         connectionManager.die();
     }
     public void resurrect(Vector2 pos){

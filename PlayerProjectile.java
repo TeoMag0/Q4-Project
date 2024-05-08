@@ -62,17 +62,16 @@ public class PlayerProjectile extends Projectile{
     }
 
     public void drawMe(Graphics g){
-        Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getY()/2, size.getY()/2)));
+        Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));
         g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
+    }
+    public Collider collider(){
+        return collider;
     }
 
     public void onCollisionEnter(Collider col){
         if(col.purpose() == ColliderPurpose.WALL){
             destroySelf();
         }
-    }
-    public void destroySelf(){
-        allProjectiles.remove(this);
-        Collider.colliderList().remove(collider);
     }
 }

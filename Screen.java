@@ -14,6 +14,7 @@ public class Screen extends JPanel {
 	public static final Vector2 screenPixelDimensions = new Vector2(1280, 720);
 	public static final Screen Singleton = new Screen();
 	public static final Player player = new Player(Vector2.zero(), 5f);
+	public static final Boss boss = new Boss(new Vector2(0, 2.5f));
 
 	public Screen() {
 		this.setLayout(null);

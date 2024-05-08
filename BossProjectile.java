@@ -30,24 +30,23 @@ public class BossProjectile extends Projectile implements Runnable{
         try{
             this.pic = ImageIO.read(new File(pic));
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
     public void drawMe(Graphics g){
-        Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getY()/2, size.getY()/2)));
-        g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.intX()), Screen.toPixels(size.intY()), null);
+        Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));
+        g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
     }
 
     public void onCollisionEnter(Collider col){
         if(col.purpose() == ColliderPurpose.WALL){
-            allProjectiles.remove(this);
+            destroySelf();
         }else if(col.purpose() == ColliderPurpose.PLAYER){
             // automatically gets set to dud by the player
             if(collider.purpose() != ColliderPurpose.DUD){
                 if (!penetrates) {
-                    Collider.colliderList().remove(collider);
-                    Projectile.allProjectiles.remove(this);
+                    destroySelf();
                 } else if (regenerates) {
                     new Thread(this).start();
                 }
@@ -64,5 +63,8 @@ public class BossProjectile extends Projectile implements Runnable{
         }
 
         collider.setPurpose(ColliderPurpose.ENEMY_PROJECTILE);
+    }
+    public Collider collider(){
+        return collider;
     }
 }
