@@ -16,7 +16,7 @@ public class CellDoors implements Runnable{
     }
     public void run(){
         try{
-            Thread.sleep(4);
+            Thread.sleep(4000);
             for(Vector2[] door : cellDoors){
                 for(Vector2 tile : door){
                     TileMap.Singleton.addTileRC(tile, TilePic.STONE_BRICK_FLOOR, false);

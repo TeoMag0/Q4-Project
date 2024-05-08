@@ -9,7 +9,7 @@ import javax.swing.event.*;
 public class PlayerAttackManager extends Startable implements MouseInputListener, Runnable{
     private Player player;
     private boolean active;
-    private Vector2 mouseWorldPosition;
+    private Vector2 mouseWorldPositionPixels;
     private boolean mouseDown;
     private boolean canShoot;
     private float firerate;
@@ -46,22 +46,24 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         }
     }
     public void launchProjectile(){
-        float speed = 3;
-        new PlayerProjectile("Parentheses.png", player.getPos(), .5f, Vector2.multiply(Vector2.difference(mouseWorldPosition, player.getPos()).normalized(), speed));
+        float speed = 4;
+        Vector2 velocity = Vector2.multiply(Vector2.difference(Screen.getWorldCoords(mouseWorldPositionPixels), player.getPos()).normalized(), speed);
+        new PlayerProjectile("Parentheses.png", player.getPos(), .5f, velocity);
     }
 
     public void mouseDragged(MouseEvent e){
-        mouseWorldPosition = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
+        mouseWorldPositionPixels = new Vector2(e.getX(), e.getY());
     }
     public void mouseMoved(MouseEvent e){
-        
+        mouseWorldPositionPixels = new Vector2(e.getX(), e.getY());
     }
     public void mouseClicked(MouseEvent e){
 
     }
     public void mousePressed(MouseEvent e) {
-        mouseWorldPosition = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
-        mouseDown = true;
+        if(e.getButton() == MouseEvent.BUTTON1){
+            mouseDown = true;
+        }
     }
     
     public void mouseReleased(MouseEvent e) {
@@ -78,7 +80,9 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
             TileMap.Singleton.removeTile(coords);
             TileMap.Singleton.saveMap();
         }*/
-        mouseDown = false;
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            mouseDown = false;
+        }
     }
     
 
