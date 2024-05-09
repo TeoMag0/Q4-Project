@@ -13,15 +13,15 @@ public class BossDeathLinesAttack implements Runnable{
 
     private final Vector2[] projectileSpawnPointsRC = new Vector2[]{
         new Vector2(-2, 7),
-            new Vector2(1, 7),
-            new Vector2(4, 7),
-            new Vector2(-5, 7),
-            new Vector2(-8, 6),
-            new Vector2(7, 6),
-            new Vector2(10, 4),
-            new Vector2(13, 1),
-            new Vector2(-11, 4),
-            new Vector2(-14, 1),
+        new Vector2(1, 7),
+        new Vector2(4, 7),
+        new Vector2(-5, 7),
+        new Vector2(-8, 6),
+        new Vector2(7, 6),
+        new Vector2(10, 4),
+        new Vector2(13, 1),
+        new Vector2(-11, 4),
+        new Vector2(-14, 1),
     };
 
     public BossDeathLinesAttack(Boss boss){
