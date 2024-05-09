@@ -17,7 +17,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
         attackManager = new BossAttackManager(this);
     }
     public void start(){
-        attackManager.activateTentacles();
+        attackManager.activateDeathLines();
     }
 
     public void drawMe(Graphics g){

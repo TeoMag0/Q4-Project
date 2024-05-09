@@ -1,9 +1,9 @@
 import java.awt.*;
 import java.awt.image.*;
 
-public class BossTentacleAttack extends Startable implements Runnable{
+public class BossTentacleAttack implements Runnable{
     
-    private boolean active = false;
+    private Thread activeThread;
     private Boss boss;
 
     private float firerate;
@@ -11,6 +11,8 @@ public class BossTentacleAttack extends Startable implements Runnable{
     private float mainAngle;
     private float rotSpeed;
     private float projectileSpeed;
+    private float angularDispBeforeSwitch;
+    private boolean dirCCW;
     private static final String tentPic = "Asterisk1.png";
 
     public BossTentacleAttack(Boss boss){
@@ -20,25 +22,24 @@ public class BossTentacleAttack extends Startable implements Runnable{
         mainAngle = 0;
         rotSpeed = .2f;
         projectileSpeed = 3;
-    }
-    public void start(){
-        new Thread(this).start();
+        angularDispBeforeSwitch = (float)(Math.PI/2);
+        dirCCW = true;
     }
 
     public void run(){
         try{
-            while(true){
-                if(active){
-                    float tentAngleInc = (float)(2*Math.PI/numTentacles);
-                    for(int i=0;i<numTentacles;i++){
-                        float angle = mainAngle+i*tentAngleInc;
-                        Vector2 velocity = new Vector2(projectileSpeed, angle, true);
-                        new BossProjectile(tentPic, boss.getPos(), .3f, velocity, true, true);
-                    }
-                    mainAngle += rotSpeed;
-                    Thread.sleep((int)(1000/firerate));
+            while(activeThread != null){
+                float tentAngleInc = (float)(2*Math.PI/numTentacles);
+                for(int i=0;i<numTentacles;i++){
+                    float angle = mainAngle+i*tentAngleInc;
+                    Vector2 velocity = new Vector2(projectileSpeed, angle, true);
+                    new BossProjectile(tentPic, boss.getPos(), .3f, velocity, true, true);
                 }
-                Thread.sleep(10);
+                mainAngle += dirCCW ? rotSpeed : -rotSpeed;
+                if(mainAngle >= angularDispBeforeSwitch || mainAngle < 0){
+                    dirCCW = !dirCCW;
+                }
+                Thread.sleep((int)(1000/firerate));
             }
         }catch(InterruptedException e){
             e.printStackTrace();
@@ -46,6 +47,11 @@ public class BossTentacleAttack extends Startable implements Runnable{
     }
 
     public void setActive(boolean active){
-        this.active = active;
+        if (active && activeThread == null) {
+            activeThread = new Thread(this);
+            activeThread.start();
+        } else if (!active && activeThread != null) {
+            activeThread = null;
+        }
     }
 }

@@ -119,7 +119,9 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
 
     public static void drawAll(Graphics g){
         for(Collider each : allColliders){
-            each.drawMe(g);
+            if(each != null){
+                each.drawMe(g);
+            }
         }
     }
 }
