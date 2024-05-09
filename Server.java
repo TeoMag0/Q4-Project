@@ -8,18 +8,21 @@ import java.io.*;
 
 public class Server {
 	private static int i = 0;
+	private static ServerSocket serverSocket;
+	private static Game game;
+	private static Manager manager;
 	public static void main(String[] args) throws IOException {
 		int portNumber = 1024;
-		ServerSocket serverSocket = new ServerSocket(portNumber);
+		serverSocket = new ServerSocket(portNumber);
 
-        Manager manager = new Manager();
-		Game game = new Game(manager);
+        manager = new Manager();
+		game = new Game(manager);
 
 		System.out.println("Waiting for a connection");
-		waitForPlayers(game, manager, serverSocket);
+		waitForPlayers();
 		
 	}
-	private static void waitForPlayers(Game game, Manager manager, ServerSocket serverSocket) throws IOException{
+	private static void waitForPlayers() throws IOException{
 		while (game.numClients() < game.MaxPlayers) {
 
 			// Wait for a connection.

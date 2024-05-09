@@ -8,4 +8,17 @@ public class ClientInformation{
     private boolean isAlive;
     private boolean inBossRoom;
 
+    public void setPos(Vector2 pos){
+        position = pos.clone();
+    }
+    public Vector2 getPos(){
+        return position.clone();
+    }
+    public void inBossRoom(boolean in){
+        inBossRoom = in;
+    }
+    public boolean inBossRoom(){
+        return inBossRoom;
+    }
+
 }

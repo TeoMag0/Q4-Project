@@ -16,10 +16,10 @@ public class BossTentacleAttack extends Startable implements Runnable{
     public BossTentacleAttack(Boss boss){
         this.boss = boss;
         firerate = 2;
-        numTentacles = 3;
+        numTentacles = 6;
         mainAngle = 0;
-        rotSpeed = .1f;
-        projectileSpeed = 1;
+        rotSpeed = .2f;
+        projectileSpeed = 3;
     }
     public void start(){
         new Thread(this).start();

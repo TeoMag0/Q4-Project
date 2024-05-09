@@ -15,11 +15,15 @@ public class Player extends Startable implements DrawableObject, Transform{
     public final PlayerUIManager uiManager;
     public final PlayerAttackManager attackManager;
     private final DLList<Vector2> redirectionVectors; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force
+    private final float inBossRoomYThresholdRC;
+    private boolean isInBossRoom;
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
         size = new Vector2(.3f, 0);
         redirectionVectors = new DLList<>();
+        inBossRoomYThresholdRC = -3;
+        isInBossRoom = false;
 
         movementManager = new PlayerMovement(this, speed);
         connectionManager = new PlayerConnectionManager(this);
@@ -48,8 +52,11 @@ public class Player extends Startable implements DrawableObject, Transform{
                 }
             }
         }
+
         position.add(deltaPos);
         redirectionVectors.clear();
+
+        updateIsInBossRoom();
     }
     public void moveTransform(Vector2 deltaPos){
         position.add(deltaPos);
@@ -76,6 +83,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         position = Vector2.zero();
         Screen.setPixelsPerUnit(75);
         connectionManager.die();
+        attackManager.setActive(false);
     }
     public void resurrect(Vector2 pos){
         appearanceManager.setActive(true);
@@ -85,5 +93,19 @@ public class Player extends Startable implements DrawableObject, Transform{
         Screen.setPixelsPerUnit(100);
         healthManager.resetHealth();
         connectionManager.resurrect();
+        attackManager.setActive(true);
+    }
+
+    private void updateIsInBossRoom(){
+        if (ClientGameManager.Singleton.gameState() == GameState.GET_IN_ROOM) {
+            float yThreshold = TileMap.Singleton.rcToCoords(new Vector2(0, inBossRoomYThresholdRC)).getY();
+            if (position.getY() >= yThreshold && !isInBossRoom) {
+                connectionManager.isInBossRoom(true);
+                isInBossRoom = true;
+            } else if (position.getY() < yThreshold && isInBossRoom) {
+                connectionManager.isInBossRoom(false);
+                isInBossRoom = false;
+            }
+        }
     }
 }

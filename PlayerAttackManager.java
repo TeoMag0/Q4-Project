@@ -70,14 +70,14 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     public void mouseReleased(MouseEvent e) {
         //tilemap building, temporary
         Vector2 coords = Screen.getWorldCoords(new Vector2(e.getX(), e.getY()));
-        /*if(e.getButton() == MouseEvent.BUTTON1){
+        if(e.getButton() == MouseEvent.BUTTON1){
             //TileMap.Singleton.addTile(coords, TilePic.STONE_BRICK_FLOOR, false);
             //TileMap.Singleton.saveMap();
-            //System.out.println(TileMap.Singleton.coordsToRC(coords));
+            System.out.println(TileMap.Singleton.coordsToRC(coords));
         }else if(e.getButton() == MouseEvent.BUTTON3) {
-            TileMap.Singleton.addTile(coords, TilePic.STONE_WALL, true);
-            TileMap.Singleton.saveMap();
-        }*/if(e.getButton() == MouseEvent.BUTTON2){
+            //TileMap.Singleton.addTile(coords, TilePic.STONE_WALL, true);
+            //TileMap.Singleton.saveMap();
+        }else if(e.getButton() == MouseEvent.BUTTON2){
             //TileMap.Singleton.removeTile(coords);
             //TileMap.Singleton.saveMap();
         }

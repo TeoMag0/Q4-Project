@@ -69,7 +69,7 @@ public class ConnectionManager {
 			e.printStackTrace();
 			System.exit(1);
 		}catch (ClassNotFoundException e){
-			System.out.println(e);
+			e.printStackTrace();
 		}
         serverSocket.close();
 	}
@@ -79,7 +79,7 @@ public class ConnectionManager {
         try{
             out.writeObject(obj);
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }

@@ -25,6 +25,7 @@ public class ClientGameManager {
                 Screen.player.uiManager.waitingText().fadeOut();
                 break;
             case PHASE_1:
+                Entry.closeEntry();
                 break;
             case PHASE_2:
                 break;

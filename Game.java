@@ -26,12 +26,19 @@ public class Game {
                 // receives Vector2 pos
                 // sends {int clientID, Vector2 pos}
                 manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] { clientID, obj.data }, obj.packet));
+                clients.get(clientID).setPos((Vector2)obj.data);
                 break;
             case PLAYER_STATUS:
                 //recieves boolean alive
                 //sends {int clientID, boolean alive}
                 manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, obj.packet));
                 break;
+            case IS_IN_BOSS_ROOM:
+                //receive boolean inBossRoom
+                if(gameState == GameState.GET_IN_ROOM){
+                    clients.get(clientID).inBossRoom((boolean) obj.data);
+                }
+                checkIfClientsInBossRoom();
             default:
                 break;
         }
@@ -83,6 +90,19 @@ public class Game {
                 next = GameState.WAITING_FOR_PLAYERS;
                 break;
         }
+        gameState = next;
         manager.broadcast(new NetworkObject<GameState>(next, Packet.GAME_STATE_CHANGE));//broadcast state change
+    }
+    public void checkIfClientsInBossRoom(){
+        boolean allIn = true;
+        for(int each : clients.keySet().toDLList()){
+            if(!clients.get(each).inBossRoom()){
+                allIn = false;
+                System.out.println(each);
+            }
+        }
+        if(allIn){
+            nextState();
+        }
     }
 }

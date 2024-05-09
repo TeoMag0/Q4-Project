@@ -33,4 +33,7 @@ public class PlayerConnectionManager implements Runnable{
         ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(true, Packet.PLAYER_STATUS));
         alive = true;
     }
+    public void isInBossRoom(boolean is){
+        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(is, Packet.IS_IN_BOSS_ROOM));
+    }
 }
