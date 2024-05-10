@@ -11,11 +11,13 @@ public class Game {
     private GameState gameState;
     private GameSpawnIndexManager playerSpawnIndices;
     private GameBossAttackTiming bossTiming;
+    private int bossHealth;
+    private int bossMaxHealth;
     
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 2;
+        MaxPlayers = 1;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager);
@@ -41,6 +43,15 @@ public class Game {
                     clients.get(clientID).inBossRoom((boolean) obj.data);
                 }
                 checkIfClientsInBossRoom();
+                break;
+            case DAMAGE_TO_BOSS:
+                //receive int damage
+                bossHealth -= (int)obj.data;
+                manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
+                if((int)bossHealth <= 0){
+                    nextState();
+                }
+                break;
             default:
                 break;
         }
@@ -82,6 +93,7 @@ public class Game {
             case GET_IN_ROOM:
                 next = GameState.PHASE_1;
                 bossTiming.setActive(true);
+                sendBossMaxHealth();
                 break;
             case PHASE_1:
                 next = GameState.PHASE_2;
@@ -106,5 +118,11 @@ public class Game {
         if(allIn){
             nextState();
         }
+    }
+    public void sendBossMaxHealth(){
+        bossMaxHealth = 100*clients.keySet().toDLList().size();
+        bossHealth = bossMaxHealth;
+        manager.broadcast(new NetworkObject<Integer>(bossMaxHealth, Packet.BOSS_MAX_HEALTH));
+        manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
     }
 }

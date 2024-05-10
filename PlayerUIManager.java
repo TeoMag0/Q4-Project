@@ -30,6 +30,7 @@ public class PlayerUIManager implements DrawableObject{
     public void drawMe(Graphics g){
         drawHearts(g);
         waitingText.drawMe(g);
+        Screen.boss.healthManager.drawHealth(g);
     }
     private void drawHearts(Graphics g){
         Vector2 heartPixelSize = new Vector2(75,75);

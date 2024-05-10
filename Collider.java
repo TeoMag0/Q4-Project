@@ -134,5 +134,6 @@ enum ColliderPurpose{
     WALL,
     ENEMY_PROJECTILE,
     PLAYER_PROJECTILE,
-    DUD
+    DUD,
+    BOSS,
 }

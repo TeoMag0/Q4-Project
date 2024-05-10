@@ -64,6 +64,12 @@ public class ConnectionManager {
 					case BOSS_ATTACK_END:
 						Screen.boss.attackManager.stopAttack((BossAttacks) received.data);
 						break;
+					case BOSS_HEALTH:
+						Screen.boss.healthManager.setHealth((int)received.data);
+						break;
+					case BOSS_MAX_HEALTH:
+						Screen.boss.healthManager.setMaxHealth((int)received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();

@@ -13,4 +13,7 @@ public enum Packet{
     IS_IN_BOSS_ROOM,
     BOSS_ATTACK_START,
     BOSS_ATTACK_END,
+    DAMAGE_TO_BOSS,
+    BOSS_HEALTH,
+    BOSS_MAX_HEALTH,
 }

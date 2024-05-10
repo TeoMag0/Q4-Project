@@ -9,12 +9,14 @@ public class Boss extends Startable implements DrawableObject, Transform{
     private float size;
     private Vector2 position;
     public final BossAttackManager attackManager;
+    public final BossHealthManager healthManager;
 
     public Boss(Vector2 position){
         this.position = position;
         size = 2;
 
         attackManager = new BossAttackManager(this);
+        healthManager = new BossHealthManager(this);
     }
     public void start(){
 
@@ -25,5 +27,9 @@ public class Boss extends Startable implements DrawableObject, Transform{
     }
     public Vector2 getPos(){
         return position.clone();
+    }
+
+    public Vector2 size(){
+        return new Vector2(size, size);
     }
 }

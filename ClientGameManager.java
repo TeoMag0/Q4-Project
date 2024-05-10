@@ -26,6 +26,7 @@ public class ClientGameManager {
                 break;
             case PHASE_1:
                 Entry.closeEntry();
+                Screen.boss.healthManager.drawHealth.setActive(true);
                 break;
             case PHASE_2:
                 break;
