@@ -1,6 +1,3 @@
-import java.awt.*;
-import java.awt.image.*;
-
 public class BossTentacleAttack implements Runnable{
     
     private Thread activeThread;
