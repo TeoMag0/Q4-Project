@@ -10,10 +10,24 @@ public class BossAttackManager{
         deathLines = new BossDeathLinesAttack(boss);
     }
 
-    public void activateTentacles(){
-        tentacles.setActive(true);
+    public void startAttack(BossAttacks attack){
+        switch(attack){
+            case TENTACLE:
+                tentacles.setActive(true);
+                break;
+            case DEATH_LINE:
+                deathLines.setActive(true);
+                break;
+        }
     }
-    public void activateDeathLines(){
-        deathLines.setActive(true);
+    public void stopAttack(BossAttacks attack){
+        switch (attack) {
+            case TENTACLE:
+                tentacles.setActive(false);
+                break;
+            case DEATH_LINE:
+                deathLines.setActive(false);
+                break;
+        }
     }
 }

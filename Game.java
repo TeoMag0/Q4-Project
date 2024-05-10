@@ -10,13 +10,15 @@ public class Game {
     public final int MaxPlayers;
     private GameState gameState;
     private GameSpawnIndexManager playerSpawnIndices;
+    private GameBossAttackTiming bossTiming;
     
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 1;
+        MaxPlayers = 2;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
+        bossTiming = new GameBossAttackTiming(manager);
     }
 
     @SuppressWarnings("rawtypes")
@@ -79,6 +81,7 @@ public class Game {
                 break;
             case GET_IN_ROOM:
                 next = GameState.PHASE_1;
+                bossTiming.setActive(true);
                 break;
             case PHASE_1:
                 next = GameState.PHASE_2;
@@ -98,7 +101,6 @@ public class Game {
         for(int each : clients.keySet().toDLList()){
             if(!clients.get(each).inBossRoom()){
                 allIn = false;
-                System.out.println(each);
             }
         }
         if(allIn){

@@ -58,6 +58,12 @@ public class ConnectionManager {
 						//receives int spawnIndex
 						PlayerSpawns.setSpawnIndex((int)received.data);
 						break;
+					case BOSS_ATTACK_START:
+						Screen.boss.attackManager.startAttack((BossAttacks)received.data);
+						break;
+					case BOSS_ATTACK_END:
+						Screen.boss.attackManager.stopAttack((BossAttacks) received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();
