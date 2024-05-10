@@ -38,7 +38,9 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
     }
     public static void drawAll(Graphics g){
         for(Projectile each : allProjectiles){
-            each.drawMe(g);
+            if(each != null){
+                each.drawMe(g);
+            }
         }
     }
     public abstract Collider collider();
