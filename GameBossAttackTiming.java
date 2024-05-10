@@ -3,6 +3,7 @@ public class GameBossAttackTiming implements Runnable{
     private Thread activeThread = null;
     private float attackDuration;
     private Manager manager;
+    private BossAttacks lastAttack;
 
     public GameBossAttackTiming(Manager manager){
         attackDuration = 10;
@@ -13,6 +14,7 @@ public class GameBossAttackTiming implements Runnable{
         try{
             while(activeThread != null){
                 BossAttacks attack = pickRandomAttack();
+                lastAttack = attack;
                 startAttack(attack);
                 Thread.sleep((int)(1000*attackDuration));
                 stopAttack(attack);
@@ -26,7 +28,11 @@ public class GameBossAttackTiming implements Runnable{
     private BossAttacks pickRandomAttack(){
         BossAttacks[] attacks = BossAttacks.values();
         int rand = (int)(Math.random()*attacks.length);
-        return attacks[rand];
+        if(attacks[rand] != lastAttack){
+            return attacks[rand];
+        }else{
+            return pickRandomAttack();
+        }
     }
 
     private void startAttack(BossAttacks attack){
