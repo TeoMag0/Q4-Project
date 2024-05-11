@@ -1,7 +1,6 @@
-public class BossTentacleAttack implements Runnable{
+public class BossTentacleAttack extends BossAttack{
     
     private Thread activeThread;
-    private Boss boss;
 
     private float firerate;
     private int numTentacles;
@@ -13,7 +12,7 @@ public class BossTentacleAttack implements Runnable{
     private static final String tentPic = "Asterisk1.png";
 
     public BossTentacleAttack(Boss boss){
-        this.boss = boss;
+        super(boss);
         firerate = 2;
         numTentacles = 6;
         mainAngle = 0;
@@ -30,7 +29,7 @@ public class BossTentacleAttack implements Runnable{
                 for(int i=0;i<numTentacles;i++){
                     float angle = mainAngle+i*tentAngleInc;
                     Vector2 velocity = new Vector2(projectileSpeed, angle, true);
-                    new BossProjectile(tentPic, boss.getPos(), .3f, velocity, true, true);
+                    new BossProjectile(tentPic, boss().getPos(), .3f, velocity, true, true);
                 }
                 mainAngle += dirCCW ? rotSpeed : -rotSpeed;
                 if(mainAngle >= angularDispBeforeSwitch || mainAngle < 0){
@@ -40,15 +39,6 @@ public class BossTentacleAttack implements Runnable{
             }
         }catch(InterruptedException e){
             e.printStackTrace();
-        }
-    }
-
-    public void setActive(boolean active){
-        if (active && activeThread == null) {
-            activeThread = new Thread(this);
-            activeThread.start();
-        } else if (!active && activeThread != null) {
-            activeThread = null;
         }
     }
 }

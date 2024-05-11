@@ -3,9 +3,8 @@
  * threads attack
  */
 
-public class BossDeathLinesAttack implements Runnable{
+public class BossDeathLinesAttack extends BossAttack{
     
-    private Boss boss;
     private Thread activeThread;
     private float projectileSpeed;
     private float firerate;
@@ -25,7 +24,7 @@ public class BossDeathLinesAttack implements Runnable{
     };
 
     public BossDeathLinesAttack(Boss boss){
-        this.boss = boss;
+        super(boss);
         projectileSpeed = 3;
         firerate = 5;
         size = 0.4f;
@@ -49,15 +48,6 @@ public class BossDeathLinesAttack implements Runnable{
             Vector2 velocity = new Vector2(0, -projectileSpeed);
             Vector2 spawnPoint = Vector2.sum(TileMap.Singleton.rcToCoords(each), new Vector2(TileMap.Singleton.tileSize()/2, -TileMap.Singleton.tileSize()/2));
             new BossProjectile("OrStatement.png", spawnPoint, size, velocity, true, false);
-        }
-    }
-
-    public void setActive(boolean active){
-        if(active && activeThread == null){
-            activeThread = new Thread(this);
-            activeThread.start();
-        }else if(!active && activeThread != null){
-            activeThread = null;
         }
     }
 }

@@ -1,4 +1,5 @@
 enum BossAttacks{
     TENTACLE,
-    DEATH_LINE
+    DEATH_LINE,
+    HASHMAP,
 }
