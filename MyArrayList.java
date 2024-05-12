@@ -20,6 +20,9 @@ public class MyArrayList<E> implements Iterable<E>{
         return (E)array[index];
     }
     public boolean add(E obj){
+        if(obj == null){
+            System.out.println("added null object "+obj);
+        }
         if(size == array.length)
             doubleArraySize();
         try{
