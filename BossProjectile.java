@@ -35,6 +35,9 @@ public class BossProjectile extends Projectile implements Runnable{
             e.printStackTrace();
         }
     }
+    public static synchronized BossProjectile createProjectile(String pic, Vector2 position, float size, Vector2 velocity, boolean penetrates, boolean regenerates){
+        return new BossProjectile(pic, position, size, velocity, penetrates, regenerates);
+    }
 
     public void drawMe(Graphics g){
         Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));

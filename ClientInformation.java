@@ -20,5 +20,11 @@ public class ClientInformation{
     public boolean inBossRoom(){
         return inBossRoom;
     }
+    public void setAlive(boolean alive){
+        isAlive = alive;
+    }
+    public boolean isAlive(){
+        return isAlive;
+    }
 
 }

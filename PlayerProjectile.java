@@ -51,6 +51,9 @@ public class PlayerProjectile extends Projectile{
             e.printStackTrace();
         }
     }
+    public static synchronized PlayerProjectile createProjectile(Vector2 position, float size, Vector2 velocity, float maxDist){
+        return new PlayerProjectile(position, size, velocity, maxDist);
+    }
 
     public void update(float deltaTime){
         super.update(deltaTime);

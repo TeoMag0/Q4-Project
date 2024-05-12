@@ -12,9 +12,11 @@ public class BossHashMapAttack extends BossAttack{
     public void run(){
         try{
             for(int i=0;i<3;i++){
-                createTargets();
+                createTargets(.5f);
                 Thread.sleep(700);
             }
+            createTargets(.2f);
+            Thread.sleep(200);
             createProjectiles();
             Thread.sleep(5000);
             deleteProjectiles();
@@ -24,14 +26,14 @@ public class BossHashMapAttack extends BossAttack{
     }
     private void createProjectiles(){
         for(Vector2 each : locations){
-            BossProjectile projectile = new BossProjectile("HMSprite.png", each, size, Vector2.zero(), true, true);
+            BossProjectile projectile = BossProjectile.createProjectile("HMSprite.png", each, size, Vector2.zero(), true, true);
             projectile.wallImpervious(true);
             activeProjectiles.add(projectile);
         }
     }
-    private void createTargets(){
+    private void createTargets(float animTime){
         for(Vector2 each : locations){
-            new HashmapTarget(each, size, 0.5f);
+            new HashmapTarget(each, size, animTime);
         }
     }
     private void deleteProjectiles(){

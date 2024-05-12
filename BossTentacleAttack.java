@@ -27,7 +27,7 @@ public class BossTentacleAttack extends BossAttack{
                 for(int i=0;i<numTentacles;i++){
                     float angle = mainAngle+i*tentAngleInc;
                     Vector2 velocity = new Vector2(projectileSpeed, angle, true);
-                    new BossProjectile(tentPic, boss().getPos(), .3f, velocity, true, true);
+                    BossProjectile.createProjectile(tentPic, boss().getPos(), .3f, velocity, true, true);
                 }
                 mainAngle += dirCCW ? rotSpeed : -rotSpeed;
                 if(mainAngle >= angularDispBeforeSwitch || mainAngle < 0){

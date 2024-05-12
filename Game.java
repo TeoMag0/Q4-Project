@@ -17,7 +17,7 @@ public class Game {
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 1;
+        MaxPlayers = 2;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
@@ -36,6 +36,7 @@ public class Game {
                 //recieves boolean alive
                 //sends {int clientID, boolean alive}
                 manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, obj.packet));
+                clients.get(clientID).setAlive((boolean)obj.data);
                 break;
             case IS_IN_BOSS_ROOM:
                 //receive boolean inBossRoom
@@ -80,6 +81,15 @@ public class Game {
     public int numClients(){
         return clients.keySet().size();
     }
+    public int numAliveClients(){
+        int count = 0;
+        for(int each : clients.keySet().toDLList()){
+            if(clients.get(each).isAlive()){
+                count++;
+            }
+        }
+        return count;
+    }
 
     public void nextState(){
         GameState next;
@@ -123,11 +133,13 @@ public class Game {
         manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
     }
     public Vector2[] getPlayerPositions(){
-        Vector2[] array = new Vector2[numClients()];
+        Vector2[] array = new Vector2[numAliveClients()];
         int i=0;
         for(int each : clients.keySet().toDLList()){
-            array[i] = clients.get(each).getPos();
-            i++;
+            if(clients.get(each).isAlive()){
+                array[i] = clients.get(each).getPos();
+                i++;
+            }
         }
         return array;
     }

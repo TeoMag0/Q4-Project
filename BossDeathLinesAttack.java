@@ -46,7 +46,7 @@ public class BossDeathLinesAttack extends BossAttack{
         for(Vector2 each : projectileSpawnPointsRC){
             Vector2 velocity = new Vector2(0, -projectileSpeed);
             Vector2 spawnPoint = Vector2.sum(TileMap.Singleton.rcToCoords(each), new Vector2(TileMap.Singleton.tileSize()/2, -TileMap.Singleton.tileSize()/2));
-            new BossProjectile("OrStatement.png", spawnPoint, size, velocity, true, false);
+            BossProjectile.createProjectile("OrStatement.png", spawnPoint, size, velocity, true, false);
         }
     }
 }
