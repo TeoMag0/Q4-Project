@@ -39,7 +39,6 @@ public class Player extends Startable implements DrawableObject, Transform{
 
     public void drawMe(Graphics g){
         appearanceManager.drawMe(g);
-        uiManager.drawMe(g);
     }
 
     public void movePosition(Vector2 deltaPos){

@@ -20,7 +20,7 @@ public class Game {
         MaxPlayers = 1;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
-        bossTiming = new GameBossAttackTiming(manager);
+        bossTiming = new GameBossAttackTiming(manager, this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -48,9 +48,6 @@ public class Game {
                 //receive int damage
                 bossHealth -= (int)obj.data;
                 manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
-                if((int)bossHealth <= 0){
-                    nextState();
-                }
                 break;
             default:
                 break;
@@ -124,5 +121,14 @@ public class Game {
         bossHealth = bossMaxHealth;
         manager.broadcast(new NetworkObject<Integer>(bossMaxHealth, Packet.BOSS_MAX_HEALTH));
         manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
+    }
+    public Vector2[] getPlayerPositions(){
+        Vector2[] array = new Vector2[numClients()];
+        int i=0;
+        for(int each : clients.keySet().toDLList()){
+            array[i] = clients.get(each).getPos();
+            i++;
+        }
+        return array;
     }
 }

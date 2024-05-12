@@ -30,10 +30,13 @@ public class Screen extends JPanel {
 		g.fillRect(0, 0, screenPixelDimensions.intX(), screenPixelDimensions.intY());
 
 		TileMap.Singleton.drawMe(g);
+		Animation.drawAll(g);
 		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);
 		Collider.drawAll(g);
+
+		player.uiManager.drawMe(g);
 	}
     
 	public Dimension getPreferredSize() {
@@ -55,5 +58,10 @@ public class Screen extends JPanel {
 	}
 	public static void setPixelsPerUnit(int ppu){
 		pixelsPerUnit = ppu;
+	}
+
+	@Override
+	public synchronized void repaint(){
+		super.repaint();
 	}
 }

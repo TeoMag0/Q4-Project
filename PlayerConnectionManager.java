@@ -21,7 +21,7 @@ public class PlayerConnectionManager implements Runnable{
             try{
                 Thread.sleep(sendInterval);
             }catch(InterruptedException e){
-                System.out.println(e);
+                e.printStackTrace();
             }
         }
     }

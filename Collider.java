@@ -11,6 +11,7 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
     private HasCollider parent;
     private ColliderPurpose purpose;
     private static final MyArrayList<Collider> allColliders = new MyArrayList<>();
+    private static final MyHashSet<Collider> collidersToRemove = new MyHashSet<>(30);
 
     public Collider(HasCollider parent, ColliderPurpose purpose, Shape shape){
         this.parent = parent;
@@ -34,6 +35,16 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
     }
     public HasCollider parent(){
         return parent;
+    }
+    public static void removeCollider(Collider c){
+        collidersToRemove.add(c);
+    }
+    public synchronized static void updateCollidersToRemove(){
+        while(collidersToRemove.toDLList().size() != 0){
+            Collider c = collidersToRemove.toDLList().get(0);
+            allColliders.remove(c);
+            collidersToRemove.remove(c);
+        }
     }
 
     public static void checkCollision(Collider col1, Collider col2){

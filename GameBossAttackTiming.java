@@ -4,10 +4,12 @@ public class GameBossAttackTiming implements Runnable{
     private float attackDuration;
     private Manager manager;
     private BossAttacks lastAttack;
+    private Game game;
 
-    public GameBossAttackTiming(Manager manager){
+    public GameBossAttackTiming(Manager manager, Game game){
         attackDuration = 10;
         this.manager = manager;
+        this.game = game;
     }
 
     public void run(){
@@ -35,11 +37,15 @@ public class GameBossAttackTiming implements Runnable{
         }
     }
 
-    private void startAttack(BossAttacks attack){
+    private synchronized void startAttack(BossAttacks attack){
+        if (attack == BossAttacks.HASHMAP) {
+            // send player positions
+            manager.broadcast(new NetworkObject<Vector2[]>(game.getPlayerPositions(), Packet.HASHMAP_POSITIONS));
+        }
         manager.broadcast(new NetworkObject<BossAttacks>(attack, Packet.BOSS_ATTACK_START));
         System.out.println("Started Attack: "+attack);
     }
-    private void stopAttack(BossAttacks attack){
+    private synchronized void stopAttack(BossAttacks attack){
         manager.broadcast(new NetworkObject<BossAttacks>(attack, Packet.BOSS_ATTACK_END));
         System.out.println("Ended Attack: " + attack);
     }

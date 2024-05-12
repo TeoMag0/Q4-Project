@@ -15,6 +15,7 @@ public class BossProjectile extends Projectile implements Runnable{
     private Collider collider;
     private boolean penetrates, regenerates;
     private float regenerationTime;
+    private boolean wallImpervious;
 
     public BossProjectile(String pic, Vector2 position, float size, Vector2 velocity, boolean penetrates, boolean regenerates){
         super(position, velocity);
@@ -23,6 +24,7 @@ public class BossProjectile extends Projectile implements Runnable{
         this.regenerates = regenerates;
 
         regenerationTime = .5f;
+        wallImpervious = false;
 
         //get the x size
         collider = new BoxCollider(this, new Vector2(size, size), ColliderPurpose.ENEMY_PROJECTILE);
@@ -38,9 +40,12 @@ public class BossProjectile extends Projectile implements Runnable{
         Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));
         g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
     }
+    public void wallImpervious(boolean impervious){
+        wallImpervious = impervious;
+    }
 
     public void onCollisionEnter(Collider col){
-        if(col.purpose() == ColliderPurpose.WALL){
+        if(col.purpose() == ColliderPurpose.WALL && !wallImpervious){
             destroySelf();
         }else if(col.purpose() == ColliderPurpose.PLAYER){
             // automatically gets set to dud by the player
@@ -59,7 +64,7 @@ public class BossProjectile extends Projectile implements Runnable{
         try{
             Thread.sleep((int)(regenerationTime*1000));
         }catch(InterruptedException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         collider.setPurpose(ColliderPurpose.ENEMY_PROJECTILE);

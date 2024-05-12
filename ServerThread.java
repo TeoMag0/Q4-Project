@@ -20,7 +20,7 @@ public class ServerThread implements Runnable{
         try{
             out = new ObjectOutputStream(clientSocket.getOutputStream());
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 	}
 
@@ -30,14 +30,15 @@ public class ServerThread implements Runnable{
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
             while(true){
-                Object receivedObject = in.readObject();
-                NetworkObject received = (NetworkObject)receivedObject;
+                NetworkObject received = (NetworkObject)in.readObject();
+                System.out.println(received);
                 game.update(clientID, received);
             }
-		} catch (IOException ex){
+		} catch (IOException e){
             game.disconnectClient(clientID);
+            e.printStackTrace();
 		}catch(ClassNotFoundException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 	}
 
@@ -45,9 +46,9 @@ public class ServerThread implements Runnable{
     public void send(NetworkObject packet){
         try{
             out.writeObject(packet);
-        } catch (IOException ex){
+        } catch (IOException e){
             System.out.println("Error sending message");
-            System.out.println(ex);
+            e.printStackTrace();
         }
     }
 

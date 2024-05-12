@@ -16,7 +16,7 @@ public class TileMapSaveLoad{
             output.writeObject(tiles);
             output.close();
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     @SuppressWarnings("unchecked")
@@ -27,9 +27,9 @@ public class TileMapSaveLoad{
             input.close();
             return list;
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }catch(ClassNotFoundException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return null;
     }

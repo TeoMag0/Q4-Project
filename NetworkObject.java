@@ -13,4 +13,9 @@ public class NetworkObject<E> implements Serializable{
         this.data = data;
         this.packet = packet;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Network Object: %s; Packet: %s", data,  packet);
+    }
 }

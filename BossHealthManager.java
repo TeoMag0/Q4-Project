@@ -68,6 +68,5 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
     }
     public void setMaxHealth(int health){
         maxHealth = health;
-        System.out.println(maxHealth);
     }
 }

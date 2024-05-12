@@ -33,7 +33,9 @@ public class Tile implements HasCollider, Serializable{
     }
 
     public void deleteCollider(){
-        Collider.colliderList().remove(collider);
+        if(collider != null){
+            Collider.removeCollider(collider);
+        }
     }
 
     public void onCollisionEnter(Collider col){

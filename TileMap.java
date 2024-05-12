@@ -28,7 +28,10 @@ public class TileMap extends Startable implements DrawableObject{
     public void drawMe(Graphics g){
         for(Vector2 each : tileMap.keySet().toDLList()){
             Tile tile = tileMap.get(each);
-            
+            if(tile == null){
+                continue;
+            }
+
             Vector2 tilePixelCoords = Screen.getScreenCoords(rcToCoords(each));
             Vector2 tileBR = Vector2.sum(tilePixelCoords, new Vector2(Screen.toPixels(tileSize), Screen.toPixels(tileSize)));
             if(tilePixelCoords.getX() <= Screen.screenPixelDimensions.getX() && tilePixelCoords.getY() <= Screen.screenPixelDimensions.getY() && tileBR.getX() >= 0 && tileBR.getY() >= 0){
@@ -52,7 +55,7 @@ public class TileMap extends Startable implements DrawableObject{
         }
         tileMap.put(rc, new Tile(rc, pic, isWall, tileSize));
     }
-    public void addTileRC(Vector2 rc, TilePic pic, boolean isWall){
+    public synchronized void addTileRC(Vector2 rc, TilePic pic, boolean isWall){
         if (tileMap.get(rc) != null) {
             removeTile(rcToCoords(rc));
         }
@@ -103,7 +106,7 @@ enum TilePic {
         try{
             pic = ImageIO.read(new File(s));
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     public BufferedImage pic(){

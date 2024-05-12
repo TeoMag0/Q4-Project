@@ -1,7 +1,5 @@
 public class BossTentacleAttack extends BossAttack{
     
-    private Thread activeThread;
-
     private float firerate;
     private int numTentacles;
     private float mainAngle;
@@ -13,18 +11,18 @@ public class BossTentacleAttack extends BossAttack{
 
     public BossTentacleAttack(Boss boss){
         super(boss);
-        firerate = 2;
-        numTentacles = 6;
+        firerate = 5;
+        numTentacles = 8;
         mainAngle = 0;
         rotSpeed = .2f;
-        projectileSpeed = 3;
+        projectileSpeed = 4;
         angularDispBeforeSwitch = (float)(Math.PI/2);
         dirCCW = true;
     }
 
     public void run(){
         try{
-            while(activeThread != null){
+            while(activeThread() != null){
                 float tentAngleInc = (float)(2*Math.PI/numTentacles);
                 for(int i=0;i<numTentacles;i++){
                     float angle = mainAngle+i*tentAngleInc;

@@ -41,7 +41,7 @@ public class DummyPlayerAnimator implements Runnable {
             try{
                 Thread.sleep(deltaTimeMS);
             }catch(InterruptedException e){
-                System.out.println(e);
+                e.printStackTrace();
             }
         }
     }

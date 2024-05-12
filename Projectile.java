@@ -7,7 +7,7 @@ import java.awt.*;
 public abstract class Projectile implements HasCollider, Transform, DrawableObject{
     public static final MyArrayList<Projectile> allProjectiles = new MyArrayList<>();
     private Vector2 pos, velocity;
-    public static final DLList<Projectile> projectilesToDelete = new DLList<>();
+    public static final MyHashSet<Projectile> projectilesToDelete = new MyHashSet<>(30);
     
     public Projectile(Vector2 position, Vector2 velocity){
         allProjectiles.add(this);
@@ -21,19 +21,24 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
     public Vector2 getVelocity(){
         return velocity.clone();
     }
-    public void update(float deltaTime){
+    public synchronized void update(float deltaTime){
+        if(velocity == null){
+            System.out.println(this+" has null velocity");
+        }
         pos.add(Vector2.multiply(velocity, deltaTime));
     }
-    public static void updateAll(int deltaTimeMS){
-        while(projectilesToDelete.size() != 0){
-            Projectile p = projectilesToDelete.get(0);
+    public synchronized static void updateAll(int deltaTimeMS){
+        while(projectilesToDelete.toDLList().size() != 0){
+            Projectile p = projectilesToDelete.toDLList().get(0);
             allProjectiles.remove(p);
-            Collider.colliderList().remove(p.collider());
+            Collider.removeCollider(p.collider());
             projectilesToDelete.remove(p);
         }
 
         for(Projectile each : allProjectiles){
-            each.update(1f*deltaTimeMS/1000);
+            if(each != null){
+                each.update(1f * deltaTimeMS / 1000);
+            }
         }
     }
     public static void drawAll(Graphics g){

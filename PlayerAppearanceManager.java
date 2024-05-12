@@ -18,7 +18,7 @@ public class PlayerAppearanceManager implements DrawableObject {
         try{
             playerSprite = ImageIO.read(new File("BlankSprite.png"));
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         this.player = player;

@@ -13,7 +13,6 @@ public class PlayerProjectile extends Projectile{
     private BufferedImage pic;
     private Vector2 size;
     private CircleCollider collider;
-    private float maxDist;
     private float lifeTime;
     private String[] pictureFiles = new String[] {
         "ParenthesesBL.png",

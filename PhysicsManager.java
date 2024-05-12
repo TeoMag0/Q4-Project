@@ -16,12 +16,13 @@ public class PhysicsManager extends Startable implements Runnable{
         new Thread(this).start();
     }
 
-    public void run(){
+    public synchronized void run(){
         while(true){
 
             Screen.player.movementManager.movePlayer(physicsTimeStepMS);
 
             Projectile.updateAll(physicsTimeStepMS);
+            Collider.updateCollidersToRemove();
 
             if(colliders.size() > 1){
                 for(int i=0;i<colliders.size();i++){
@@ -40,7 +41,7 @@ public class PhysicsManager extends Startable implements Runnable{
             try{
                 Thread.sleep(physicsTimeStepMS);
             }catch(InterruptedException e){
-                System.out.println(e);
+                e.printStackTrace();
             }
         }
     }

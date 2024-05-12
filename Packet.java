@@ -16,4 +16,5 @@ public enum Packet{
     DAMAGE_TO_BOSS,
     BOSS_HEALTH,
     BOSS_MAX_HEALTH,
+    HASHMAP_POSITIONS,
 }

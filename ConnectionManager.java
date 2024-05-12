@@ -59,16 +59,24 @@ public class ConnectionManager {
 						PlayerSpawns.setSpawnIndex((int)received.data);
 						break;
 					case BOSS_ATTACK_START:
+						//receives BossAttacks attack
 						Screen.boss.attackManager.startAttack((BossAttacks)received.data);
 						break;
 					case BOSS_ATTACK_END:
+						// receives BossAttacks attack
 						Screen.boss.attackManager.stopAttack((BossAttacks) received.data);
 						break;
 					case BOSS_HEALTH:
+						//receives in health
 						Screen.boss.healthManager.setHealth((int)received.data);
 						break;
 					case BOSS_MAX_HEALTH:
+						//receives int maxHealth
 						Screen.boss.healthManager.setMaxHealth((int)received.data);
+						break;
+					case HASHMAP_POSITIONS:
+						//receives Vector2[] positions
+						Screen.boss.attackManager.setHashmapPositions((Vector2[])received.data);
 						break;
 				}
 
@@ -87,7 +95,7 @@ public class ConnectionManager {
 	}
 
     @SuppressWarnings("rawtypes")
-    public void sendObject(NetworkObject obj){
+    public synchronized void sendObject(NetworkObject obj){
         try{
             out.writeObject(obj);
         }catch(IOException e){

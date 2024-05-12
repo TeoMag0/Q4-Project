@@ -34,12 +34,8 @@ public class MyHashSet<E>{
         if(array[obj.hashCode()%array.length].size() == 0){
             array[obj.hashCode()%array.length] = null;
         }
-        for(E each : list){
-            if(each.equals(obj)){
-                list.remove(each);
-                break;
-            }
-        }
+        
+        list.remove(obj);
         size--;
         return toReturn;
     }

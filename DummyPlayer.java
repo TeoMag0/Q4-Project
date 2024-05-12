@@ -26,10 +26,10 @@ public class DummyPlayer implements DrawableObject, Transform {
             appearanceManager.drawMe(g);
         }
     }
-    public void setPosition(Vector2 pos) {
+    public synchronized void setPosition(Vector2 pos) {
         position = pos.clone();
     }
-    public void moveToPosition(Vector2 pos){
+    public synchronized void moveToPosition(Vector2 pos){
         animator.addNewDestination(pos);
     }
     public synchronized void movePosition(Vector2 deltaPos) {

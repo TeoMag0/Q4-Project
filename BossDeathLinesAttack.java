@@ -5,7 +5,6 @@
 
 public class BossDeathLinesAttack extends BossAttack{
     
-    private Thread activeThread;
     private float projectileSpeed;
     private float firerate;
     private float size;
@@ -35,7 +34,7 @@ public class BossDeathLinesAttack extends BossAttack{
         try{
             spawnProjectiles();
             Thread.sleep(1500);
-            while(activeThread != null){
+            while(activeThread() != null){
                 spawnProjectiles();
                 Thread.sleep((int)(1000/firerate));
             }

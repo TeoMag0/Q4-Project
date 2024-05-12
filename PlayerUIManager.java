@@ -23,7 +23,7 @@ public class PlayerUIManager implements DrawableObject{
             hearts[1] = ImageIO.read(new File("HalfHeart1.png"));
             hearts[2] = ImageIO.read(new File("EmptyHeart.png"));
         }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
