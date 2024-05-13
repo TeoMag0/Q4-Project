@@ -13,10 +13,15 @@ public class PlayerMovementAnimation implements Runnable{
     private Player player;
     private BufferedImage[] sprites;
     private Thread curThread;
+    private float timer;
+    private final float animtionChangeTime;
 
     public PlayerMovementAnimation(Player player){
         this.player = player;
         moving = false;
+        
+        animtionChangeTime = .5f;
+        timer = animtionChangeTime;
 
         sprites = new BufferedImage[2];
     }
@@ -25,10 +30,12 @@ public class PlayerMovementAnimation implements Runnable{
         try{
             PlayerAppearanceManager aM = player.appearanceManager;
             while(curThread != null){
-                Thread.sleep(500);
-                if(moving && curThread != null){
+                if(timer <= 0){
                     aM.setSprite(aM.sprite() == sprites[0] ? sprites[1] : sprites[0]);
+                    timer = animtionChangeTime;
                 }
+                Thread.sleep(10);
+                timer -= .01;
             }
         }catch(InterruptedException e){
             e.printStackTrace();
