@@ -17,4 +17,5 @@ public enum Packet{
     BOSS_HEALTH,
     BOSS_MAX_HEALTH,
     HASHMAP_POSITIONS,
+    PLAYER_COLOR
 }

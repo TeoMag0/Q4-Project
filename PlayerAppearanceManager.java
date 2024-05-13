@@ -11,6 +11,7 @@ public class PlayerAppearanceManager implements DrawableObject {
     private Player player;
     private BufferedImage playerSprite;
     private boolean active;
+    public PlayerMovementAnimation movementAnimation;
     
     public PlayerAppearanceManager(Player player){
         active = true;
@@ -24,6 +25,8 @@ public class PlayerAppearanceManager implements DrawableObject {
         this.player = player;
         float playerSpriteHeight = player.size().getX()*playerSprite.getHeight()/playerSprite.getWidth();
         player.setSize(new Vector2(player.size().getX(), playerSpriteHeight));
+
+        movementAnimation = new PlayerMovementAnimation(player);
     }
 
     public void drawMe(Graphics g){
@@ -38,4 +41,18 @@ public class PlayerAppearanceManager implements DrawableObject {
     public void setActive(boolean active){
         this.active = active;
     }
+
+    public void setSprite(BufferedImage image){
+        playerSprite = image;
+    }
+    public BufferedImage sprite(){
+        return playerSprite;
+    }
+}
+
+enum PlayerColor{
+    BLUE,
+    GREEN,
+    YELLOW,
+    RED
 }

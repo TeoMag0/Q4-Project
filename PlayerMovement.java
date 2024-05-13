@@ -28,12 +28,16 @@ public class PlayerMovement extends Startable implements KeyListener{
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_A){
             a = true;
+            player.appearanceManager.movementAnimation.moving(true);
         }else if(e.getKeyCode() == KeyEvent.VK_W){
             w = true;
+            player.appearanceManager.movementAnimation.moving(true);
         }else if(e.getKeyCode() == KeyEvent.VK_D){
             d = true;
+            player.appearanceManager.movementAnimation.moving(true);
         }else if(e.getKeyCode() == KeyEvent.VK_S){
             s = true;
+            player.appearanceManager.movementAnimation.moving(true);
         }
     }
     public void keyTyped(KeyEvent e){
@@ -48,6 +52,9 @@ public class PlayerMovement extends Startable implements KeyListener{
             d = false;
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             s = false;
+        }
+        if(!(a || w || s || d)){
+            player.appearanceManager.movementAnimation.moving(false);
         }
     }
 

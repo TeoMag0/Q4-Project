@@ -59,8 +59,11 @@ public class Game {
         System.out.println(String.format("Client %s added", clientID));
         clients.put(clientID, new ClientInformation());
         playerSpawnIndices.addPlayer(clientID);
+
         manager.send(clientID, new NetworkObject<Integer>(playerSpawnIndices.spawnIndexOf(clientID), Packet.PLAYER_SPAWN_INDEX));//send spawn index
+        manager.send(clientID, new NetworkObject<Integer>(clientID, Packet.PLAYER_COLOR));
         manager.send(clientID, new NetworkObject<GameState>(gameState, Packet.GAME_STATE_CHANGE));//send current state
+
         if(gameState == GameState.WAITING_FOR_PLAYERS){
             manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));//update waiting text
             if(numClients() == MaxPlayers){

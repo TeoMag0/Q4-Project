@@ -17,18 +17,20 @@ public class Player extends Startable implements DrawableObject, Transform{
     private final DLList<Vector2> redirectionVectors; //redirects player if they are touching a wall; get normal force direction from collider, then dot deltapos with the normal of the normal force
     private final float inBossRoomYThresholdRC;
     private boolean isInBossRoom;
+    private PlayerColor color;
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
-        size = new Vector2(.3f, 0);
+        size = new Vector2(.5f, 0);
         redirectionVectors = new DLList<>();
         inBossRoomYThresholdRC = -3;
         isInBossRoom = false;
+        color = PlayerColor.BLUE;
 
         movementManager = new PlayerMovement(this, speed);
         connectionManager = new PlayerConnectionManager(this);
         appearanceManager = new PlayerAppearanceManager(this);
-        collisionManager = new PlayerCollisionManager(this, size.getX()/2);
+        collisionManager = new PlayerCollisionManager(this, .15f);
         healthManager = new PlayerHealthManager(this, 6);
         uiManager = new PlayerUIManager(this);
         attackManager = new PlayerAttackManager(this);
@@ -106,5 +108,29 @@ public class Player extends Startable implements DrawableObject, Transform{
                 isInBossRoom = false;
             }
         }
+    }
+
+    public void setColor(int c){
+        switch(c){
+            case 0:
+                color = PlayerColor.BLUE;
+                break;
+            case 1:
+                color = PlayerColor.GREEN;
+                break;
+            case 2:
+                color = PlayerColor.YELLOW;
+                break;
+            case 3:
+                color = PlayerColor.RED;
+                break;
+            default:
+                color = PlayerColor.BLUE;
+                break;
+        }
+        appearanceManager.movementAnimation.updateColor();
+    }
+    public PlayerColor color(){
+        return color;
     }
 }

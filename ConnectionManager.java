@@ -26,7 +26,6 @@ public class ConnectionManager {
 				Object receivedObject = in.readObject();
 				NetworkObject received = (NetworkObject)receivedObject;
 
-				int clientID;
 				switch(received.packet){
 					case PLAYER_POS:
 						//{int clientID, Vector2 pos}
@@ -77,6 +76,10 @@ public class ConnectionManager {
 					case HASHMAP_POSITIONS:
 						//receives Vector2[] positions
 						Screen.boss.attackManager.setHashmapPositions((Vector2[])received.data);
+						break;
+					case PLAYER_COLOR:
+						//receives int clientID
+						Screen.player.setColor((int)received.data);
 						break;
 				}
 
