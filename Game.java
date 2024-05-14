@@ -11,8 +11,7 @@ public class Game {
     private GameState gameState;
     private GameSpawnIndexManager playerSpawnIndices;
     private GameBossAttackTiming bossTiming;
-    private int bossHealth;
-    private int bossMaxHealth;
+    private GameBossHealthManager bossHealthManager;
     
     public Game(Manager manager){
         this.manager = manager;
@@ -21,6 +20,7 @@ public class Game {
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
+        bossHealthManager = new GameBossHealthManager(this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -47,8 +47,8 @@ public class Game {
                 break;
             case DAMAGE_TO_BOSS:
                 //receive int damage
-                bossHealth -= (int)obj.data;
-                manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
+                bossHealthManager.damage((int)obj.data);
+                manager.broadcast(new NetworkObject<Integer>(bossHealthManager.bossHealth(), Packet.BOSS_HEALTH));
                 break;
             default:
                 break;
@@ -102,14 +102,17 @@ public class Game {
                 break;
             case GET_IN_ROOM:
                 next = GameState.PHASE_1;
-                bossTiming.setActive(true);
-                sendBossMaxHealth();
+                bossTiming.startPhase(next);
+                sendBossMaxHealth(next);
                 break;
             case PHASE_1:
                 next = GameState.PHASE_2;
+                bossTiming.startPhase(next);
+                sendBossMaxHealth(next);
                 break;
             case PHASE_2:
                 next = GameState.GAME_END;
+                bossTiming.stopPhase();
                 break;
             default:
                 next = GameState.WAITING_FOR_PLAYERS;
@@ -129,11 +132,13 @@ public class Game {
             nextState();
         }
     }
-    public void sendBossMaxHealth(){
-        bossMaxHealth = 100*clients.keySet().toDLList().size();
-        bossHealth = bossMaxHealth;
-        manager.broadcast(new NetworkObject<Integer>(bossMaxHealth, Packet.BOSS_MAX_HEALTH));
-        manager.broadcast(new NetworkObject<Integer>(bossHealth, Packet.BOSS_HEALTH));
+
+
+    public void sendBossMaxHealth(GameState phase){
+        bossHealthManager.calcMaxHealth(numClients(), phase);
+        bossHealthManager.resetHealth();
+        manager.broadcast(new NetworkObject<Integer>(bossHealthManager.bossMaxHealth(), Packet.BOSS_MAX_HEALTH));
+        manager.broadcast(new NetworkObject<Integer>(bossHealthManager.bossHealth(), Packet.BOSS_HEALTH));
     }
     public Vector2[] getPlayerPositions(){
         Vector2[] array = new Vector2[numAliveClients()];

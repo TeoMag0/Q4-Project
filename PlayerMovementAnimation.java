@@ -20,7 +20,7 @@ public class PlayerMovementAnimation implements Runnable{
         this.player = player;
         moving = false;
         
-        animtionChangeTime = .5f;
+        animtionChangeTime = .3f;
         timer = animtionChangeTime;
 
         sprites = new BufferedImage[2];

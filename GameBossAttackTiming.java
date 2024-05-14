@@ -5,6 +5,7 @@ public class GameBossAttackTiming implements Runnable{
     private Manager manager;
     private BossAttacks lastAttack;
     private Game game;
+    private GameState curState;
 
     public GameBossAttackTiming(Manager manager, Game game){
         attackDuration = 10;
@@ -18,9 +19,19 @@ public class GameBossAttackTiming implements Runnable{
                 BossAttacks attack = pickRandomAttack();
                 lastAttack = attack;
                 startAttack(attack);
-                Thread.sleep((int)(1000*attackDuration));
+
+                if(curState == GameState.PHASE_2){
+                    BossAttacks attack2 = pickRandomAttack();
+                    lastAttack = attack2;
+                    startAttack(attack2);
+                    Thread.sleep((int) (1000 * attackDuration));
+                    stopAttack(attack2);
+                }else{
+                    Thread.sleep((int) (1000 * attackDuration));
+                }
+
                 stopAttack(attack);
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             }
         }catch(InterruptedException e){
             e.printStackTrace();
@@ -50,12 +61,23 @@ public class GameBossAttackTiming implements Runnable{
         System.out.println("Ended Attack: " + attack);
     }
 
-    public void setActive(boolean active){
-        if(active && activeThread == null){
-            activeThread = new Thread(this);
-            activeThread.start();
-        }else if(!active && activeThread != null){
+    public void startPhase(GameState phase){
+        //lkets attack finish before starting new phase
+        if(activeThread != null){
+            Thread curThread = activeThread;
             activeThread = null;
+            try {
+                curThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        curState = phase;
+        activeThread = new Thread(this);
+        activeThread.start();
+    }
+    public void stopPhase(){
+        activeThread = null;
     }
 }

@@ -31,10 +31,11 @@ public class ServerThread implements Runnable{
 
             while(true){
                 NetworkObject received = (NetworkObject)in.readObject();
-                System.out.println(received);
                 game.update(clientID, received);
             }
-		} catch (IOException e){
+		} catch(SocketException e){
+            game.disconnectClient(clientID);
+        }catch (IOException e){
             game.disconnectClient(clientID);
             e.printStackTrace();
 		}catch(ClassNotFoundException e){

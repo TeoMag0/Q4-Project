@@ -11,6 +11,7 @@ import java.awt.*;
 public class Screen extends JPanel {
 
 	private static int pixelsPerUnit = 100;
+	public static boolean drawColliders;
 	public static final Vector2 screenPixelDimensions = new Vector2(1280, 720);
 	public static final Screen Singleton = new Screen();
 	public static final Player player = new Player(Vector2.zero(), 5f);
@@ -19,6 +20,8 @@ public class Screen extends JPanel {
 	public Screen() {
 		this.setLayout(null);
 		this.setFocusable(true);		
+
+		drawColliders = false;
 
 		//instantiate things that need awakening
 		PhysicsManager.Singleton.wakeUp();
@@ -34,7 +37,10 @@ public class Screen extends JPanel {
 		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);
-		Collider.drawAll(g);
+
+		if(drawColliders){
+			Collider.drawAll(g);
+		}
 
 		player.uiManager.drawMe(g);
 	}

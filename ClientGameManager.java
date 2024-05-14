@@ -1,6 +1,6 @@
 
 /*
- * deals with all transitions of game states on the client side
+ * purpose: deals with all transitions of game states on the client side
  */
 
 public class ClientGameManager {

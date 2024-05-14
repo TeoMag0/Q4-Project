@@ -7,7 +7,7 @@ import java.awt.*;
 public class Player extends Startable implements DrawableObject, Transform{
     private Vector2 position;
     private Vector2 size;
-    public final PlayerMovement movementManager;
+    public final PlayerKeyInput movementManager;
     public final PlayerAppearanceManager appearanceManager;
     public final PlayerConnectionManager connectionManager;
     public final PlayerCollisionManager collisionManager;
@@ -27,7 +27,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         isInBossRoom = false;
         color = PlayerColor.BLUE;
 
-        movementManager = new PlayerMovement(this, speed);
+        movementManager = new PlayerKeyInput(this, speed);
         connectionManager = new PlayerConnectionManager(this);
         appearanceManager = new PlayerAppearanceManager(this);
         collisionManager = new PlayerCollisionManager(this, .15f);
@@ -37,6 +37,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     }
     public void start(){
         new Thread(connectionManager).start();
+        connectionManager.resurrect();
     }
 
     public void drawMe(Graphics g){

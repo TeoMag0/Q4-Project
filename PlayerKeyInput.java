@@ -5,14 +5,14 @@ import java.awt.event.*;
  * notes: works off of collision timer to make player colisions align
  */
 
-public class PlayerMovement extends Startable implements KeyListener{
+public class PlayerKeyInput extends Startable implements KeyListener{
 
     private boolean a,w,d,s;
     private float speed;
     private Player player;
     private boolean active;
 
-    public PlayerMovement(Player player, float speed){
+    public PlayerKeyInput(Player player, float speed){
         active = true;
         this.speed = speed;
         this.player = player;
@@ -38,6 +38,8 @@ public class PlayerMovement extends Startable implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_S){
             s = true;
             player.appearanceManager.movementAnimation.moving(true);
+        }else if(e.getKeyCode() == KeyEvent.VK_P){
+            Screen.drawColliders = !Screen.drawColliders;
         }
     }
     public void keyTyped(KeyEvent e){
