@@ -15,7 +15,9 @@ public class GameBossAttackTiming implements Runnable{
 
     public void run(){
         try{
+            game.dialogueManager.startOfStateDialogue(curState);
 
+            game.sendBossMaxHealth(curState);
             game.bossHealthManager.setInvulnerable(false);
             while(activeThread == Thread.currentThread()){
                 BossAttacks attack = pickRandomAttack();

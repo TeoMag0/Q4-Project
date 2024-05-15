@@ -12,6 +12,7 @@ public class Game {
     private GameSpawnIndexManager playerSpawnIndices;
     public final GameBossAttackTiming bossTiming;
     public final GameBossHealthManager bossHealthManager;
+    public final GameBossDialogue dialogueManager;
     
     public Game(Manager manager){
         this.manager = manager;
@@ -21,6 +22,7 @@ public class Game {
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
         bossHealthManager = new GameBossHealthManager(manager, this);
+        dialogueManager = new GameBossDialogue(manager, this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -103,12 +105,10 @@ public class Game {
             case GET_IN_ROOM:
                 next = GameState.PHASE_1;
                 bossTiming.startPhase(next);
-                sendBossMaxHealth(next);
                 break;
             case PHASE_1:
                 next = GameState.PHASE_2;
                 bossTiming.startPhase(next);
-                sendBossMaxHealth(next);
                 break;
             case PHASE_2:
                 next = GameState.GAME_END;

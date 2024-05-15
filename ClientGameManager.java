@@ -31,6 +31,8 @@ public class ClientGameManager {
             case PHASE_2:
                 break;
             case GAME_END:
+                Entry.openEntry();
+                Screen.boss.healthManager.drawHealth.setActive(false);
                 break;
         }
     }
