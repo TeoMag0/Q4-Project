@@ -44,7 +44,7 @@ public class ServerThread implements Runnable{
 	}
 
     @SuppressWarnings("rawtypes")
-    public void send(NetworkObject packet){
+    public synchronized void send(NetworkObject packet){
         try{
             out.writeObject(packet);
         } catch (IOException e){

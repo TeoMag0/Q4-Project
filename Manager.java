@@ -27,14 +27,14 @@ public class Manager{
     }
 
     @SuppressWarnings("rawtypes")
-    public void broadcast(NetworkObject message){
+    public synchronized void broadcast(NetworkObject message){
         for(ServerThread each : serverThreads){
             each.send(message);
         }
     }
     
     @SuppressWarnings("rawtypes")
-    public void broadcastExcept(int clientID, NetworkObject message) {
+    public synchronized void broadcastExcept(int clientID, NetworkObject message) {
         for (ServerThread each : serverThreads) {
             if(each.clientID() != clientID){
                 each.send(message);
@@ -43,7 +43,7 @@ public class Manager{
     }
 
     @SuppressWarnings("rawtypes")
-    public void send(int clientID, NetworkObject message){
+    public synchronized void send(int clientID, NetworkObject message){
         for (ServerThread each : serverThreads) {
             if(each.clientID() == clientID){
                 each.send(message);
