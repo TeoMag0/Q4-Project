@@ -8,14 +8,22 @@ public class GameBossDialogue {
     }
 
     public void startOfStateDialogue(GameState state){
-        switch(state){
-            case PHASE_1:
-            //send message
-                break;
-            case PHASE_2:
-                break;
-            case GAME_END:
-                break;
+        try{
+            switch(state){
+                case PHASE_1:
+                    phase1Dialogue();
+                    break;
+                case PHASE_2:
+                    break;
+                case GAME_END:
+                    break;
+            }
+        }catch(InterruptedException e){
+
         }
+    }
+
+    private void phase1Dialogue() throws InterruptedException{
+        Thread.sleep(10000);
     }
 }
