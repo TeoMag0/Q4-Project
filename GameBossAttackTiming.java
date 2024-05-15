@@ -15,6 +15,8 @@ public class GameBossAttackTiming implements Runnable{
 
     public void run(){
         try{
+
+            game.bossHealthManager.setInvulnerable(false);
             while(activeThread == Thread.currentThread()){
                 BossAttacks attack = pickRandomAttack();
                 lastAttack = attack;
@@ -68,6 +70,7 @@ public class GameBossAttackTiming implements Runnable{
 
     public void startPhase(GameState phase){
         //lkets attack finish before starting new phase
+        game.bossHealthManager.setInvulnerable(true);
         curState = phase;
         Thread t = activeThread;
         activeThread = new Thread(this);

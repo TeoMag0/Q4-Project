@@ -14,12 +14,17 @@ public class DummyPlayerManager implements DrawableObject{
     public void updatePosition(int clientID, Vector2 pos){
         if(dummies.get(clientID) == null){
             dummies.put(clientID, new DummyPlayer(pos));
+            dummies.get(clientID).setColor(clientID);
         }else{
             dummies.get(clientID).moveToPosition(pos);
         }
     }
 
     public void setAlive(int clientID, boolean alive){
+        if(dummies.get(clientID) == null){
+            dummies.put(clientID, new DummyPlayer(Vector2.zero()));
+            dummies.get(clientID).setColor(clientID);
+        }
         dummies.get(clientID).setAlive(alive);
     }
 

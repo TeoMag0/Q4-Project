@@ -10,8 +10,8 @@ public class Game {
     public final int MaxPlayers;
     private GameState gameState;
     private GameSpawnIndexManager playerSpawnIndices;
-    private GameBossAttackTiming bossTiming;
-    private GameBossHealthManager bossHealthManager;
+    public final GameBossAttackTiming bossTiming;
+    public final GameBossHealthManager bossHealthManager;
     
     public Game(Manager manager){
         this.manager = manager;
@@ -20,7 +20,7 @@ public class Game {
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
-        bossHealthManager = new GameBossHealthManager(this);
+        bossHealthManager = new GameBossHealthManager(manager, this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -61,7 +61,7 @@ public class Game {
         playerSpawnIndices.addPlayer(clientID);
 
         manager.send(clientID, new NetworkObject<Integer>(playerSpawnIndices.spawnIndexOf(clientID), Packet.PLAYER_SPAWN_INDEX));//send spawn index
-        manager.send(clientID, new NetworkObject<Integer>(clientID, Packet.PLAYER_COLOR));
+        manager.send(clientID, new NetworkObject<Integer>(clientID, Packet.PLAYER_COLOR)); //send it its color
         manager.send(clientID, new NetworkObject<GameState>(gameState, Packet.GAME_STATE_CHANGE));//send current state
 
         if(gameState == GameState.WAITING_FOR_PLAYERS){

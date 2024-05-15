@@ -81,6 +81,10 @@ public class ConnectionManager {
 						//receives int clientID
 						Screen.player.setColor((int)received.data);
 						break;
+					case BOSS_INVULNERABLE:
+						//receives boolean invulnerable
+						Screen.boss.healthManager.setInvulnerable((boolean)received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();

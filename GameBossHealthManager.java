@@ -3,9 +3,11 @@ public class GameBossHealthManager {
     private Game game;
     private int bossHealth;
     private int maxHealth;
+    private Manager manager;
 
-    public GameBossHealthManager(Game game){
+    public GameBossHealthManager(Manager manager, Game game){
         this.game = game;
+        this.manager = manager;
     }
 
     public void damage(int damage){
@@ -38,5 +40,9 @@ public class GameBossHealthManager {
 
     public void resetHealth(){
         bossHealth = maxHealth;
+    }
+
+    public void setInvulnerable(boolean invulnerable){
+        manager.broadcast(new NetworkObject<Boolean>(invulnerable, Packet.BOSS_INVULNERABLE));
     }
 }

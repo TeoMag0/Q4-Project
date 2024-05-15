@@ -7,13 +7,14 @@ import java.awt.*;
 public class DummyPlayer implements DrawableObject, Transform {
     private Vector2 position;
     private Vector2 size;
-    private final DummyPlayerAppearanceManager appearanceManager;
-    private final DummyPlayerAnimator animator;
+    public final DummyPlayerAppearanceManager appearanceManager;
+    public final DummyPlayerAnimator animator;
     private boolean alive;
+    private PlayerColor color;
     
     public DummyPlayer(Vector2 position) {
         this.position = position.clone();
-        size = new Vector2(.3f, 0);
+        size = Screen.player.size();
         alive = true;
 
         appearanceManager = new DummyPlayerAppearanceManager(this);
@@ -49,5 +50,28 @@ public class DummyPlayer implements DrawableObject, Transform {
     }
     public void setAlive(boolean alive){
         this.alive = alive;
+    }
+    public PlayerColor color(){
+        return color;
+    }
+    public void setColor(int c){
+        switch(c){
+            case 0:
+                color = PlayerColor.BLUE;
+                break;
+            case 1:
+                color = PlayerColor.GREEN;
+                break;
+            case 2:
+                color = PlayerColor.YELLOW;
+                break;
+            case 3:
+                color = PlayerColor.RED;
+                break;
+            default:
+                color = PlayerColor.BLUE;
+                break;
+        }
+        appearanceManager.movementAnimation.updateColor();
     }
 }

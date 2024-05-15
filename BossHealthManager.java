@@ -10,6 +10,7 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
     private int damageToSend;
     private Thread activeThread;
     public final DrawBossHealth drawHealth;
+    private boolean invulnerable;
 
     public BossHealthManager(Boss boss){
         this.boss = boss;
@@ -17,6 +18,7 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
         drawHealth = new DrawBossHealth(this);
 
         collider = new BoxCollider(this, boss.size(), ColliderPurpose.BOSS);
+        invulnerable = true;
     }
     public void start(){
         activeThread = new Thread(this);
@@ -24,8 +26,10 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
     }
 
     public void hit(){
-        health--;
-        damageToSend++;
+        if(!invulnerable){
+            health--;
+            damageToSend++;
+        }
     }
 
     public Vector2 getPos(){
@@ -68,5 +72,12 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
     }
     public void setMaxHealth(int health){
         maxHealth = health;
+    }
+
+    public boolean invulnerable(){
+        return invulnerable;
+    }
+    public void setInvulnerable(boolean invulnerable){
+        this.invulnerable = invulnerable;
     }
 }

@@ -11,7 +11,7 @@ public class PlayerAppearanceManager implements DrawableObject {
     private Player player;
     private BufferedImage playerSprite;
     private boolean active;
-    public PlayerMovementAnimation movementAnimation;
+    public final PlayerMovementAnimation movementAnimation;
     
     public PlayerAppearanceManager(Player player){
         active = true;
