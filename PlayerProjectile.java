@@ -25,9 +25,12 @@ public class PlayerProjectile extends Projectile{
         "ParenthesesL.png",
     };
 
+    private boolean test = false;
+
     public PlayerProjectile(Vector2 position, float size, Vector2 velocity, float maxDist){
         super(position, velocity);
         this.size = new Vector2(size, size);
+        test = true;
 
         //get the x size
         collider = new CircleCollider(this, size/4, ColliderPurpose.PLAYER_PROJECTILE);
@@ -64,6 +67,9 @@ public class PlayerProjectile extends Projectile{
     }
 
     public void drawMe(Graphics g){
+        if(!test){
+            System.out.println("drawMe called before size was instantiated");
+        }
         Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));
         g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
     }

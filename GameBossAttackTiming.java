@@ -15,7 +15,7 @@ public class GameBossAttackTiming implements Runnable{
 
     public void run(){
         try{
-            while(activeThread != null){
+            while(activeThread == Thread.currentThread()){
                 BossAttacks attack = pickRandomAttack();
                 lastAttack = attack;
                 startAttack(attack);
@@ -32,6 +32,11 @@ public class GameBossAttackTiming implements Runnable{
 
                 stopAttack(attack);
                 Thread.sleep(2000);
+            }
+
+            //start queued thread
+            if(activeThread != null){
+                activeThread.start();
             }
         }catch(InterruptedException e){
             e.printStackTrace();
@@ -63,19 +68,12 @@ public class GameBossAttackTiming implements Runnable{
 
     public void startPhase(GameState phase){
         //lkets attack finish before starting new phase
-        if(activeThread != null){
-            Thread curThread = activeThread;
-            activeThread = null;
-            try {
-                curThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
         curState = phase;
+        Thread t = activeThread;
         activeThread = new Thread(this);
-        activeThread.start();
+        if(t == null){
+            activeThread.start();
+        }
     }
     public void stopPhase(){
         activeThread = null;
