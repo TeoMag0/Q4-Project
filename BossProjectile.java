@@ -92,4 +92,7 @@ public class BossProjectile extends Projectile implements Runnable{
     public Collider collider(){
         return collider;
     }
+    public float lifeLeft(){
+        return lifetime;
+    }
 }
