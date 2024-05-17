@@ -10,6 +10,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
     private Vector2 position;
     public final BossAttackManager attackManager;
     public final BossHealthManager healthManager;
+    public final BossSpeechBubble speechBubble;
 
     public Boss(Vector2 position){
         this.position = position;
@@ -17,13 +18,14 @@ public class Boss extends Startable implements DrawableObject, Transform{
 
         attackManager = new BossAttackManager(this);
         healthManager = new BossHealthManager(this);
+        speechBubble = new BossSpeechBubble(this, new Vector2(0, 2));
     }
     public void start(){
 
     }
     
     public void drawMe(Graphics g){
-
+        speechBubble.drawMe(g);
     }
     public Vector2 getPos(){
         return position.clone();

@@ -12,11 +12,12 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
     private ColliderPurpose purpose;
     private static final MyArrayList<Collider> allColliders = new MyArrayList<>();
     private static final MyHashSet<Collider> collidersToRemove = new MyHashSet<>(30);
+    private static final DLList<Collider> collidersToAdd = new DLList<>();
 
     public Collider(HasCollider parent, ColliderPurpose purpose, Shape shape){
         this.parent = parent;
         this.purpose = purpose;
-        allColliders.add(this);
+        collidersToAdd.add(this);
         this.shape = shape;
     }
 
@@ -39,7 +40,11 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
     public static void removeCollider(Collider c){
         collidersToRemove.add(c);
     }
-    public synchronized static void updateCollidersToRemove(){
+    public synchronized static void updateColliders(){
+        while(collidersToAdd.size() != 0){
+            Collider c = collidersToAdd.remove(0);
+            allColliders.add(c);
+        }
         while(collidersToRemove.toDLList().size() != 0){
             Collider c = collidersToRemove.toDLList().get(0);
             allColliders.remove(c);

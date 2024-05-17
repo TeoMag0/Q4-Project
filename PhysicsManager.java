@@ -22,16 +22,18 @@ public class PhysicsManager extends Startable implements Runnable{
             Screen.player.movementManager.movePlayer(physicsTimeStepMS);
 
             Projectile.updateAll(physicsTimeStepMS);
-            Collider.updateCollidersToRemove();
+            Collider.updateColliders();
 
             if(colliders.size() > 1){
                 for(int i=0;i<colliders.size();i++){
                     for(int j=i+1;j<colliders.size();j++){
-                        if(colliders.get(i) == null || colliders.get(j) == null){
+                        Collider c1 = colliders.get(i);
+                        Collider c2 = colliders.get(j);
+                        if(c1 == null || c2 == null){
                             continue;
                         }
-                        if(colliders.get(i).purpose() != colliders.get(j).purpose() && Vector2.distance(colliders.get(i).getPos(), colliders.get(j).getPos()) < registerCollisionDistance){
-                            Collider.checkCollision(colliders.get(i), colliders.get(j));
+                        if(c1.purpose() != c2.purpose() && Vector2.distance(c1.getPos(), c2.getPos()) < registerCollisionDistance){
+                            Collider.checkCollision(c1, c2);
                         }
                     }
                 }

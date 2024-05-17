@@ -85,6 +85,10 @@ public class ConnectionManager {
 						//receives boolean invulnerable
 						Screen.boss.healthManager.setInvulnerable((boolean)received.data);
 						break;
+					case BOSS_QUOTE:
+						//receives String quote
+						Screen.boss.speechBubble.setQuote((String)received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();

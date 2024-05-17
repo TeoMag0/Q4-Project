@@ -19,4 +19,5 @@ public enum Packet{
     HASHMAP_POSITIONS,
     PLAYER_COLOR,
     BOSS_INVULNERABLE,
+    BOSS_QUOTE,
 }

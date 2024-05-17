@@ -8,9 +8,10 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
     public static final MyArrayList<Projectile> allProjectiles = new MyArrayList<>();
     private Vector2 pos, velocity;
     public static final MyHashSet<Projectile> projectilesToDelete = new MyHashSet<>(30);
+    public static final DLList<Projectile> projectilesToAdd = new DLList<>();
     
     public Projectile(Vector2 position, Vector2 velocity){
-        allProjectiles.add(this);
+        projectilesToAdd.add(this);
         this.pos = position;
         this.velocity = velocity;
     }
@@ -28,6 +29,10 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
         pos.add(Vector2.multiply(velocity, deltaTime));
     }
     public synchronized static void updateAll(int deltaTimeMS){
+        while(projectilesToAdd.size() != 0){
+            Projectile p = projectilesToAdd.remove(0);
+            allProjectiles.add(p);
+        }
         while(projectilesToDelete.toDLList().size() != 0){
             Projectile p = projectilesToDelete.toDLList().get(0);
             allProjectiles.remove(p);

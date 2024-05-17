@@ -14,8 +14,10 @@ public class GameBossDialogue {
                     phase1Dialogue();
                     break;
                 case PHASE_2:
+                    phase2Dialogue();
                     break;
                 case GAME_END:
+                    gameEndDialogue();
                     break;
             }
         }catch(InterruptedException e){
@@ -24,6 +26,15 @@ public class GameBossDialogue {
     }
 
     private void phase1Dialogue() throws InterruptedException{
-        Thread.sleep(10000);
+        manager.broadcast(new NetworkObject<String>("Je voudrais un croissant.", Packet.BOSS_QUOTE));
+        manager.broadcast(new NetworkObject<String>("N'IMPORTE QUOI", Packet.BOSS_QUOTE));
+        Thread.sleep(5000);
+    }
+    private void phase2Dialogue() throws InterruptedException{
+        manager.broadcast(new NetworkObject<String>("I HOPE YOU'RE READY TO GET SERIALIZED", Packet.BOSS_QUOTE));
+        Thread.sleep(5000);
+    }
+    private void gameEndDialogue() throws InterruptedException{
+        Thread.sleep(5000);
     }
 }
