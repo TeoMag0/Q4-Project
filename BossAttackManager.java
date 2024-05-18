@@ -3,6 +3,7 @@ public class BossAttackManager{
     private BossTentacleAttack tentacles;
     private BossDeathLinesAttack deathLines;
     private BossHashMapAttack hashmapAttack;
+    private BossRecursiveAttack recursiveAttack;
     private Boss boss;
 
     public BossAttackManager(Boss boss){
@@ -10,6 +11,7 @@ public class BossAttackManager{
         tentacles = new BossTentacleAttack(boss);
         deathLines = new BossDeathLinesAttack(boss);
         hashmapAttack = new BossHashMapAttack(boss, 2);
+        recursiveAttack = new BossRecursiveAttack(boss);
     }
 
     public void startAttack(BossAttacks attack){
@@ -23,6 +25,9 @@ public class BossAttackManager{
             case HASHMAP:
                 hashmapAttack.setActive(true);
                 break;
+            case RECURSIVE:
+                recursiveAttack.setActive(true);
+                break;
         }
     }
     public void stopAttack(BossAttacks attack){
@@ -35,6 +40,9 @@ public class BossAttackManager{
                 break;
             case HASHMAP:
                 hashmapAttack.setActive(false);
+                break;
+            case RECURSIVE:
+                recursiveAttack.setActive(false);
                 break;
         }
     }
