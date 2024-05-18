@@ -22,6 +22,9 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
     public Vector2 getVelocity(){
         return velocity.clone();
     }
+    public void setVelocity(Vector2 velocity){
+        this.velocity = velocity.clone();
+    }
     public synchronized void update(float deltaTime){
         if(velocity == null){
             System.out.println(this+" has null velocity");

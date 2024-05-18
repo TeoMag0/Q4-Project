@@ -4,6 +4,7 @@ public class BossAttackManager{
     private BossDeathLinesAttack deathLines;
     private BossHashMapAttack hashmapAttack;
     private BossRecursiveAttack recursiveAttack;
+    private BossStackOverflowAttack stackOverflow;
     private Boss boss;
 
     public BossAttackManager(Boss boss){
@@ -12,6 +13,7 @@ public class BossAttackManager{
         deathLines = new BossDeathLinesAttack(boss);
         hashmapAttack = new BossHashMapAttack(boss, 2);
         recursiveAttack = new BossRecursiveAttack(boss);
+        stackOverflow = new BossStackOverflowAttack(boss);
     }
 
     public void startAttack(BossAttacks attack){
@@ -28,6 +30,9 @@ public class BossAttackManager{
             case RECURSIVE:
                 recursiveAttack.setActive(true);
                 break;
+            case STACK_OVERFLOW:
+                stackOverflow.setActive(true);
+                break;
         }
     }
     public void stopAttack(BossAttacks attack){
@@ -43,6 +48,9 @@ public class BossAttackManager{
                 break;
             case RECURSIVE:
                 recursiveAttack.setActive(false);
+                break;
+            case STACK_OVERFLOW:
+                stackOverflow.setActive(false);
                 break;
         }
     }

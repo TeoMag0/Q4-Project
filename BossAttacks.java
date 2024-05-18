@@ -3,4 +3,5 @@ enum BossAttacks{
     DEATH_LINE,
     HASHMAP,
     RECURSIVE,
+    STACK_OVERFLOW,
 }

@@ -18,7 +18,7 @@ public class BossProjectile extends Projectile implements Runnable{
     private boolean wallImpervious;
     private float lifetime;
 
-    public BossProjectile(String pic, Vector2 position, float size, Vector2 velocity, float lifetime, boolean penetrates, boolean regenerates, boolean wallImpervious){
+    public BossProjectile(String pic, Vector2 position, float size, Vector2 velocity, float lifetime, boolean penetrates, boolean regenerates, boolean wallImpervious, Shape colShape){
         super(position, velocity);
         this.size = new Vector2(size, size);
         this.penetrates = penetrates;
@@ -26,7 +26,14 @@ public class BossProjectile extends Projectile implements Runnable{
         this.lifetime = lifetime;
         this.wallImpervious = wallImpervious;
 
-        collider = new BoxCollider(this, this.size, ColliderPurpose.ENEMY_PROJECTILE);
+        switch(colShape){
+            case BOX:
+                collider = new BoxCollider(this, this.size, ColliderPurpose.ENEMY_PROJECTILE);
+                break;
+            case CIRCLE:
+                collider = new CircleCollider(this, this.size.getY()/2, ColliderPurpose.ENEMY_PROJECTILE);
+                break;
+        }
         regenerationTime = .5f;
 
         try{
@@ -36,13 +43,13 @@ public class BossProjectile extends Projectile implements Runnable{
         }
     }
     public static synchronized void createProjectile(String pic, Vector2 position, float size, Vector2 velocity, float lifetime, boolean penetrates, boolean regenerates){
-        new BossProjectile(pic, position, size, velocity, lifetime, penetrates, regenerates, false);
+        new BossProjectile(pic, position, size, velocity, lifetime, penetrates, regenerates, false, Shape.BOX);
     }
     public static synchronized void createProjectile(String pic, Vector2 position, float size, Vector2 velocity, float lifetime, boolean penetrates, boolean regenerates, boolean wallImpervious){
-        new BossProjectile(pic, position, size, velocity, lifetime, penetrates, regenerates, wallImpervious);
+        new BossProjectile(pic, position, size, velocity, lifetime, penetrates, regenerates, wallImpervious, Shape.BOX);
     }
     public static synchronized void createProjectile(String pic, Vector2 position, float size, Vector2 velocity, boolean penetrates, boolean regenerates){
-        new BossProjectile(pic, position, size, velocity, Float.POSITIVE_INFINITY, penetrates, regenerates, false);
+        new BossProjectile(pic, position, size, velocity, Float.POSITIVE_INFINITY, penetrates, regenerates, false, Shape.BOX);
     }
 
     public void drawMe(Graphics g){

@@ -11,8 +11,8 @@ public class BossTentacleAttack extends BossAttack{
 
     public BossTentacleAttack(Boss boss){
         super(boss);
-        firerate = 5;
-        numTentacles = 8;
+        firerate = 4;
+        numTentacles = 5;
         mainAngle = 0;
         rotSpeed = .2f;
         projectileSpeed = 4;

@@ -6,9 +6,9 @@ public class BossProjectileRecursive extends BossProjectile{
     private float startAngle;
 
     public BossProjectileRecursive(String pic, Vector2 position, float size, Vector2 velocity, float lifetime, int iterations){
-        super(pic, position, size, velocity, lifetime, true, true, true);
+        super(pic, position, size, velocity, lifetime, true, true, true, Shape.CIRCLE);
         this.iterations = iterations;
-        spawns = 3;
+        spawns = 4;
         this.lifetime = lifetime;
         startAngle = (float)(Math.random()*2*Math.PI);
     }
