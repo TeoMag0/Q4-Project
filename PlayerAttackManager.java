@@ -73,7 +73,7 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         if(e.getButton() == MouseEvent.BUTTON1){
             //TileMap.Singleton.addTile(coords, TilePic.STONE_BRICK_FLOOR, false);
             //TileMap.Singleton.saveMap();
-            //System.out.println(TileMap.Singleton.coordsToRC(coords));
+            System.out.println(TileMap.Singleton.coordsToRC(coords));
         }else if(e.getButton() == MouseEvent.BUTTON3) {
             //TileMap.Singleton.addTile(coords, TilePic.STONE_WALL, true);
             //TileMap.Singleton.saveMap();

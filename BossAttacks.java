@@ -1,6 +1,8 @@
 enum BossAttacks{
     TENTACLE,
-    DEATH_LINE,
+    DEATH_LINE_TOP,
+    DEATH_LINE_LEFT,
+    DEATH_LINE_RIGHT,
     HASHMAP,
     RECURSIVE,
     STACK_OVERFLOW,

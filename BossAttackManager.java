@@ -21,7 +21,16 @@ public class BossAttackManager{
             case TENTACLE:
                 tentacles.setActive(true);
                 break;
-            case DEATH_LINE:
+            case DEATH_LINE_TOP:
+                deathLines.setDirection(BossDeathLinesAttack.Direction.TOP);
+                deathLines.setActive(true);
+                break;
+            case DEATH_LINE_LEFT:
+                deathLines.setDirection(BossDeathLinesAttack.Direction.LEFT);
+                deathLines.setActive(true);
+                break;
+            case DEATH_LINE_RIGHT:
+                deathLines.setDirection(BossDeathLinesAttack.Direction.RIGHT);
                 deathLines.setActive(true);
                 break;
             case HASHMAP:
@@ -40,7 +49,7 @@ public class BossAttackManager{
             case TENTACLE:
                 tentacles.setActive(false);
                 break;
-            case DEATH_LINE:
+            case DEATH_LINE_TOP, DEATH_LINE_LEFT, DEATH_LINE_RIGHT:
                 deathLines.setActive(false);
                 break;
             case HASHMAP:
