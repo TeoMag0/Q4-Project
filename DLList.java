@@ -33,7 +33,7 @@ public class DLList<E> implements Iterable<E>{
         }catch(Exception e){return null;}
     }
     
-    public E remove(int index){
+    public synchronized E remove(int index){
         Node<E> node = findNodeByIndex(index);
         if(node == null) {System.out.println("Object at loc "+index+" in dllist not found, so couldn't be removed");}
         node.prev().setNext(node.next());
@@ -42,7 +42,7 @@ public class DLList<E> implements Iterable<E>{
         return node.get();
     }
 
-    public void remove(E el){
+    public synchronized void remove(E el){
         Node<E> node = findNodeWithElement(el);
         if(node == null) {System.out.println("Object "+el.toString()+" in dllist not found, so couldn't be removed");}
         node.prev().setNext(node.next());

@@ -46,7 +46,7 @@ public class BossDeathLinesAttack extends BossAttack{
     public BossDeathLinesAttack(Boss boss){
         super(boss);
         projectileSpeed = 3;
-        firerate = 5;
+        firerate = 4;
         size = 0.4f;
     }
 

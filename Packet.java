@@ -20,4 +20,5 @@ public enum Packet{
     PLAYER_COLOR,
     BOSS_INVULNERABLE,
     BOSS_QUOTE,
+    GAME_END,
 }

@@ -15,28 +15,31 @@ public class GameBossAttackTiming implements Runnable{
 
     public void run(){
         try{
-            game.sendBossMaxHealth(curState);
+            if(curState == GameState.GAME_END){
+                game.dialogueManager.startOfStateDialogue(curState);
+                game.endGame();
+            }else{
+                game.sendBossMaxHealth(curState);
+                game.dialogueManager.startOfStateDialogue(curState);
+                game.bossHealthManager.setInvulnerable(false);
+                while(activeThread == Thread.currentThread()){
+                    BossAttacks attack = pickRandomAttack();
+                    lastAttack = attack;
+                    startAttack(attack);
 
-            game.dialogueManager.startOfStateDialogue(curState);
+                    if(curState == GameState.PHASE_2){
+                        BossAttacks attack2 = pickRandomAttack();
+                        lastAttack = attack2;
+                        startAttack(attack2);
+                        Thread.sleep((int) (1000 * attackDuration));
+                        stopAttack(attack2);
+                    }else{
+                        Thread.sleep((int) (1000 * attackDuration));
+                    }
 
-            game.bossHealthManager.setInvulnerable(false);
-            while(activeThread == Thread.currentThread()){
-                BossAttacks attack = pickRandomAttack();
-                lastAttack = attack;
-                startAttack(attack);
-
-                if(curState == GameState.PHASE_2){
-                    BossAttacks attack2 = pickRandomAttack();
-                    lastAttack = attack2;
-                    startAttack(attack2);
-                    Thread.sleep((int) (1000 * attackDuration));
-                    stopAttack(attack2);
-                }else{
-                    Thread.sleep((int) (1000 * attackDuration));
+                    stopAttack(attack);
+                    Thread.sleep(2000);
                 }
-
-                stopAttack(attack);
-                Thread.sleep(2000);
             }
 
             //start queued thread

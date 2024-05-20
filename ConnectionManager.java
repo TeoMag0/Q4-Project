@@ -89,6 +89,9 @@ public class ConnectionManager {
 						//receives String quote
 						Screen.boss.speechBubble.setQuote((String)received.data);
 						break;
+					case GAME_END:
+						//receives boolean gameended
+						ClientGameManager.Singleton.endGame();
 				}
 
 				Screen.Singleton.repaint();

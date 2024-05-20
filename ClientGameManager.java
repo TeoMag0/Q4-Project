@@ -36,4 +36,8 @@ public class ClientGameManager {
                 break;
         }
     }
+
+    public void endGame(){
+        System.out.println("game ended");
+    }
 }

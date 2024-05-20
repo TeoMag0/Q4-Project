@@ -151,4 +151,8 @@ public class Game {
         }
         return array;
     }
+
+    public void endGame(){
+        manager.broadcast(new NetworkObject<Boolean>(true, Packet.GAME_END));
+    }
 }
