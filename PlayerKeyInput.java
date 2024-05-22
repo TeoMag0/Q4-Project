@@ -40,6 +40,8 @@ public class PlayerKeyInput extends Startable implements KeyListener{
             player.appearanceManager.movementAnimation.moving(true);
         }else if(e.getKeyCode() == KeyEvent.VK_P){
             Screen.drawColliders = !Screen.drawColliders;
+        }else if(e.getKeyCode() == KeyEvent.VK_E){
+            player.interactPressed();
         }
     }
     public void keyTyped(KeyEvent e){

@@ -47,17 +47,20 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
         }
         while(collidersToRemove.toDLList().size() != 0){
             Collider c = collidersToRemove.toDLList().get(0);
+            if(c == null){
+                System.out.println("collider to remove is already null");
+            }
             allColliders.remove(c);
             collidersToRemove.remove(c);
         }
     }
 
-    public static void checkCollision(Collider col1, Collider col2){
+    public static boolean checkCollision(Collider col1, Collider col2){
         if(col1 == null || col2 == null){
-            return;
+            return false;
         }
         if(col1.purpose == ColliderPurpose.WALL && col2.purpose == ColliderPurpose.WALL){
-            return;
+            return false;
         }
         
         if(col1.shape() == Shape.CIRCLE && col2.shape == Shape.CIRCLE){
@@ -68,6 +71,7 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
             if(Vector2.distance(cir2.getPos(), cir1.getPos()) <= cir1.radius()+cir2.radius()){
                 cir1.parent().onCollisionEnter(cir2);
                 cir2.parent().onCollisionEnter(cir1);
+                return true;
             }
         }else if((col1.shape() == Shape.BOX && col2.shape() == Shape.CIRCLE) || (col2.shape() == Shape.BOX && col1.shape() == Shape.CIRCLE)){
             BoxCollider box;
@@ -83,6 +87,7 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
             if(findBoxPointInCircle(box, cir) != null || findCirclePointInBox(cir, box) != null){
                 box.parent().onCollisionEnter(cir);
                 cir.parent().onCollisionEnter(box);
+                return true;
             }       
         }else if(col1.shape() == Shape.BOX && col2.shape() == Shape.BOX){
             BoxCollider box1 = (BoxCollider)col1;
@@ -96,8 +101,10 @@ public abstract class Collider implements Transform, Serializable, DrawableObjec
             if(box1BottomLeft.getX()<box2TopRight.getX() && box1TopRight.getX()>box2BottomLeft.getX() && box1BottomLeft.getY()<box2TopRight.getY() && box1TopRight.getY()>box2BottomLeft.getY()){
                 box1.parent().onCollisionEnter(box2);
                 box2.parent().onCollisionEnter(box1);
+                return true;
             }
         }
+        return false;
     }
 
     public static MyArrayList<Collider> colliderList(){
@@ -152,4 +159,5 @@ enum ColliderPurpose{
     PLAYER_PROJECTILE,
     DUD,
     BOSS,
+    PORTAL,
 }

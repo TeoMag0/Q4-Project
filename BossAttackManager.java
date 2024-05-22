@@ -1,7 +1,9 @@
 public class BossAttackManager{
     
     private BossTentacleAttack tentacles;
-    private BossDeathLinesAttack deathLines;
+    private BossDeathLinesTop deathLinesTop;
+    private BossDeathLinesLeft deathLinesLeft;
+    private BossDeathLinesRight deathLinesRight;
     private BossHashMapAttack hashmapAttack;
     private BossRecursiveAttack recursiveAttack;
     private BossStackOverflowAttack stackOverflow;
@@ -10,7 +12,9 @@ public class BossAttackManager{
     public BossAttackManager(Boss boss){
         this.boss = boss;
         tentacles = new BossTentacleAttack(boss);
-        deathLines = new BossDeathLinesAttack(boss);
+        deathLinesTop = new BossDeathLinesTop(boss);
+        deathLinesLeft = new BossDeathLinesLeft(boss);
+        deathLinesRight = new BossDeathLinesRight(boss);
         hashmapAttack = new BossHashMapAttack(boss, 2);
         recursiveAttack = new BossRecursiveAttack(boss);
         stackOverflow = new BossStackOverflowAttack(boss);
@@ -22,16 +26,13 @@ public class BossAttackManager{
                 tentacles.setActive(true);
                 break;
             case DEATH_LINE_TOP:
-                deathLines.setDirection(BossDeathLinesAttack.Direction.TOP);
-                deathLines.setActive(true);
+                deathLinesTop.setActive(true);
                 break;
             case DEATH_LINE_LEFT:
-                deathLines.setDirection(BossDeathLinesAttack.Direction.LEFT);
-                deathLines.setActive(true);
+                deathLinesLeft.setActive(true);
                 break;
             case DEATH_LINE_RIGHT:
-                deathLines.setDirection(BossDeathLinesAttack.Direction.RIGHT);
-                deathLines.setActive(true);
+                deathLinesRight.setActive(true);
                 break;
             case HASHMAP:
                 hashmapAttack.setActive(true);
@@ -49,8 +50,14 @@ public class BossAttackManager{
             case TENTACLE:
                 tentacles.setActive(false);
                 break;
-            case DEATH_LINE_TOP, DEATH_LINE_LEFT, DEATH_LINE_RIGHT:
-                deathLines.setActive(false);
+            case DEATH_LINE_TOP:
+                deathLinesTop.setActive(false);
+                break;
+            case DEATH_LINE_LEFT:
+                deathLinesLeft.setActive(false);
+                break;
+            case DEATH_LINE_RIGHT:
+                deathLinesRight.setActive(false);
                 break;
             case HASHMAP:
                 hashmapAttack.setActive(false);

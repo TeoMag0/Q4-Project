@@ -31,13 +31,13 @@ public class ClientGameManager {
             case PHASE_2:
                 break;
             case GAME_END:
-                Entry.openEntry();
-                Screen.boss.healthManager.drawHealth.setActive(false);
                 break;
         }
     }
 
     public void endGame(){
-        System.out.println("game ended");
+        Entry.openEntry();
+        ExitPortal.createPortal();
+        Screen.boss.healthManager.drawHealth.setActive(false);
     }
 }

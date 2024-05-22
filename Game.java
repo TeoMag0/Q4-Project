@@ -112,7 +112,7 @@ public class Game {
                 break;
             case PHASE_2:
                 next = GameState.GAME_END;
-                bossTiming.stopPhase();
+                bossTiming.startPhase(next);
                 break;
             default:
                 next = GameState.WAITING_FOR_PLAYERS;

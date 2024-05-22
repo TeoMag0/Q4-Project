@@ -59,6 +59,9 @@ public class PlayerCollisionManager implements HasCollider, Transform{
             col.setPurpose(ColliderPurpose.DUD);
         }
     }
+    public Collider collider(){
+        return playerCol;
+    }
     
     public void setActive(boolean active) {
         this.active = active;

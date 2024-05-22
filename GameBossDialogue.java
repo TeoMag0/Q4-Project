@@ -26,15 +26,19 @@ public class GameBossDialogue {
     }
 
     private void phase1Dialogue() throws InterruptedException{
-        manager.broadcast(new NetworkObject<String>("Je voudrais un croissant.", Packet.BOSS_QUOTE));
-        manager.broadcast(new NetworkObject<String>("N'IMPORTE QUOI", Packet.BOSS_QUOTE));
+        sendMessage("je voudrais un croissant");
         Thread.sleep(5000);
     }
     private void phase2Dialogue() throws InterruptedException{
-        manager.broadcast(new NetworkObject<String>("I HOPE YOU'RE READY TO GET SERIALIZED", Packet.BOSS_QUOTE));
+        sendMessage("I hope you aren't claustrophobic, because YOU'RE ABOUT TO GET SERIALIZED");
         Thread.sleep(5000);
     }
     private void gameEndDialogue() throws InterruptedException{
+        sendMessage("I'm dying");
         Thread.sleep(5000);
+    }
+
+    private void sendMessage(String message){
+        manager.broadcast(new NetworkObject<String>(message, Packet.BOSS_QUOTE));
     }
 }

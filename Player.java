@@ -131,6 +131,13 @@ public class Player extends Startable implements DrawableObject, Transform{
         }
         appearanceManager.movementAnimation.updateColor();
     }
+
+    public void interactPressed(){
+        if(ExitPortal.playerTouching()){
+            ExitPortal.teleportPlayer();
+        }
+    }
+
     public PlayerColor color(){
         return color;
     }
