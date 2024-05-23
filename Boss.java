@@ -23,6 +23,10 @@ public class Boss extends Startable implements DrawableObject, Transform{
     public void start(){
 
     }
+
+    public void dropLoot(){
+        new LootItem(position);
+    }
     
     public void drawMe(Graphics g){
         speechBubble.drawMe(g);

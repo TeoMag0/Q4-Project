@@ -39,5 +39,6 @@ public class ClientGameManager {
         Entry.openEntry();
         ExitPortal.createPortal();
         Screen.boss.healthManager.drawHealth.setActive(false);
+        Screen.boss.dropLoot();
     }
 }
