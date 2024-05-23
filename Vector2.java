@@ -77,10 +77,13 @@ public class Vector2 implements Serializable{
         y -= vector.getY();
     }
     /**
-     * Returns a new unit vector in the same direction as the vector
+     * Returns a new unit vector in the same direction as the vector. If the vector's magnitude is 0, this method will return <0,0>.
      * @return
      */
     public Vector2 normalized(){
+        if(magnitude() == 0){
+            return Vector2.zero();
+        }
         return new Vector2(x/magnitude(), y/magnitude());
     }
     /**

@@ -41,6 +41,10 @@ public abstract class InteractableObject implements DrawableObject, Transform, H
     public abstract void interacted();
 
     public static void drawAll(Graphics g){
+        while(toRemove.size() != 0){
+            InteractableObject obj = toRemove.remove(0);
+            objectList.remove(obj);
+        }
         for(InteractableObject each : objectList){
             each.drawMe(g);
         }

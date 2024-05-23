@@ -49,7 +49,9 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     public void launchProjectile(){
         float speed = 4;
         Vector2 velocity = Vector2.multiply(Vector2.difference(Screen.getWorldCoords(mouseWorldPositionPixels), player.getPos()).normalized(), speed);
-        PlayerProjectile.createProjectile(player.getPos(), .5f, velocity, 3.5f);
+        if(!velocity.equals(Vector2.zero())){
+            PlayerProjectile.createProjectile(player.getPos(), .5f, velocity, 3.5f);
+        }
     }
 
     public void mouseDragged(MouseEvent e){
