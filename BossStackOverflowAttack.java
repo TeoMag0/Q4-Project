@@ -8,7 +8,7 @@ public class BossStackOverflowAttack extends BossAttack{
         super(boss);
         speed = 10;
         firerate = 4;
-        numLines = 5;
+        numLines = 3;
     }
 
     public void run(){
