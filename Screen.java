@@ -35,7 +35,7 @@ public class Screen extends JPanel {
 		TileMap.Singleton.drawMe(g);
 		Animation.drawAll(g);
 		boss.drawMe(g);
-		ExitPortal.drawPortal(g);
+		InteractableObject.drawAll(g);
 		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);

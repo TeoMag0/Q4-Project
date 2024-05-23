@@ -3,21 +3,18 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class ExitPortal extends InteractableObject{
+public class LootItem extends InteractableObject{
 
-    private Vector2 locationRC;
     private Vector2 position;
     private Vector2 size;
     private BufferedImage sprite;
     private BoxCollider collider;
-    private static ExitPortal portal;
     private InteractionPrompt interactionPrompt;
     
-    public ExitPortal(){
+    public LootItem(Vector2 position){
         super();
-        size = new Vector2(1,1);
-        locationRC = Vector2.zero();
-        position = TileMap.Singleton.rcToCoords(locationRC);
+        size = new Vector2(.5f,.5f);
+        this.position = position.clone();
 
         collider = new BoxCollider(this, size, ColliderPurpose.INTERACTABLE);
 
@@ -32,7 +29,7 @@ public class ExitPortal extends InteractableObject{
 
 
     public void interacted(){
-        Screen.player.setPos(new Vector2(-10, 0));
+        destroySelf();
     }
 
     
@@ -50,16 +47,5 @@ public class ExitPortal extends InteractableObject{
     }
     public Vector2 size(){
         return size.clone();
-    }
-
-    public static void createPortal(){
-        portal = new ExitPortal();
-    }
-    public static void deletePortal(){
-        portal.destroySelf();
-        portal = null;
-    }
-    public static ExitPortal portal(){
-        return portal;
     }
 }

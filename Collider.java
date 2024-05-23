@@ -159,5 +159,5 @@ enum ColliderPurpose{
     PLAYER_PROJECTILE,
     DUD,
     BOSS,
-    PORTAL,
+    INTERACTABLE,
 }

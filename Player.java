@@ -133,9 +133,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     }
 
     public void interactPressed(){
-        if(ExitPortal.playerTouching()){
-            ExitPortal.teleportPlayer();
-        }
+        InteractableObject.checkInteractions();
     }
 
     public PlayerColor color(){
