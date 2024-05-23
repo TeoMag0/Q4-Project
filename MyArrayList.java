@@ -49,7 +49,6 @@ public class MyArrayList<E> implements Iterable<E>{
         array[index] = obj;
     }
     public synchronized void remove(int index){
-        array[index] = null;
         for(int i=index;i<size-1;i++){
             array[i] = array[i+1];
         }

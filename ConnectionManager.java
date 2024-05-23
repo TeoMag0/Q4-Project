@@ -66,7 +66,7 @@ public class ConnectionManager {
 						Screen.boss.attackManager.stopAttack((BossAttacks) received.data);
 						break;
 					case BOSS_HEALTH:
-						//receives in health
+						//receives int health
 						Screen.boss.healthManager.setHealth((int)received.data);
 						break;
 					case BOSS_MAX_HEALTH:
