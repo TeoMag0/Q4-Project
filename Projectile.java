@@ -34,6 +34,9 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
     public synchronized static void updateAll(int deltaTimeMS){
         while(projectilesToAdd.size() != 0){
             Projectile p = projectilesToAdd.remove(0);
+            if(p == null){
+                System.out.println("added null projectile to projectile list");
+            }
             allProjectiles.add(p);
         }
         while(projectilesToDelete.toDLList().size() != 0){

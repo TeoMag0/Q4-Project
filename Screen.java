@@ -64,7 +64,7 @@ public class Screen extends JPanel {
 		return new Vector2(newX, newY);
 	}
 	public static int toPixels(float num){
-		return (int)Math.ceil(num*pixelsPerUnit);
+		return (int)(num*pixelsPerUnit);
 	}
 	public static void setPixelsPerUnit(int ppu){
 		pixelsPerUnit = ppu;
