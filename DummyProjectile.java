@@ -3,30 +3,20 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-/*
- * purpose: player's projectile
- * to update: make width of collider line up with picture
- *              and if penetrates is false send to server, and send active state to server
- */
 
-public class PlayerProjectile extends Projectile{
+public class DummyProjectile extends Projectile {
+
+    private float lifetime;
+    private Collider collider;
+    private static BufferedImage[] pictures;
     private BufferedImage pic;
     private Vector2 size;
-    private CircleCollider collider;
-    private float lifeTime;
-    private static BufferedImage[] pictures;
-
-    private boolean test = false;
-
-    public PlayerProjectile(Vector2 position, float size, Vector2 velocity, float maxDist){
-        super(position, velocity);
-        this.size = new Vector2(size, size);
-        test = true;
-
-        //get the x size
-        collider = new CircleCollider(this, size/4, ColliderPurpose.PLAYER_PROJECTILE);
-
-        lifeTime = maxDist/velocity.magnitude();
+    
+    public DummyProjectile(Vector2 pos, Vector2 velocity){
+        super(pos, velocity);
+        lifetime = Screen.player.attackManager.maxDist/velocity.magnitude();
+        collider = new CircleCollider(this, .1f, ColliderPurpose.DUD);
+        size = new Vector2(Screen.player.attackManager.projectileSize(), Screen.player.attackManager.projectileSize());
 
         float angle = (float)Math.atan2(velocity.getY(), velocity.getX());
         float increment = (float)Math.PI/4;
@@ -41,29 +31,28 @@ public class PlayerProjectile extends Projectile{
             pic = pictures[7];
         }
     }
-    public static synchronized PlayerProjectile createProjectile(Vector2 position, float size, Vector2 velocity, float maxDist){
-        return new PlayerProjectile(position, size, velocity, maxDist);
-    }
 
-    public void update(float deltaTime){
-        super.update(deltaTime);
-        lifeTime -= deltaTime;
-        if(lifeTime <= 0){
-            destroySelf();
-        }
-    }
-
+    @Override
     public void drawMe(Graphics g){
-        if(!test){
-            System.out.println("drawMe called before size was instantiated");
-        }
         Vector2 drawPoint = Screen.getScreenCoords(Vector2.sum(getPos(), new Vector2(-size.getX()/2, size.getY()/2)));
         g.drawImage(pic, drawPoint.intX(), drawPoint.intY(), Screen.toPixels(size.getX()), Screen.toPixels(size.getY()), null);
     }
+
+    @Override
+    public void update(float deltaTime){
+        super.update(deltaTime);
+        lifetime -= deltaTime;
+
+        if(lifetime <= 0){
+            destroySelf();
+        }
+    }
+    @Override
     public Collider collider(){
         return collider;
     }
 
+    @Override
     public void onCollisionEnter(Collider col){
         if(col.purpose() == ColliderPurpose.WALL){
             destroySelf();

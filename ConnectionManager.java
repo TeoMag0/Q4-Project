@@ -92,6 +92,11 @@ public class ConnectionManager {
 					case GAME_END:
 						//receives boolean gameended
 						ClientGameManager.Singleton.endGame();
+						break;
+					case PLAYER_PROJECTILE:
+						//receives {int clientID, Vector2 velocity}
+						Object[] array = (Object[])received.data;
+						DummyPlayerManager.Singleton.launchProjectile((int)array[0], (Vector2)array[1]);
 				}
 
 				Screen.Singleton.repaint();

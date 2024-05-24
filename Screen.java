@@ -25,6 +25,8 @@ public class Screen extends JPanel {
 
 		//instantiate things that need awakening
 		PhysicsManager.Singleton.wakeUp();
+		PlayerProjectile.setUpSprites();
+		DummyProjectile.setUpSprites();
 	}
 
 	public void paintComponent(Graphics g){

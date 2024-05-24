@@ -17,7 +17,7 @@ public class Game {
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 1;
+        MaxPlayers = 2;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
@@ -51,6 +51,11 @@ public class Game {
                 //receive int damage
                 bossHealthManager.damage((int)obj.data);
                 manager.broadcast(new NetworkObject<Integer>(bossHealthManager.bossHealth(), Packet.BOSS_HEALTH));
+                break;
+            case PLAYER_PROJECTILE:
+                //receives Vector2 velocity
+                //sends {int clientID, Vector2 projectileVelocity}
+                manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, Packet.PLAYER_PROJECTILE));
                 break;
             default:
                 break;

@@ -31,8 +31,7 @@ public class PhysicsManager extends Startable implements Runnable{
                         Collider c2 = colliders.get(j);
                         if(c1 == null || c2 == null){
                             continue;
-                        }
-                        if(c1.purpose() != c2.purpose() && Vector2.distance(c1.getPos(), c2.getPos()) < registerCollisionDistance){
+                        }else if(c1.purpose() != c2.purpose() && Vector2.distance(c1.getPos(), c2.getPos()) < registerCollisionDistance){
                             Collider.checkCollision(c1, c2);
                         }
                     }

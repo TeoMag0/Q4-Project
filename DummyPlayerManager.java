@@ -34,6 +34,11 @@ public class DummyPlayerManager implements DrawableObject{
         }
     }
 
+    public void launchProjectile(int clientID, Vector2 velocity){
+        Vector2 pos = dummies.get(clientID).getPos();
+        new DummyProjectile(pos, velocity);
+    }
+
     public void remove(int clientID){
         dummies.remove(clientID);
     }
