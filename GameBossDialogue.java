@@ -21,7 +21,7 @@ public class GameBossDialogue {
                     break;
             }
         }catch(InterruptedException e){
-
+            e.printStackTrace();
         }
     }
 

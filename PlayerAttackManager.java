@@ -14,12 +14,16 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     private boolean canShoot;
     private float firerate;
     private Thread runThread;
+    public final float maxDist;
+    private final float projectileSize;
 
     public PlayerAttackManager(Player player){
         this.player = player;
         setActive(true);
         mouseDown = false;
         firerate = 5;
+        maxDist = 3f;
+        projectileSize = .5f;
         canShoot(true);
     }
     public void start(){
@@ -50,7 +54,8 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         float speed = 4;
         Vector2 velocity = Vector2.multiply(Vector2.difference(Screen.getWorldCoords(mouseWorldPositionPixels), player.getPos()).normalized(), speed);
         if(!velocity.equals(Vector2.zero())){
-            PlayerProjectile.createProjectile(player.getPos(), .5f, velocity, 3.5f);
+            PlayerProjectile.createProjectile(player.getPos(), projectileSize, velocity, maxDist);
+            player.connectionManager.sendProjectile(velocity);
             Sound.playSound("drawCard.wav");
         }
     }
@@ -104,5 +109,8 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
     }
     private synchronized void canShoot(boolean canShoot){
         this.canShoot = canShoot;
+    }
+    public float projectileSize(){
+        return projectileSize;
     }
 }

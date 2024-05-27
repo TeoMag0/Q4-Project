@@ -4,13 +4,18 @@ public class GameBossHealthManager {
     private int bossHealth;
     private int maxHealth;
     private Manager manager;
+    private boolean invulnerable;
 
     public GameBossHealthManager(Manager manager, Game game){
         this.game = game;
         this.manager = manager;
+        invulnerable = false;
     }
 
     public void damage(int damage){
+        if(invulnerable){
+            return;
+        }
         bossHealth -= damage;
 
         //end of phase
@@ -43,6 +48,7 @@ public class GameBossHealthManager {
     }
 
     public void setInvulnerable(boolean invulnerable){
+        this.invulnerable = invulnerable;
         manager.broadcast(new NetworkObject<Boolean>(invulnerable, Packet.BOSS_INVULNERABLE));
     }
 }

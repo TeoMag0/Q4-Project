@@ -25,6 +25,8 @@ public class Screen extends JPanel {
 
 		//instantiate things that need awakening
 		PhysicsManager.Singleton.wakeUp();
+		PlayerProjectile.setUpSprites();
+		DummyProjectile.setUpSprites();
 	}
 
 	public void paintComponent(Graphics g){
@@ -62,7 +64,7 @@ public class Screen extends JPanel {
 		return new Vector2(newX, newY);
 	}
 	public static int toPixels(float num){
-		return (int)Math.ceil(num*pixelsPerUnit);
+		return (int)(num*pixelsPerUnit);
 	}
 	public static void setPixelsPerUnit(int ppu){
 		pixelsPerUnit = ppu;

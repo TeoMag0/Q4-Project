@@ -36,4 +36,8 @@ public class PlayerConnectionManager implements Runnable{
     public void isInBossRoom(boolean is){
         ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(is, Packet.IS_IN_BOSS_ROOM));
     }
+
+    public void sendProjectile(Vector2 velocity){
+        ConnectionManager.Singleton.sendObject(new NetworkObject<Vector2>(velocity, Packet.PLAYER_PROJECTILE));
+    }
 }

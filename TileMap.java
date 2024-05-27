@@ -35,7 +35,7 @@ public class TileMap extends Startable implements DrawableObject{
             Vector2 tilePixelCoords = Screen.getScreenCoords(rcToCoords(each));
             Vector2 tileBR = Vector2.sum(tilePixelCoords, new Vector2(Screen.toPixels(tileSize), Screen.toPixels(tileSize)));
             if(tilePixelCoords.getX() <= Screen.screenPixelDimensions.getX() && tilePixelCoords.getY() <= Screen.screenPixelDimensions.getY() && tileBR.getX() >= 0 && tileBR.getY() >= 0){
-                g.drawImage(tile.pic().pic(), tilePixelCoords.intX(), tilePixelCoords.intY(), Screen.toPixels(tileSize), Screen.toPixels(tileSize), null);
+                g.drawImage(tile.pic().pic(), tilePixelCoords.intX(), tilePixelCoords.intY(), Screen.toPixels(tileSize)+1, Screen.toPixels(tileSize)+1, null);
             }
         }
     }
