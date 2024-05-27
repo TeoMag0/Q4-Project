@@ -51,6 +51,7 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         Vector2 velocity = Vector2.multiply(Vector2.difference(Screen.getWorldCoords(mouseWorldPositionPixels), player.getPos()).normalized(), speed);
         if(!velocity.equals(Vector2.zero())){
             PlayerProjectile.createProjectile(player.getPos(), .5f, velocity, 3.5f);
+            Sound.playSound("drawCard.wav");
         }
     }
 
