@@ -27,6 +27,7 @@ public class Screen extends JPanel {
 		PhysicsManager.Singleton.wakeUp();
 		PlayerProjectile.setUpSprites();
 		DummyProjectile.setUpSprites();
+		new RestartButton();
 	}
 
 	public void paintComponent(Graphics g){

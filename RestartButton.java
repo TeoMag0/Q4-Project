@@ -11,10 +11,10 @@ public class RestartButton extends InteractableObject{
     private Collider collider;
 
     public RestartButton(){
-        position = new Vector2(0, 36);
+        position = TileMap.Singleton.rcToCoords(new Vector2(0, 40));
 
         try{
-            sprite = ImageIO.read(new File("BlackSprite.png"));
+            sprite = ImageIO.read(new File("BlankSprite.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
