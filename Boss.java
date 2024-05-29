@@ -6,19 +6,21 @@ import java.awt.*;
 
 public class Boss extends Startable implements DrawableObject, Transform{
     
-    private float size;
+    private Vector2 size;
     private Vector2 position;
     public final BossAttackManager attackManager;
     public final BossHealthManager healthManager;
     public final BossSpeechBubble speechBubble;
+    public final BossAppearanceManager appearanceManager;
 
     public Boss(Vector2 position){
         this.position = position;
-        size = 2;
+        size = new Vector2(2, 2);
 
         attackManager = new BossAttackManager(this);
         healthManager = new BossHealthManager(this);
-        speechBubble = new BossSpeechBubble(this, new Vector2(0, 2));
+        speechBubble = new BossSpeechBubble(this, new Vector2(0, 1));
+        appearanceManager = new BossAppearanceManager(this);
     }
     public void start(){
 
@@ -29,6 +31,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
     }
     
     public void drawMe(Graphics g){
+        appearanceManager.drawMe(g);
         speechBubble.drawMe(g);
     }
     public Vector2 getPos(){
@@ -36,6 +39,6 @@ public class Boss extends Startable implements DrawableObject, Transform{
     }
 
     public Vector2 size(){
-        return new Vector2(size, size);
+        return size.clone();
     }
 }

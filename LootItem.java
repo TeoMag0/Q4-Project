@@ -20,7 +20,7 @@ public class LootItem extends InteractableObject{
         interactionPrompt = new InteractionPrompt(this, new Vector2(0, size.getY()/2+.2f), "Pick Up");
 
         try{
-            sprite = ImageIO.read(new File("BlankSprite.png"));
+            sprite = ImageIO.read(new File("APlus.png"));
         }catch(IOException e){
             e.printStackTrace();
         }

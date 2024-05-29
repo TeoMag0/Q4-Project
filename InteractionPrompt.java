@@ -19,7 +19,7 @@ public class InteractionPrompt implements DrawableObject, Transform {
         size = new Vector2(.3f, .3f);
 
         try{
-            sprite = ImageIO.read(new File("BlankSprite.png"));
+            sprite = ImageIO.read(new File("Interact.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
