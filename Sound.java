@@ -21,10 +21,4 @@ public class Sound {
         Clip clip = clips.get(fileName);
         clip.start();
     }
-
-    private static void checkClip(String fileName){
-        if(clips.get(fileName) == null){
-            
-        }
-    }
 }
