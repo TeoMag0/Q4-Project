@@ -19,7 +19,7 @@ public class MyArrayList<E> implements Iterable<E>{
     public E get(int index){
         return (E)array[index];
     }
-    public boolean add(E obj){
+    public synchronized boolean add(E obj){
         if(obj == null){
             System.out.println("added null object "+obj);
         }
@@ -31,7 +31,7 @@ public class MyArrayList<E> implements Iterable<E>{
             return true;
         }catch(Exception e){return false;}
     }
-    public void add(int index, E obj){
+    public synchronized void add(int index, E obj){
         if(size == array.length)
             doubleArraySize();
 
@@ -45,7 +45,7 @@ public class MyArrayList<E> implements Iterable<E>{
         }
         size++;
     }
-    public void set(int index, E obj){
+    public synchronized void set(int index, E obj){
         array[index] = obj;
     }
     public synchronized void remove(int index){

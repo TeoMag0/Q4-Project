@@ -36,8 +36,11 @@ public abstract class Projectile implements HasCollider, Transform, DrawableObje
             Projectile p = projectilesToAdd.remove(0);
             if(p == null){
                 System.out.println("added null projectile to projectile list");
+                System.out.println(projectilesToAdd);
+                System.out.println(projectilesToAdd.size());
+            }else{
+                allProjectiles.add(p);
             }
-            allProjectiles.add(p);
         }
         while(projectilesToDelete.toDLList().size() != 0){
             Projectile p = projectilesToDelete.toDLList().get(0);

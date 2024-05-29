@@ -22,6 +22,7 @@ public class BossStackOverflowAttack extends BossAttack{
                 for(float each : angles){
                     new BossProjectileBouncy("BlankSprite.png", boss().getPos(), .3f, new Vector2(speed, each, true),20);
                 }
+                Sound.playSound("straw.wav");
                 Thread.sleep((int)(1000/firerate));
             }
         }catch(InterruptedException e){

@@ -10,15 +10,19 @@ public class MyHashSet<E>{
         size = 0;
     }
 
+    private int getIndex(E obj){
+        return Math.abs(obj.hashCode()%array.length);
+    }
+
     public E add(E obj){
         E toReturn = get(obj);
         if(toReturn != null){
             remove(toReturn);
         }
-        if(array[obj.hashCode()%array.length] == null){
-            array[obj.hashCode()%array.length] = new DLList<E>();
+        if(array[getIndex(obj)] == null){
+            array[getIndex(obj)] = new DLList<E>();
         }
-        array[obj.hashCode()%array.length].add(obj);
+        array[getIndex(obj)].add(obj);
         size++;
         list.add(obj);
         return toReturn;
@@ -30,9 +34,9 @@ public class MyHashSet<E>{
             System.out.println("tried to remove a key from hashtable that doesn't exist");
             return null;
         }
-        array[obj.hashCode()%array.length].remove(obj);
-        if(array[obj.hashCode()%array.length].size() == 0){
-            array[obj.hashCode()%array.length] = null;
+        array[getIndex(obj)].remove(obj);
+        if(array[getIndex(obj)].size() == 0){
+            array[getIndex(obj)] = null;
         }
         
         list.remove(obj);
@@ -45,7 +49,7 @@ public class MyHashSet<E>{
     }
 
     private E get(E obj){
-        DLList<E> bucketList = array[obj.hashCode()%array.length];
+        DLList<E> bucketList = array[getIndex(obj)];
         if(bucketList != null){
             for(E each : bucketList){
                 if(obj.equals(each)){

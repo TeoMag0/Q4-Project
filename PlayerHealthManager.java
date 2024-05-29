@@ -12,6 +12,7 @@ public class PlayerHealthManager {
     //when hit by boss's projectile
     public void hit(){
         health--;
+        Sound.playSound("pencilOnGlass.wav");
         if(health == 0){
             player.die();
         }

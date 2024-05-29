@@ -87,6 +87,7 @@ public class BossDeathLinesAttack extends BossAttack{
                 }
                 break;
         }
+        Sound.playSound("straw.wav");
     }
     public void setDirection(Direction dir){
         attackDir = dir;

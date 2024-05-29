@@ -27,6 +27,8 @@ public class Screen extends JPanel {
 		PhysicsManager.Singleton.wakeUp();
 		PlayerProjectile.setUpSprites();
 		DummyProjectile.setUpSprites();
+
+		new LootItem(new Vector2(0, -10));
 	}
 
 	public void paintComponent(Graphics g){
@@ -65,6 +67,9 @@ public class Screen extends JPanel {
 	}
 	public static int toPixels(float num){
 		return (int)(num*pixelsPerUnit);
+	}
+	public static float toCoords(int pixels){
+		return (float)pixels/pixelsPerUnit;
 	}
 	public static void setPixelsPerUnit(int ppu){
 		pixelsPerUnit = ppu;

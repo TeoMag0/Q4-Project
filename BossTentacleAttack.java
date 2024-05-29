@@ -33,6 +33,7 @@ public class BossTentacleAttack extends BossAttack{
                 if(mainAngle >= angularDispBeforeSwitch || mainAngle < 0){
                     dirCCW = !dirCCW;
                 }
+                Sound.playSound("straw.wav");
                 Thread.sleep((int)(1000/firerate));
             }
         }catch(InterruptedException e){

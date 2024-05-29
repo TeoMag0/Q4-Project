@@ -10,6 +10,10 @@ public class MyHashTable<K,V>{
         size = 0;
     }
 
+    private int keyIndex(K key){
+        return Math.abs(key.hashCode()%array.length);
+    }
+
     public void put(K key, V val){
         if(keySet.contains(key)){
             remove(key);
@@ -17,15 +21,15 @@ public class MyHashTable<K,V>{
         if(val == null){
             return;
         }
-        if(array[key.hashCode()%array.length] == null){
-            array[key.hashCode()%array.length] = new DLList<Pair<K,V>>();
+        if(array[keyIndex(key)] == null){
+            array[keyIndex(key)] = new DLList<Pair<K,V>>();
         } 
-        array[key.hashCode()%array.length].add(new Pair<K, V>(key, val));    
+        array[keyIndex(key)].add(new Pair<K, V>(key, val));    
         keySet.add(key);
         size++;
     }
     public V get(K key){
-        DLList<Pair<K, V>> list = array[key.hashCode()%array.length];
+        DLList<Pair<K, V>> list = array[keyIndex(key)];
         if(list != null){
             for(Pair<K,V> each : list){
                 if(each.key.equals(key)){
@@ -38,10 +42,10 @@ public class MyHashTable<K,V>{
 
     public V remove(K key){
         V toReturn = get(key);
-        array[key.hashCode()%array.length].remove(new Pair<K,V>(key, toReturn));
+        array[keyIndex(key)].remove(new Pair<K,V>(key, toReturn));
         keySet.remove(key);
-        if(array[key.hashCode()%array.length].size() == 0){
-            array[key.hashCode()%array.length] = null;
+        if(array[keyIndex(key)].size() == 0){
+            array[keyIndex(key)] = null;
         }
         if(toReturn != null){
             size--;

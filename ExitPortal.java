@@ -20,7 +20,7 @@ public class ExitPortal extends InteractableObject{
 
         collider = new BoxCollider(this, size, ColliderPurpose.INTERACTABLE);
 
-        interactionPrompt = new InteractionPrompt(this, new Vector2(0, size.getY()/2+.2f));
+        interactionPrompt = new InteractionPrompt(this, new Vector2(0, size.getY()/2+.2f), "End Screen");
 
         try{
             sprite = ImageIO.read(new File("BlankSprite.png"));
@@ -31,7 +31,7 @@ public class ExitPortal extends InteractableObject{
 
 
     public void interacted(){
-        Screen.player.setPos(new Vector2(-10, 0));
+        Screen.player.setPos(TileMap.Singleton.rcToCoords(new Vector2(0, 21)));
     }
 
     

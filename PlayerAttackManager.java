@@ -56,7 +56,7 @@ public class PlayerAttackManager extends Startable implements MouseInputListener
         if(!velocity.equals(Vector2.zero())){
             PlayerProjectile.createProjectile(player.getPos(), projectileSize, velocity, maxDist);
             player.connectionManager.sendProjectile(velocity);
-            Sound.playSound("drawCard.wav");
+            Sound.playSound("keyclack.wav");
         }
     }
 

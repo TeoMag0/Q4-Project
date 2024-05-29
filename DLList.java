@@ -15,7 +15,7 @@ public class DLList<E> implements Iterable<E>{
 
         size = 0;
     }
-    public void add(E data){
+    public synchronized void add(E data){
         Node<E> newNode = new Node<E>(data);
 
         newNode.setPrev(tail.prev());

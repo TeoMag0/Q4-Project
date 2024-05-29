@@ -23,6 +23,7 @@ public class BossProjectileRecursive extends BossProjectile{
                 Vector2 velocity = new Vector2(getVelocity().magnitude(), angle, true);
                 createProjectile("Asterisk1.png", getPos(), .3f, velocity, lifetime, iterations-1);
             }
+            Sound.playSound("straw.wav");
         }
     }
 
