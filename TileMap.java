@@ -80,7 +80,7 @@ public class TileMap extends Startable implements DrawableObject{
             array[i] = new Pair<Vector2, Tile>(each, tileMap.get(each));
             i++;
         }
-        TileMapSaveLoad.saveMap(array);
+        TileMapSaveLoad.saveMapToText(array);
     }
     
     @SuppressWarnings("unchecked")

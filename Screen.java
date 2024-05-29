@@ -27,8 +27,6 @@ public class Screen extends JPanel {
 		PhysicsManager.Singleton.wakeUp();
 		PlayerProjectile.setUpSprites();
 		DummyProjectile.setUpSprites();
-
-		new LootItem(new Vector2(0, -10));
 	}
 
 	public void paintComponent(Graphics g){
