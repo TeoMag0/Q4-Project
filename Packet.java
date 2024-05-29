@@ -23,4 +23,6 @@ public enum Packet{
     GAME_END,
     PLAYER_PROJECTILE,
     RESTART_GAME,
+    PLAYER_HEALED,
+    SPAWN_HEART,
 }

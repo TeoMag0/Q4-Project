@@ -18,6 +18,7 @@ public class Player extends Startable implements DrawableObject, Transform{
     private final float inBossRoomYThresholdRC;
     private boolean isInBossRoom;
     private PlayerColor color;
+    private boolean isAlive;
 
     public Player(Vector2 position, float speed){
         this.position = position.clone();
@@ -26,6 +27,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         inBossRoomYThresholdRC = -3;
         isInBossRoom = false;
         color = PlayerColor.BLUE;
+        isAlive = true;
 
         movementManager = new PlayerKeyInput(this, speed);
         connectionManager = new PlayerConnectionManager(this);
@@ -86,6 +88,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         Screen.setPixelsPerUnit(75);
         connectionManager.die();
         attackManager.setActive(false);
+        isAlive = false;
     }
     public void resurrect(){
         appearanceManager.setActive(true);
@@ -95,6 +98,7 @@ public class Player extends Startable implements DrawableObject, Transform{
         healthManager.resetHealth();
         connectionManager.resurrect();
         attackManager.setActive(true);
+        isAlive = true;
     }
 
     private void updateIsInBossRoom(){
@@ -137,5 +141,8 @@ public class Player extends Startable implements DrawableObject, Transform{
 
     public PlayerColor color(){
         return color;
+    }
+    public boolean isAlive(){
+        return isAlive;
     }
 }

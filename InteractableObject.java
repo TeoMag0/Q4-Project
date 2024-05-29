@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.image.*;
-import java.io.*;
-import javax.imageio.*;
 
 public abstract class InteractableObject implements DrawableObject, Transform, HasCollider{
 
@@ -26,6 +24,9 @@ public abstract class InteractableObject implements DrawableObject, Transform, H
     }
 
     public boolean playerTouching(){
+        if(!Screen.player.isAlive()){
+            return false;
+        }
         return Collider.checkCollision(collider(), Screen.player.collisionManager.collider());
     }
 

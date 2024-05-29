@@ -101,6 +101,15 @@ public class ConnectionManager {
 						//receives {int clientID, Vector2 velocity}
 						Object[] array = (Object[])received.data;
 						DummyPlayerManager.Singleton.launchProjectile((int)array[0], (Vector2)array[1]);
+						break;
+					case SPAWN_HEART:
+						//receives Vector2 location
+						ClientHeartPickupManager.addHeart((Vector2)received.data);
+						break;
+					case PLAYER_HEALED:
+						//receives Vector2 location
+						ClientHeartPickupManager.removeHeart((Vector2)received.data);
+						break;
 				}
 
 				Screen.Singleton.repaint();

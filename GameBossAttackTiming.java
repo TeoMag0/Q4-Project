@@ -27,6 +27,8 @@ public class GameBossAttackTiming implements Runnable{
                     lastAttack = attack;
                     startAttack(attack);
 
+                    game.healManager.spawnHearts();
+                    
                     if(curState == GameState.PHASE_2){
                         BossAttacks attack2 = pickRandomAttack();
                         lastAttack = attack2;

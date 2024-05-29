@@ -13,6 +13,7 @@ public class Game {
     public final GameBossAttackTiming bossTiming;
     public final GameBossHealthManager bossHealthManager;
     public final GameBossDialogue dialogueManager;
+    public final GameHealManager healManager;
     
     public Game(Manager manager){
         this.manager = manager;
@@ -23,6 +24,7 @@ public class Game {
         bossTiming = new GameBossAttackTiming(manager, this);
         bossHealthManager = new GameBossHealthManager(manager, this);
         dialogueManager = new GameBossDialogue(manager, this);
+        healManager = new GameHealManager(this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -67,6 +69,10 @@ public class Game {
                         nextState();
                     }
                 }
+                break;
+            case PLAYER_HEALED:
+                //receive Vector2 heartPos
+                manager.broadcastExcept(clientID, obj);
             default:
                 break;
         }
@@ -171,5 +177,8 @@ public class Game {
 
     public void endGame(){
         manager.broadcast(new NetworkObject<Boolean>(true, Packet.GAME_END));
+    }
+    public void sendHeart(Vector2 position){
+        manager.broadcast(new NetworkObject<Vector2>(position, Packet.SPAWN_HEART));
     }
 }
