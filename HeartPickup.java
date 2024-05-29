@@ -10,6 +10,7 @@ public class HeartPickup extends InteractableObject implements Runnable{
     private BoxCollider collider;
     private InteractionPrompt interactionPrompt;
     private static final BufferedImage[] anim = new BufferedImage[17];
+    private Thread thisThread = null;
     
     public HeartPickup(Vector2 position){
         super();
@@ -21,7 +22,8 @@ public class HeartPickup extends InteractableObject implements Runnable{
         interactionPrompt = new InteractionPrompt(this, new Vector2(0, size.getY()/2+.2f), "Pick Up");
 
         sprite = anim[0];
-        new Thread(this).start();
+        thisThread = new Thread(this);
+        thisThread.start();
     }
 
 
@@ -35,11 +37,25 @@ public class HeartPickup extends InteractableObject implements Runnable{
         try{
             for(int i=0;i<anim.length;i++){
                 sprite = anim[i];
-                Thread.sleep(100);
+                Thread.sleep(50);
+            }
+            while(thisThread != null){
+                Thread.sleep(1000);
+                if(sprite == anim[16]){
+                    sprite = anim[15];
+                }else{
+                    sprite = anim[16];
+                }
             }
         }catch(InterruptedException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void destroySelf(){
+        thisThread = null;
+        super.destroySelf();
     }
 
     public static void setUpSprites(){
