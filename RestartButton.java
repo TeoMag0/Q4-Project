@@ -1,5 +1,6 @@
-import java.awt.*;
 import java.awt.image.*;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class RestartButton extends InteractableObject{
 
@@ -11,6 +12,16 @@ public class RestartButton extends InteractableObject{
 
     public RestartButton(){
         position = new Vector2(0, 36);
+
+        try{
+            sprite = ImageIO.read(new File("BlackSprite.png"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        size = new Vector2(2,2);
+        prompt = new InteractionPrompt(this, new Vector2(0, .3f), "Restart");
+        collider = new BoxCollider(this, size, ColliderPurpose.INTERACTABLE);
     }
 
     public void interacted(){
