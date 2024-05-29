@@ -47,6 +47,9 @@ public class WaitingForPlayersText implements DrawableObject, Runnable{
     public void fadeOut(){
         new Thread(this).start();
     }
+    public void reset(){
+        textColor = new Color(textColor.getRed(), textColor.getGreen(), textColor.getBlue(), 255);
+    }
 
     public void run(){
         try{

@@ -91,7 +91,11 @@ public class ConnectionManager {
 						break;
 					case GAME_END:
 						//receives boolean gameended
-						ClientGameManager.Singleton.endGame();
+						if((boolean)received.data){
+							ClientGameManager.Singleton.endGame();
+						}else{
+							ClientGameManager.Singleton.restartGame();
+						}
 						break;
 					case PLAYER_PROJECTILE:
 						//receives {int clientID, Vector2 velocity}

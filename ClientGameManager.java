@@ -38,7 +38,15 @@ public class ClientGameManager {
     public void endGame(){
         Entry.openEntry();
         ExitPortal.createPortal();
-        Screen.boss.healthManager.drawHealth.setActive(false);
-        Screen.boss.dropLoot();
+        Screen.boss.die();
+        Screen.player.resurrect();
+    }
+    public void restartGame(){
+        ExitPortal.deletePortal();
+        Screen.boss.resurrect();
+        Screen.player.resurrect();
+        PlayerSpawns.movePlayerToSpawn();
+        CellDoors.closeCellDoors();
+        Screen.player.uiManager.waitingText().reset();
     }
 }

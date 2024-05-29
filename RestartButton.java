@@ -25,7 +25,8 @@ public class RestartButton extends InteractableObject{
     }
 
     public void interacted(){
-        //send restart to game
+        ClientGameManager.Singleton.restartGame();
+        ConnectionManager.Singleton.sendObject(new NetworkObject<Boolean>(null, Packet.RESTART_GAME));
     }
 
     public Vector2 getPos() {

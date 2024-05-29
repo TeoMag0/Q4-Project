@@ -87,11 +87,10 @@ public class Player extends Startable implements DrawableObject, Transform{
         connectionManager.die();
         attackManager.setActive(false);
     }
-    public void resurrect(Vector2 pos){
+    public void resurrect(){
         appearanceManager.setActive(true);
         collisionManager.setActive(true);
         movementManager.setActive(true);
-        position = pos.clone();
         Screen.setPixelsPerUnit(100);
         healthManager.resetHealth();
         connectionManager.resurrect();

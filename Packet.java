@@ -22,4 +22,5 @@ public enum Packet{
     BOSS_QUOTE,
     GAME_END,
     PLAYER_PROJECTILE,
+    RESTART_GAME,
 }

@@ -26,8 +26,13 @@ public class Boss extends Startable implements DrawableObject, Transform{
 
     }
 
-    public void dropLoot(){
+    public void die(){
         new LootItem(position);
+        healthManager.drawHealth.setActive(false);
+        appearanceManager.setActive(false);
+    }
+    public void resurrect(){
+        appearanceManager.setActive(true);
     }
     
     public void drawMe(Graphics g){

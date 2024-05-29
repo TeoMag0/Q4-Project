@@ -57,6 +57,16 @@ public class Game {
                 //sends {int clientID, Vector2 projectileVelocity}
                 manager.broadcastExcept(clientID, new NetworkObject<Object[]>(new Object[] {clientID, obj.data}, Packet.PLAYER_PROJECTILE));
                 break;
+            case RESTART_GAME:
+                //receives null
+                if(gameState != GameState.WAITING_FOR_PLAYERS){
+                    manager.broadcastExcept(clientID, new NetworkObject<Boolean>(false, Packet.GAME_END));
+                    nextState();
+
+                    if(numClients() == MaxPlayers){
+                        nextState();
+                    }
+                }
             default:
                 break;
         }
@@ -119,6 +129,8 @@ public class Game {
                 next = GameState.GAME_END;
                 bossTiming.startPhase(next);
                 break;
+            case GAME_END:
+                bossTiming.stopPhase();
             default:
                 next = GameState.WAITING_FOR_PLAYERS;
                 break;

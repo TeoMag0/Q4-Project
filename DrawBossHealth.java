@@ -43,6 +43,11 @@ public class DrawBossHealth {
         g.setColor(Color.RED);
         g.fillRoundRect(drawPoint.intX(), drawPoint.intY(), healthLength, screenHeight, 15, 15);
 
+        if(healthManager.invulnerable()){
+            g.setColor(new Color(255,255, 255, 100));
+            g.fillRect(drawPoint.intX(), drawPoint.intY(), healthLength, screenHeight);
+        }
+
         g.drawImage(healthBar, drawPoint.intX(), drawPoint.intY(), screenWidth, screenHeight, null);
     }
 

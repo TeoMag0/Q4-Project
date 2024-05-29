@@ -1,10 +1,8 @@
 public class GameBossDialogue {
     private Manager manager;
-    private Game game;
 
     public GameBossDialogue(Manager manager, Game game){
         this.manager = manager;
-        this.game = game;
     }
 
     public void startOfStateDialogue(GameState state){
@@ -19,6 +17,8 @@ public class GameBossDialogue {
                 case GAME_END:
                     gameEndDialogue();
                     break;
+                default:
+                    break;
             }
         }catch(InterruptedException e){
             e.printStackTrace();
@@ -26,19 +26,23 @@ public class GameBossDialogue {
     }
 
     private void phase1Dialogue() throws InterruptedException{
-        sendMessage("je voudrais un croissant");
-        Thread.sleep(5000);
+        Thread.sleep(2000);
+        sendMessage("Hello my little computer science students. :)");
+        sendMessage("Welcome to the quarter 4 project.");
+        sendMessage("Use left click to attack, and WASD to move around.");
+        sendMessage("In order to pass, you have to defeat...");
+        sendMessage("ME.");
     }
     private void phase2Dialogue() throws InterruptedException{
-        sendMessage("I hope you aren't claustrophobic, because YOU'RE ABOUT TO GET SERIALIZED");
-        Thread.sleep(5000);
+        Thread.sleep(2000);
+        sendMessage("Ew this code is so messy.");
     }
     private void gameEndDialogue() throws InterruptedException{
         sendMessage("I'm dying");
-        Thread.sleep(5000);
     }
 
-    private void sendMessage(String message){
+    private void sendMessage(String message)throws InterruptedException{
         manager.broadcast(new NetworkObject<String>(message, Packet.BOSS_QUOTE));
+        Thread.sleep(3000);
     }
 }
