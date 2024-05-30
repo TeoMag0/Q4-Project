@@ -25,4 +25,5 @@ public enum Packet{
     RESTART_GAME,
     PLAYER_HEALED,
     SPAWN_HEART,
+    TRANSFORM_BOSS,
 }

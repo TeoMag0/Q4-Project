@@ -7,9 +7,6 @@ public class ClientGameManager {
     public static final ClientGameManager Singleton = new ClientGameManager();
     private GameState gameState;
 
-    public ClientGameManager(){
-
-    }
     public GameState gameState(){
         return gameState;
     }
@@ -29,7 +26,6 @@ public class ClientGameManager {
                 Screen.boss.healthManager.drawHealth.setActive(true);
                 break;
             case PHASE_2:
-                Screen.boss.phase2();
                 break;
             case GAME_END:
                 break;

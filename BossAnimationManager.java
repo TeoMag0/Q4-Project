@@ -32,8 +32,6 @@ public class BossAnimationManager extends Startable implements Runnable{
                     boss.appearanceManager.setSprite(bossDown[1]);
                 } else if (boss.appearanceManager.sprite() == bossDown[1]) {
                     boss.appearanceManager.setSprite(bossDown[0]);
-                } else if (boss.appearanceManager.sprite() == bossUp[0]) {
-
                 }
                 Thread.sleep(500);
             }

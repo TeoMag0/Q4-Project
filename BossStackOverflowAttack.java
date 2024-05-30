@@ -20,7 +20,7 @@ public class BossStackOverflowAttack extends BossAttack{
         try{
             while(activeThread() != null){
                 for(float each : angles){
-                    new BossProjectileBouncy("BlankSprite.png", boss().getPos(), .3f, new Vector2(speed, each, true),20);
+                    new BossProjectileBouncy("Asterisk1.png", boss().getPos(), .3f, new Vector2(speed, each, true),6);
                 }
                 Sound.playSound("straw.wav");
                 Thread.sleep((int)(1000/firerate));

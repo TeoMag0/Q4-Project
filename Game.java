@@ -181,4 +181,7 @@ public class Game {
     public void sendHeart(Vector2 position){
         manager.broadcast(new NetworkObject<Vector2>(position, Packet.SPAWN_HEART));
     }
+    public void transformBoss(){
+        manager.broadcast(new NetworkObject<Boolean>(null, Packet.TRANSFORM_BOSS));
+    }
 }

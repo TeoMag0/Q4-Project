@@ -110,6 +110,10 @@ public class ConnectionManager {
 						//receives Vector2 location
 						ClientHeartPickupManager.removeHeart((Vector2)received.data);
 						break;
+					case TRANSFORM_BOSS:
+						//reeives null
+						BossTransformer.transformBoss();
+						break;
 				}
 
 				Screen.Singleton.repaint();
