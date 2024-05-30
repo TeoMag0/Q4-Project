@@ -46,4 +46,7 @@ public class BossAppearanceManager implements DrawableObject{
     public void setSprite(BufferedImage sprite){
         this.sprite = sprite;
     }
+    public void resetSprite(){
+        sprite = startingSprite;
+    }
 }

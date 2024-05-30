@@ -33,6 +33,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
     }
     public void resurrect(){
         appearanceManager.setActive(true);
+        appearanceManager.resetSprite();
     }
     
     public void drawMe(Graphics g){

@@ -13,8 +13,9 @@ public class ClientHeartPickupManager {
     }
 
     public static void deleteHearts(){
-        for(Vector2 each : hearts.keySet().toDLList()){
-            removeHeart(each);
+        while(hearts.keySet().toDLList().size() != 0){
+            Vector2 loc = hearts.keySet().toDLList().get(0);
+            hearts.remove(loc);
         }
     }
 }
