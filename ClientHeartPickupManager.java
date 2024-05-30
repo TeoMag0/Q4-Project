@@ -11,4 +11,10 @@ public class ClientHeartPickupManager {
     public static void addHeart(Vector2 position){
         hearts.put(position.clone(), new HeartPickup(position));
     }
+
+    public static void deleteHearts(){
+        for(Vector2 each : hearts.keySet().toDLList()){
+            removeHeart(each);
+        }
+    }
 }

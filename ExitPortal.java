@@ -55,8 +55,10 @@ public class ExitPortal extends InteractableObject{
         portal = new ExitPortal();
     }
     public static void deletePortal(){
-        portal.destroySelf();
-        portal = null;
+        if(portal != null){
+            portal.destroySelf();
+            portal = null;
+        }
     }
     public static ExitPortal portal(){
         return portal;

@@ -63,7 +63,9 @@ public class Game {
                 //receives null
                 if(gameState != GameState.WAITING_FOR_PLAYERS){
                     manager.broadcastExcept(clientID, new NetworkObject<Boolean>(false, Packet.GAME_END));
-                    nextState();
+                    while(gameState != GameState.WAITING_FOR_PLAYERS){
+                        nextState();
+                    }
 
                     if(numClients() == MaxPlayers){
                         nextState();
@@ -183,5 +185,8 @@ public class Game {
     }
     public void transformBoss(){
         manager.broadcast(new NetworkObject<Boolean>(null, Packet.TRANSFORM_BOSS));
+    }
+    public GameState gameState(){
+        return gameState;
     }
 }

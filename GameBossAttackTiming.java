@@ -40,6 +40,16 @@ public class GameBossAttackTiming implements Runnable{
 
                     stopAttack(attack);
                     Thread.sleep(2000);
+
+                    if(game.numAliveClients() == 0){
+                        manager.broadcast(new NetworkObject<Boolean>(false, Packet.GAME_END));
+                        while(game.gameState() != GameState.WAITING_FOR_PLAYERS){
+                            game.nextState();
+                        }
+                        if(game.numClients() == game.MaxPlayers){
+                            game.nextState();
+                        }
+                    }
                 }
             }
 

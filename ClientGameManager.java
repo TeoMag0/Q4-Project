@@ -45,5 +45,8 @@ public class ClientGameManager {
         PlayerSpawns.movePlayerToSpawn();
         CellDoors.closeCellDoors();
         Screen.player.uiManager.waitingText().reset();
+        Entry.openEntry();
+        Screen.boss.healthManager.drawHealth.setActive(false);
+        ClientHeartPickupManager.deleteHearts();
     }
 }
