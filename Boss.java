@@ -50,5 +50,6 @@ public class Boss extends Startable implements DrawableObject, Transform{
     public void phase2(){
         appearanceManager.phase2();
         size = new Vector2(1.3f, 1.3f);
+        healthManager.updateCollider();
     }
 }

@@ -25,6 +25,11 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
         activeThread.start();
     }
 
+    public void updateCollider(){
+        Collider.removeCollider(collider);
+        collider = new BoxCollider(this, boss.size(), ColliderPurpose.BOSS);
+    }
+
     public void hit(){
         if(!invulnerable){
             health-= 1;
