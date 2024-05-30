@@ -3,6 +3,8 @@
  * purpose: everything to be sent to/between clients goes through this guy it's like an FBI tap, also change game state
  */
 
+import java.io.IOException;
+
 public class Game {
 
     private Manager manager;
@@ -18,7 +20,7 @@ public class Game {
     public Game(Manager manager){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 1;
+        MaxPlayers = 2;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
@@ -89,11 +91,9 @@ public class Game {
         manager.send(clientID, new NetworkObject<Integer>(clientID, Packet.PLAYER_COLOR)); //send it its color
         manager.send(clientID, new NetworkObject<GameState>(gameState, Packet.GAME_STATE_CHANGE));//send current state
 
-        if(gameState == GameState.WAITING_FOR_PLAYERS){
-            manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));//update waiting text
-            if(numClients() == MaxPlayers){
-                nextState();
-            }
+        manager.broadcast(new NetworkObject<int[]>(new int[] {numClients(), MaxPlayers}, Packet.WAITING_PLAYERS));//update waiting text
+        if(numClients() == MaxPlayers){
+            nextState();
         }
     }
     public void disconnectClient(int clientID){
@@ -102,9 +102,7 @@ public class Game {
         clients.remove(clientID);
         manager.broadcast(new NetworkObject<Integer>(clientID, Packet.DISCONNECTED_PLAYER));//tells client to delete dummy
         playerSpawnIndices.removePlayer(clientID);
-        if (gameState == GameState.WAITING_FOR_PLAYERS) {
-            manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));//update waiting text
-        }
+        manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));//update waiting text
     }
     public int numClients(){
         return clients.keySet().size();
@@ -141,6 +139,11 @@ public class Game {
                 bossTiming.stopPhase();
             default:
                 next = GameState.WAITING_FOR_PLAYERS;
+                try{
+                    Server.waitForPlayers();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
                 break;
         }
         gameState = next;
@@ -188,5 +191,8 @@ public class Game {
     }
     public GameState gameState(){
         return gameState;
+    }
+    public MyHashTable<Integer, ClientInformation> clients(){
+        return clients;
     }
 }

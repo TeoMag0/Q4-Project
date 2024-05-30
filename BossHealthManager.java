@@ -32,8 +32,8 @@ public class BossHealthManager extends Startable implements HasCollider, Runnabl
 
     public void hit(){
         if(!invulnerable){
-            health-= 1;
-            damageToSend+= 1;
+            health-= 100;
+            damageToSend+= 100;
         }
     }
 

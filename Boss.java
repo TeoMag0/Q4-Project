@@ -19,7 +19,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
 
         attackManager = new BossAttackManager(this);
         healthManager = new BossHealthManager(this);
-        speechBubble = new BossSpeechBubble(this, new Vector2(0, 1));
+        speechBubble = new BossSpeechBubble(this, new Vector2(0, .8f));
         appearanceManager = new BossAppearanceManager(this);
     }
     public void start(){
@@ -34,6 +34,8 @@ public class Boss extends Startable implements DrawableObject, Transform{
     public void resurrect(){
         appearanceManager.setActive(true);
         appearanceManager.resetSprite();
+        size = new Vector2(1.3f, 1.3f);
+        healthManager.updateCollider();
     }
     
     public void drawMe(Graphics g){

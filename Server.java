@@ -22,19 +22,26 @@ public class Server {
 		waitForPlayers();
 		
 	}
-	private static void waitForPlayers() throws IOException{
+	public static void waitForPlayers() throws IOException{
+		int i=0;
 		while (game.numClients() < game.MaxPlayers) {
+			if(game.clients().get(i) == null){
+				// Wait for a connection.
+				Socket clientSocket = serverSocket.accept();
 
-			// Wait for a connection.
-			Socket clientSocket = serverSocket.accept();
-
-			// Once a connection is made, run the socket in a ServerThread.
-			ServerThread serverThread = new ServerThread(clientSocket, game, i);
-			manager.add(serverThread);
-			Thread thread = new Thread(serverThread);
-			thread.start();
-			game.addClient(i);
-			i++;
+				// Once a connection is made, run the socket in a ServerThread.
+				ServerThread serverThread = new ServerThread(clientSocket, game, i);
+				manager.add(serverThread);
+				Thread thread = new Thread(serverThread);
+				thread.start();
+				game.addClient(i);
+				i++;
+			}else{
+				i++;
+			}
+			if(i >= game.MaxPlayers){
+				i = 0;
+			}
 		}
 	}
 }
