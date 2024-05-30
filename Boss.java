@@ -15,7 +15,7 @@ public class Boss extends Startable implements DrawableObject, Transform{
 
     public Boss(Vector2 position){
         this.position = position;
-        size = new Vector2(2, 2);
+        size = new Vector2(.5f, .5f);
 
         attackManager = new BossAttackManager(this);
         healthManager = new BossHealthManager(this);
@@ -45,5 +45,10 @@ public class Boss extends Startable implements DrawableObject, Transform{
 
     public Vector2 size(){
         return size.clone();
+    }
+
+    public void phase2(){
+        appearanceManager.phase2();
+        size = new Vector2(1.3f, 1.3f);
     }
 }

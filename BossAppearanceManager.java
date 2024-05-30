@@ -6,18 +6,23 @@ import javax.imageio.*;
 public class BossAppearanceManager implements DrawableObject{
     
     private Boss boss;
+    private BufferedImage startingSprite;
     private BufferedImage sprite;
     private boolean active;
+    public final BossAnimationManager animationManager;
 
     public BossAppearanceManager(Boss boss){
         this.boss = boss;
         active = true;
 
         try{
-            sprite = ImageIO.read(new File("BlankSprite.png"));
+            startingSprite = ImageIO.read(new File("Boss0.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
+
+        sprite = startingSprite;
+        animationManager = new BossAnimationManager(boss);
     }
 
     public void drawMe(Graphics g){
@@ -30,5 +35,15 @@ public class BossAppearanceManager implements DrawableObject{
 
     public void setActive(boolean active){
         this.active = active;
+    }
+
+    public void phase2(){
+        animationManager.phase2();
+    }
+    public BufferedImage sprite(){
+        return sprite;
+    }
+    public void setSprite(BufferedImage sprite){
+        this.sprite = sprite;
     }
 }

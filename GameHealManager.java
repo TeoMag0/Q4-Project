@@ -8,8 +8,8 @@ public class GameHealManager {
 
     public void spawnHearts(){
         for(int i=0;i<game.numAliveClients();i++){
-            float x = (float)Math.random()*10-4;
-            float y = (float)Math.random()*10-4;
+            float x = (float)Math.random()*6-3;
+            float y = (float)Math.random()*6-3;
 
             spawnHeart(new Vector2(x, y));
         }
