@@ -14,12 +14,12 @@ public class RestartButton extends InteractableObject{
         position = TileMap.Singleton.rcToCoords(new Vector2(0, 40));
 
         try{
-            sprite = ImageIO.read(new File("BlankSprite.png"));
+            sprite = ImageIO.read(new File("RedPortal.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
 
-        size = new Vector2(2,2);
+        size = new Vector2(1f,1f);
         prompt = new InteractionPrompt(this, new Vector2(0, .3f), "Restart");
         collider = new BoxCollider(this, size, ColliderPurpose.INTERACTABLE);
     }
