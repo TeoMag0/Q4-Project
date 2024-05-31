@@ -29,6 +29,7 @@ public class Screen extends JPanel {
 		DummyProjectile.setUpSprites();
 		HeartPickup.setUpSprites();
 		new RestartButton();
+		BalloonManager.setUpBalloons();
 	}
 
 	public void paintComponent(Graphics g){
@@ -43,6 +44,7 @@ public class Screen extends JPanel {
 		DummyPlayerManager.Singleton.drawMe(g);
 		player.drawMe(g);
 		Projectile.drawAll(g);
+		BalloonManager.drawAll(g);
 
 		if(drawColliders){
 			Collider.drawAll(g);
