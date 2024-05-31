@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 /*
  * purpose: host server
@@ -7,7 +8,6 @@ import java.io.*;
  */
 
 public class Server {
-	private static int i = 0;
 	private static ServerSocket serverSocket;
 	private static Game game;
 	private static Manager manager;
@@ -16,7 +16,12 @@ public class Server {
 		serverSocket = new ServerSocket(portNumber);
 
         manager = new Manager();
-		game = new Game(manager);
+
+		System.out.println("How many players? (1-4)");
+		Scanner scan = new Scanner(System.in);
+		int maxP = Integer.parseInt(scan.nextLine());
+		game = new Game(manager, maxP);
+		scan.close();
 
 		System.out.println("Waiting for a connection");
 		waitForPlayers();

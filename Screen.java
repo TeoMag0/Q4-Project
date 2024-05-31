@@ -38,6 +38,7 @@ public class Screen extends JPanel {
 		g.fillRect(0, 0, screenPixelDimensions.intX(), screenPixelDimensions.intY());
 
 		TileMap.Singleton.drawMe(g);
+		MoveInstructions.drawAll(g);
 		Animation.drawAll(g);
 		boss.drawMe(g);
 		InteractableObject.drawAll(g);

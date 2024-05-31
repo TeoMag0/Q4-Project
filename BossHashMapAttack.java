@@ -10,11 +10,13 @@ public class BossHashMapAttack extends BossAttack{
     public void run(){
         try{
             for(int i=0;i<3;i++){
+                Sound.playSound("straw.wav");
                 createTargets(.5f);
                 Thread.sleep(700);
             }
             createTargets(.2f);
             Thread.sleep(200);
+            Sound.playSound("straw.wav");
             createProjectiles();
         }catch(InterruptedException e){
             e.printStackTrace();

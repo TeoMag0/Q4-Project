@@ -17,10 +17,10 @@ public class Game {
     public final GameBossDialogue dialogueManager;
     public final GameHealManager healManager;
     
-    public Game(Manager manager){
+    public Game(Manager manager, int maxPlayers){
         this.manager = manager;
         clients = new MyHashTable<>(10);
-        MaxPlayers = 2;
+        MaxPlayers = maxPlayers;
         playerSpawnIndices = new GameSpawnIndexManager(MaxPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         bossTiming = new GameBossAttackTiming(manager, this);
@@ -103,6 +103,10 @@ public class Game {
         manager.broadcast(new NetworkObject<Integer>(clientID, Packet.DISCONNECTED_PLAYER));//tells client to delete dummy
         playerSpawnIndices.removePlayer(clientID);
         manager.broadcast(new NetworkObject<int[]>(new int[] { numClients(), MaxPlayers }, Packet.WAITING_PLAYERS));//update waiting text
+
+        if(numClients() == 0){
+            System.exit(0);
+        }
     }
     public int numClients(){
         return clients.keySet().size();
